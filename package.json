@@ -1,0 +1,26 @@
+{
+  "name": "mywebsite",
+  "version": "1.0.0",
+  "description": "My website personal",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NeilGutierrezChacon/MyWebSite.git"
+  },
+  "author": "Neil Gutierrez Chacon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NeilGutierrezChacon/MyWebSite/issues"
+  },
+  "homepage": "https://github.com/NeilGutierrezChacon/MyWebSite#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
