@@ -4,6 +4,7 @@
   "description": "My website personal",
   "main": "index.js",
   "scripts": {
+    "start": "node src",
     "dev": "nodemon src/index.js"
   },
   "repository": {
@@ -17,7 +18,9 @@
   },
   "homepage": "https://github.com/NeilGutierrezChacon/MyWebSite#readme",
   "dependencies": {
+    "ejs": "^3.1.3",
     "express": "^4.17.1",
+    "morgan": "^1.10.0",
     "path": "^0.12.7"
   },
   "devDependencies": {

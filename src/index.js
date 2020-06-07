@@ -1,21 +1,22 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 
-const path = require('path');
+const path = require("path");
 
+const pathViews = path.join(__dirname, "views");
 
+/* Settings */
+app.set("port", process.env.PORT || 3000);
+app.set("views", pathViews);
+app.engine("html", require("ejs").renderFile);
+app.set("view engine", "ejs");
 
+/* Routes */
+app.use(require("./routes/index"));
 
-app.set('port',process.env.PORT || 3000);
+app.use(express.static(path.join(__dirname, "public")));
 
-
-const dirPublic = path.join(__dirname,'public');
-
-app.use('/',express.static(dirPublic));
-
-
-
-app.listen(app.get('port'),()=>{
-    console.log('Server on port', app.get('port'));
-    console.log("Path of directori public: ",dirPublic);
+app.listen(app.get("port"), () => {
+  console.log("Server on port", app.get("port"));
+  console.log(pathViews);
 });
