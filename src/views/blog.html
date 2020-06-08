@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <%- include ('partials/head.html')%>
+  </head>
+  <body>
+    <%- include ('partials/header.html')%>
+    <main>
+      <div class="container-fluid p-0">
+        <!-- Jumbotron Title -->
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-4">Blog</h1>
+            <p class="lead">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor
+              qui similique vitae veritatis voluptatum ad laudantium maxime.
+              Tempora delectus odio rerum aliquid, nulla laudantium a soluta
+              asperiores, cumque beatae quod?
+            </p>
+          </div>
+        </div>
+        <!-- Post Recomendados (2 cartas)  -->
+        <div class="row"></div>
+        <!-- Post -->
+        <div class="row">
+          <div class="col px-5">
+            <div class="post">
+              <h2 class="display-7">
+                Post 1
+              </h2>
+              <span class="date"><%= new Date() %></span>
+              <p class="resumen">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Eveniet illo maiores sunt unde? Rem, quibusdam voluptatem
+                obcaecati voluptates quae fugiat nihil dolorum illum atque
+                itaque ratione quis cum sequi explicabo.
+              </p>
+              <p class="introduccion">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi
+                accusantium et nostrum suscipit sed saepe voluptatem magni
+                architecto harum eius assumenda incidunt, porro ratione iure?
+                Esse dolorum sequi modi libero!
+              </p>
+              <p class="cuerpo">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor
+                quisquam natus reprehenderit perspiciatis facere omnis eius quam
+                unde praesentium nisi distinctio blanditiis optio nemo sequi
+                alias sapiente, perferendis ex ad.
+              </p>
+              <div class="conclusion">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut,
+                suscipit facilis veniam delectus architecto quia cumque,
+                deleniti, dolorem laborum magni reprehenderit quisquam quos.
+                Beatae, culpa. Velit maiores illo ducimus temporibus!
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col px-5">
+            <div class="post">
+              <h2 class="display-7">
+                Post 1
+              </h2>
+              <span class="date"><%= new Date() %></span>
+              <p class="resumen">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Eveniet illo maiores sunt unde? Rem, quibusdam voluptatem
+                obcaecati voluptates quae fugiat nihil dolorum illum atque
+                itaque ratione quis cum sequi explicabo.
+              </p>
+              <p class="introduccion">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi
+                accusantium et nostrum suscipit sed saepe voluptatem magni
+                architecto harum eius assumenda incidunt, porro ratione iure?
+                Esse dolorum sequi modi libero!
+              </p>
+              <p class="cuerpo">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor
+                quisquam natus reprehenderit perspiciatis facere omnis eius quam
+                unde praesentium nisi distinctio blanditiis optio nemo sequi
+                alias sapiente, perferendis ex ad.
+              </p>
+              <div class="conclusion">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut,
+                suscipit facilis veniam delectus architecto quia cumque,
+                deleniti, dolorem laborum magni reprehenderit quisquam quos.
+                Beatae, culpa. Velit maiores illo ducimus temporibus!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col px-5">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <li class="page-item">
+                        <a class="page-link" href="#">Previous</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                  </nav>
+            </div>
+        </div>
+
+        
+      </div>
+    </main>
+  </body>
+  <%- include ('partials/footer.html')%>
+</html>

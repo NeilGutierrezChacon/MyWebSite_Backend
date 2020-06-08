@@ -17,6 +17,21 @@
       "methods": ["GET"]
     },
     {
+      "src": "/MyProjects",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/Blog",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/Contact",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
       "src": "/(.*)",
       "dest": "src/public/$1"
     }
