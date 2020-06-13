@@ -16,7 +16,22 @@ footer{
     position: absolute;
     height: 26em;
     width: 100%;
-    z-index: 2;   
+    z-index: 2;
+    margin-top: 3em; 
+    color: white;  
+}
+footer ul{
+    list-style: none;
+    padding: 0px;
+    
+}
+footer ul li,p{
+    font-size: 1.1em;
+    font-weight: bold;
+}
+footer ul li a{
+    text-decoration: none;
+    color: white; 
 }
 .cont-info{
     width: 100%;
@@ -29,6 +44,10 @@ footer{
 .img_logo{
     width: 5em;
     height: 5em;
+}
+.img_user{
+    width: 7em;
+    height: 7em;
 }
 .cont-proyectos{
     display: flex;
