@@ -35,6 +35,31 @@
       "methods": ["GET"]
     },
     {
+      "src": "/AdminSignIn",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/AdminmyProfile",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/AdminManageProjects",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/AdminEditProject",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/AdminAddProject",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
       "src": "/dbTest",
       "dest": "src/index.js",
       "methods": ["GET"]

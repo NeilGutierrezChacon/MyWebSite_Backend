@@ -22,6 +22,25 @@ router.get("/AdminSignIn", (req, res) => {
   res.render("signIn.html");
 });
 
+router.get("/AdminMyProfile", (req, res) => {
+  res.render("adminMyProfile.html");
+});
+
+router.get("/AdminManageProjects", (req, res) => {
+  res.render("adminManageProjects.html");
+});
+
+router.get("/AdminEditProject", (req, res) => {
+  res.render("adminEditProject.html");
+});
+
+router.get("/AdminAddProject", (req, res) => {
+  res.render("adminAddProject.html");
+});
+
+
+
+
 
 router.get("/dbTest", async (req, res) => {
 
