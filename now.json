@@ -40,7 +40,7 @@
       "methods": ["GET"]
     },
     {
-      "src": "/AdminmyProfile",
+      "src": "/AdminMyProfile",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
