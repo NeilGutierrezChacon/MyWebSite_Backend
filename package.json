@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/NeilGutierrezChacon/MyWebSite#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "ejs": "^3.1.3",
     "express": "^4.17.1",
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.9.18",
     "morgan": "^1.10.0",
     "path": "^0.12.7"
   },

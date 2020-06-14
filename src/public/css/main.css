@@ -60,3 +60,9 @@ footer ul li a{
     height: 9em;
     border: 1px solid black;
 }
+
+
+.form-signIn{
+    width: 35%;
+    padding: 2em;
+}

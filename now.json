@@ -1,5 +1,8 @@
 {
   "version": 2,
+  "env": {
+    "MONGODB_URI": "mongodb://ngch43:6fi0YvfSc28kCTyx@cluster0-shard-00-00-9xpme.mongodb.net:27017,cluster0-shard-00-01-9xpme.mongodb.net:27017,cluster0-shard-00-02-9xpme.mongodb.net:27017/myWebSite?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority"
+  },
   "builds": [
     {
       "src": "src/public/**",
@@ -28,6 +31,11 @@
     },
     {
       "src": "/Contact",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/dbTest",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
