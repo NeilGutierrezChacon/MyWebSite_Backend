@@ -38,6 +38,23 @@ router.get("/AdminAddProject", (req, res) => {
   res.render("adminAddProject.html");
 });
 
+router.get("/Cookies", (req, res) => {
+  res.render("cookies.html");
+});
+
+router.get("/PrivacyPolicy", (req, res) => {
+  res.render("privacyPolicy.html");
+});
+
+router.get("/UserManual", (req, res) => {
+  res.render("userManual.html");
+});
+
+router.get("/LegalNotice", (req, res) => {
+  res.render("legalNotice.html");
+});
+
+
 
 
 
