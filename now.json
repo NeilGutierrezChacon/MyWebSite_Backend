@@ -60,6 +60,26 @@
       "methods": ["GET"]
     },
     {
+      "src": "/Cookies",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/PrivacyPolicy",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/UserManual",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/LegalNotice",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
       "src": "/dbTest",
       "dest": "src/index.js",
       "methods": ["GET"]
