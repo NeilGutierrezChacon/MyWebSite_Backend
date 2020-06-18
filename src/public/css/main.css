@@ -69,3 +69,7 @@ footer a{
     width: 35%;
     padding: 2em;
 }
+.card img{
+    width: 100%;
+    height: auto;
+}
