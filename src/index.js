@@ -17,6 +17,9 @@ app.set("views", pathViews);
 app.engine("html", require("ejs").renderFile);
 app.set("view engine", "ejs");
 
+app.use(express.urlencoded({extended:false}));
+app.use(express.json());
+
 
 
 /* Routes */
