@@ -10,28 +10,22 @@
     <%- include ('partials/header.html')%>
     <main>
       <div class="container-fluid">
-        <div class="cont-landing-img row py-5">
-          <div class="col-sm d-flex justify-content-center">
-            <img
-              src="./img/logo_bootstrap.png"
-              alt="Technology used logo"
-              class="img_logo"
-            />
-            <img
-              src="./img/logo_css.png"
-              alt="Technology used logo"
-              class="img_logo"
-            />
-            <img
-              src="./img/logo_html.png"
-              alt="Technology used logo"
-              class="img_logo"
-            />
-            <img
-              src="./img/logo_js.png"
-              alt="Technology used logo"
-              class="img_logo"
-            />
+        <div class="cont-landing-img row">
+          <div class="col-sm d-flex justify-content-center p-0">
+            <div class="img_landing">
+              <div class="jumbotron">
+                <h1 class="display-4">Hello, world!</h1>
+                <p class="lead">
+                  This page has been created to show the projects that I have
+                  developed or am developing in this way to show my knowledge
+                  and my way of working
+                </p>
+                <hr class="my-4" />
+                <a class="btn btn-primary btn-lg" href="#title-projects" role="button">
+                  See projects
+                </a>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -55,7 +49,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <h2 class="mt-3 mb-2">
+            <h2 id="title-projects" class="mt-3 mb-2">
               Last projects
             </h2>
           </div>
@@ -64,13 +58,12 @@
           <div class="col d-flex justify-content-center">
             <div class="card-deck">
               <%- include ('partials/cartProject.html', {project:
-                {title:"Project title", gitHub:"/" }})%>
-              <%- include ('partials/cartProject.html', {project:
-                {title:"Project title", gitHub:"/" }})%>
-              <%- include ('partials/cartProject.html', {project:
-                {title:"Project title", gitHub:"/" }})%>
-              <%- include ('partials/cartProject.html', {project:
-                {title:"Project title", gitHub:"/" }})%>
+              {title:"Project title", gitHub:"/" }})%> <%- include
+              ('partials/cartProject.html', {project: {title:"Project title",
+              gitHub:"/" }})%> <%- include ('partials/cartProject.html',
+              {project: {title:"Project title", gitHub:"/" }})%> <%- include
+              ('partials/cartProject.html', {project: {title:"Project title",
+              gitHub:"/" }})%>
             </div>
           </div>
         </div>

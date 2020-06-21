@@ -17,11 +17,10 @@ window.onload = function () {
         .then(function (response) {
           console.log(response.data);
           let token = response.data.token;
-          if(token){
+          if (token) {
             document.cookie = `token=${token}`;
             window.location.replace("/AdminMyProfile");
           }
-          
         })
         .catch(function (error) {
           console.log(error);
@@ -36,12 +35,19 @@ window.onload = function () {
     init: function () {
       console.log("init view");
       view.eventSendFormSignIn();
+      view.eventShowInputNewPassword();
     },
     getEmail: function () {
       return document.getElementById("inputEmail").value;
     },
     getPassword: function () {
       return document.getElementById("inputPassword").value;
+    },
+    getCheckNewPassword: function () {
+      return document.getElementById("checkNewPassword");
+    },
+    getFormGroupNewPassword: function () {
+      return document.getElementById("form-group-new-password");
     },
     eventSendFormSignIn: function () {
       let signIn = document.getElementById("signIn");
@@ -50,6 +56,21 @@ window.onload = function () {
         console.log(event);
         event.preventDefault();
         controller.sendFormSignIn();
+      });
+    },
+
+    eventShowInputNewPassword: function () {
+      /* Hide the new password field */
+      let checkNewPassword = view.getCheckNewPassword();
+      let formGroupNewPassword = view.getFormGroupNewPassword();
+      checkNewPassword.addEventListener("click", () => {
+        if (!checkNewPassword.checked) {
+          checkNewPassword.value = true;
+          formGroupNewPassword.style.display = "none";
+        } else {
+          checkNewPassword.value = false;
+          formGroupNewPassword.style.display = "block";
+        }
       });
     },
   };
