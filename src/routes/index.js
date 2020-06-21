@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Project = require("../models/project");
 
+const verifyToken = require('../verifyToken');
+
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
 
 router.get("/", (req, res) => {
   res.render("index.html");
@@ -69,23 +72,28 @@ router.post("/Contact", async (req, res) => {
 });
 
 router.get("/AdminSignIn", (req, res) => {
-  console.log(req.query);
+  
   res.render("signIn.html");
 });
 
 router.post("/AdminSignIn", (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
   if (
     email == process.env.ADMIN_NAME &&
     password == process.env.ADMIN_PASSWORD
   ) {
-    res.redirect("/AdminMyProfile");
+    const token = jwt.sign({adminName:process.env.ADMIN_NAME}, process.env.TOKEN_SECRET, {
+      expiresIn: 60 * 60 * 24, // expires in 24 hours
+    });
+    console.log(token);
+    res.json({auth:true,token});
   } else {
-    res.render("signIn.html");
+    res.json({auth:false});
   }
 });
 
-router.get("/AdminMyProfile", (req, res) => {
+router.get("/AdminMyProfile",verifyToken,(req, res) => {
   res.render("adminMyProfile.html");
 });
 
