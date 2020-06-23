@@ -7,12 +7,17 @@ const verifyToken = require('../verifyToken');
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 
-router.get("/", (req, res) => {
-  res.render("index.html");
+router.get("/",async (req, res) => {
+
+  let projects = await Project.find().limit(4);
+  console.log(projects);
+
+  res.render("index.html",{projects});
 });
 
-router.get("/MyProjects", (req, res) => {
-  res.render("my_projects.html");
+router.get("/MyProjects", async(req, res) => {
+  let projects = await Project.find();
+  res.render("my_projects.html",{projects});
 });
 
 router.get("/Blog", (req, res) => {
@@ -105,8 +110,23 @@ router.get("/AdminEditProject", (req, res) => {
   res.render("adminEditProject.html");
 });
 
-router.get("/AdminAddProject", (req, res) => {
+router.get("/AdminAddProject",(req, res) => {
   res.render("adminAddProject.html");
+});
+
+router.post("/AdminAddProject",async(req, res) => {
+  const {title,description,github,website,image} =  req.body;
+  console.log(image)
+  const project = new Project ({
+    title,
+    description,
+    github,
+    website,
+    img:image
+  });
+  console.log(project);
+  await project.save();
+  res.redirect("/AdminAddProject");
 });
 
 router.get("/Cookies", (req, res) => {

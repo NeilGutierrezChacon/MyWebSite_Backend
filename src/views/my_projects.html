@@ -1,41 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <%- include ('partials/head.html')%>
-</head>
-<body>
+  </head>
+  <body>
     <%- include ('partials/header.html')%>
     <main>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12 col-xl-12">
-                    <h1>My projects</h1>
-                </div>
-            </div>
-            <!-- Proyects (Se mostraran los proyectos por categorias) -->
-            <div class="row">
-                <h3 class="px-5">NodeJs</h3>
-                <div class="col-sm-12 col-xl-12 d-flex justify-content-around">
-                    <!-- La idea es implementar un carrusel para mostrar los proyectos -->
-                    <div class="cont-proyecto"></div>
-                    <div class="cont-proyecto"></div>
-                    <div class="cont-proyecto"></div>
-                </div>
-            </div>
-            <div class="row">
-                <h3 class="px-5">Vue</h3>
-                <div class="col-sm-12 col-xl-12 d-flex justify-content-around">
-                    <div class="cont-proyecto"></div>
-                    <div class="cont-proyecto"></div>
-                    <div class="cont-proyecto"></div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-xl-12">
+            <h1>My projects</h1>
+          </div>
         </div>
+        <!-- Proyects (Se mostraran los proyectos por categorias) -->
+        <div class="row row-cols-1 row-cols-md-3 ">
+            <% projects.forEach(function(project){ %>
+                <div class="col mb-4 d-flex justify-content-center">
+                    <%- include('partials/cartProject.html',{project})%> 
+                </div>
+            <% }); %>
+        </div>
+      </div>
     </main>
-    
-</body>
-<%- include ('partials/footer.html')%>
+  </body>
+  <%- include ('partials/footer.html')%>
 </html>

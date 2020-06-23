@@ -76,6 +76,11 @@
       "methods": ["GET"]
     },
     {
+      "src": "/AdminAddProject",
+      "dest": "src/index.js",
+      "methods": ["POST"]
+    },
+    {
       "src": "/Cookies",
       "dest": "src/index.js",
       "methods": ["GET"]

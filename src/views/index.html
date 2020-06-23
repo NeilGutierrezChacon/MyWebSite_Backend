@@ -57,13 +57,9 @@
         <div class="row">
           <div class="col d-flex justify-content-center">
             <div class="card-deck">
-              <%- include ('partials/cartProject.html', {project:
-              {title:"Project title", gitHub:"/" }})%> <%- include
-              ('partials/cartProject.html', {project: {title:"Project title",
-              gitHub:"/" }})%> <%- include ('partials/cartProject.html',
-              {project: {title:"Project title", gitHub:"/" }})%> <%- include
-              ('partials/cartProject.html', {project: {title:"Project title",
-              gitHub:"/" }})%>
+              <% projects.forEach(function(project){ %>
+                <%- include ('partials/cartProject.html',{project})%>
+              <% }); %>
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ var projectSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: 'Title cannot be blank!'
+        required: 'Description cannot be blank!'
     },
     github: {
         type: String
