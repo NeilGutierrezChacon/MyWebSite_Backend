@@ -119,9 +119,19 @@ router.delete("/AdminManageProjects",async(req,res)=>{
   res.status(200).json({delete:true});
 });
 
-router.get("/AdminEditProject", (req, res) => {
-  console.log(req.query);
-  res.render("adminEditProject.html");
+router.get("/AdminEditProject", async (req, res) => {
+  const {id} = req.query;
+  const project = await Project.findById({_id:id});
+  console.log(project);
+  res.render("admin/adminEditProject.html",{project});
+});
+
+router.put("/AdminEditProject", async (req, res) => {
+  const {id} =  req.body;
+  console.log(req.body);
+  const info = await Project.updateOne({_id:id},req.body);
+  console.log(info);
+  res.status(200).json({update:true});
 });
 
 router.get("/AdminAddProject",(req, res) => {

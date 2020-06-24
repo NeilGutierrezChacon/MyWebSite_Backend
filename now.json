@@ -76,6 +76,11 @@
       "methods": ["GET"]
     },
     {
+      "src": "/AdminEditProject",
+      "dest": "src/index.js",
+      "methods": ["PUT"]
+    },
+    {
       "src": "/AdminAddProject",
       "dest": "src/index.js",
       "methods": ["GET"]

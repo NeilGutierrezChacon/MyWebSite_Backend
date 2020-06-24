@@ -45,6 +45,15 @@
           console.log(error);
         });
     },
+    updateProject:function(project){
+      axios.put("/AdminEditProject",project).then(function(response){
+        if(response.data.update){
+          window.location.replace("/AdminManageProjects");
+        }
+      }).catch(function(error){
+        console.log(error);
+      });
+    }
   };
 
   var view = {
@@ -53,6 +62,7 @@
       view.eventSendFormSignIn();
       view.eventShowInputNewPassword();
       view.eventDeleteProject();
+      view.eventUpdateProject();
     },
     getEmail: function () {
       try {
@@ -82,6 +92,48 @@
         console.log(e);
       }
     },
+    getTitle:function(){
+      try{
+        return document.getElementById("inputTitle").value;
+      }catch(e){
+        console.log(e);
+      }
+    },
+    getUrlGitHub:function(){
+      try{
+        return document.getElementById("inputUrlGitHub").value;
+      }catch(e){
+        console.log(e);
+      }
+    },
+    getUrlWebSite:function(){
+      try{
+        return document.getElementById("inputUrlWebSite").value;
+      }catch(e){
+        console.log(e);
+      }
+    },
+    getUrlImage:function(){
+      try{
+        return document.getElementById("inputUrlImage").value;
+      }catch(e){
+        console.log(e);
+      }
+    },
+    getDescription:function(){
+      try{
+        return document.getElementById("inputDescription").value;
+      }catch(e){
+        console.log(e);
+      }
+    },
+    getProjectId:function(){
+      try{
+        return document.getElementById("inputProjectId").value;
+      }catch(e){
+        console.log(e);
+      }
+    },
     eventSendFormSignIn: function () {
       try {
         let signIn = document.getElementById("signIn");
@@ -96,7 +148,6 @@
         console.log(e);
       }
     },
-
     eventShowInputNewPassword: function () {
       try {
         /* Hide the new password field */
@@ -116,19 +167,26 @@
       }
     },
     eventDeleteProject: function () {
-      let buttons = document.getElementsByName("buttonDeleteProject");
-      /* for(i=0;i<buttons.length;i++){
-        buttons[i].addEventListener('click',function(i){
-          console.log(i);
-          console.log(this.id);
-        });
-      } */
-      buttons.forEach((value,index)=>{
-        value.addEventListener('click',(ev,index)=>{
-          console.log(this);
-        })
-      });
+      
     },
+    eventUpdateProject: function(){
+      let btnUpdate = document.getElementById("updateProject");
+      btnUpdate.addEventListener('click',function(e){
+        e.preventDefault();
+        let project = {
+          id:view.getProjectId(),
+          title:view.getTitle(),
+          github:view.getUrlGitHub(),
+          website:view.getUrlWebSite(),
+          img:view.getUrlImage(),
+          description:view.getDescription()
+
+        }
+        controller.updateProject(project);
+        console.log("Update project");
+      });
+    }
+
   };
 
   controller.init();
