@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <%- include ('../partials/head.html')%>
+  </head>
+  <body>
+    <%- include ('../partials/header.html')%>
+    <main>
+      <div class="container">
+        <div class="row d-flex justify-content-center mt-5">
+          <div class="col-sm-12">
+            <h3>Add Post</h3>
+          </div>
+        </div>
+        <form class="w-50 mx-auto" action="/AdminAddPost" method="POST">
+          <div class="form-row">
+            <div class="col-sm-12 col-md-10">
+              <div class="form-group">
+                <label for="inputTitle">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="title"
+                  id="inputTitle"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputSummary">Summary:</label>
+            <textarea
+              class="form-control"
+              id="inputSummary"
+              name="summary"
+              rows="7"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="inputIntroduction">Introduction:</label>
+            <textarea
+              class="form-control"
+              id="inputIntroduction"
+              name="introduction"
+              rows="7"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="inputBody">Body:</label>
+            <textarea
+              class="form-control"
+              id="inputBody"
+              name="body"
+              rows="7"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="inputConclusion">Conclusion:</label>
+            <textarea
+              class="form-control"
+              id="inputConclusion"
+              name="conclusion"
+              rows="7"
+            ></textarea>
+          </div>
+          <div class="form-row">
+            <button type="submit" id="addProject" class="btn btn-primary mx-auto">
+              Add
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </body>
+  <%- include ('../partials/footer.html')%>
+</html>

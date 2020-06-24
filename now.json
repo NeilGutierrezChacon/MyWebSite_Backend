@@ -66,6 +66,11 @@
       "methods": ["GET"]
     },
     {
+      "src": "/AdminManageProjects",
+      "dest": "src/index.js",
+      "methods": ["DELETE"]
+    },
+    {
       "src": "/AdminEditProject",
       "dest": "src/index.js",
       "methods": ["GET"]
@@ -77,6 +82,16 @@
     },
     {
       "src": "/AdminAddProject",
+      "dest": "src/index.js",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/AdminAddPost",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/AdminAddPost",
       "dest": "src/index.js",
       "methods": ["POST"]
     },

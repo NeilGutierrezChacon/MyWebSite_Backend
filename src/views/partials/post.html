@@ -1,0 +1,18 @@
+<div class="post">
+  <h2 class="display-7">
+    <%= post.title %>
+  </h2>
+  <span class="date"><%= `${post.updateDate.getDay()}/${post.updateDate.getMonth()}/${post.updateDate.getFullYear()}` %></span>
+  <p class="resumen">
+    <%= post.summary %>
+  </p>
+  <p class="introduccion">
+    <%= post.introduccion %>
+  </p>
+  <p class="cuerpo">
+    <%= post.body %>
+  </p>
+  <div class="conclusion">
+    <%= post.conclusion %>
+  </div>
+</div>

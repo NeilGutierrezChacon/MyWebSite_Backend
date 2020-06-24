@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <%- include ('../partials/head.html')%>
+  </head>
+  <body>
+    <%- include ('../partials/header.html')%>
+    <main>
+      <div class="container">
+        <div class="row d-flex justify-content-center mt-5">
+          <div class="col-sm-12">
+            <h3>Manage projects</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search project"
+              />
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button">
+                  Search
+                </button>
+              </div>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" width="70%">Title</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% projects.forEach(function(project){ %>
+                <tr name="rowProject">
+                  <td id="<%= project.id %>" name="titleProject">
+                    <%= project.title %>
+                  </td>
+                  <td>
+                    <a type="button" href="/AdminEditProject?id=<%= project.id %>" class="btn">
+                      <i class="fas fa-edit fa-lg"></i>
+                    </a>
+                    <button
+                      type="button"
+                      class="btn"
+                      id="<%= project.id %>"
+                      name="buttonDeleteProject"
+                      onclick="controller.deleteProject('<%= project.id %>')"
+                    >
+                      <i class="fas fa-trash-alt fa-lg"></i>
+                    </button>
+                  </td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+            <a
+              type="button"
+              href="/AdminAddProject"
+              class="btn btn-outline-primary float-right"
+              >Add Project</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+  <%- include ('../partials/footer.html')%>
+</html>

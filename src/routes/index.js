@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Project = require("../models/project");
+const Post = require("../models/post");
 
 const verifyToken = require('../verifyToken');
 
@@ -20,8 +21,11 @@ router.get("/MyProjects", async(req, res) => {
   res.render("my_projects.html",{projects});
 });
 
-router.get("/Blog", (req, res) => {
-  res.render("blog.html");
+router.get("/Blog", async (req, res) => {
+
+  const posts = await Post.find();
+  console.log(posts);
+  res.render("blog.html",{posts});
 });
 
 router.get("/Contact", (req, res) => {
@@ -102,11 +106,21 @@ router.get("/AdminMyProfile",verifyToken,(req, res) => {
   res.render("adminMyProfile.html");
 });
 
-router.get("/AdminManageProjects", (req, res) => {
-  res.render("adminManageProjects.html");
+router.get("/AdminManageProjects",async (req, res) => {
+
+  const projects = await Project.find();
+  res.render("admin/adminManageProjects.html",{projects});
+});
+
+router.delete("/AdminManageProjects",async(req,res)=>{
+  const {id} = req.query;
+  const info = await Project.deleteOne({_id:id});
+  console.log(info);
+  res.status(200).json({delete:true});
 });
 
 router.get("/AdminEditProject", (req, res) => {
+  console.log(req.query);
   res.render("adminEditProject.html");
 });
 
@@ -127,6 +141,26 @@ router.post("/AdminAddProject",async(req, res) => {
   console.log(project);
   await project.save();
   res.redirect("/AdminAddProject");
+});
+
+router.get("/AdminAddPost",(req, res) => {
+  res.render("admin/adminAddPost.html");
+});
+
+router.post("/AdminAddPost",async(req, res) => {
+  console.log(req.body);
+  const {title,summary,introduction,body,conclusion} = req.body;
+
+  const post = new Post({
+    title,
+    updateDate:new Date(),
+    summary,
+    introduction,
+    body,
+    conclusion
+  });
+  await post.save();
+  res.render("admin/adminAddPost.html");
 });
 
 router.get("/Cookies", (req, res) => {
@@ -158,5 +192,7 @@ router.get("/dbTest", async (req, res) => {
     res.status(500).json({ text: "Internal error" });
   }
 });
+
+
 
 module.exports = router;
