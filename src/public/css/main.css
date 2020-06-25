@@ -20,7 +20,7 @@ footer{
     width: 100%;
     height: auto;  
     z-index: 2;
-    margin-top: 3em; 
+    margin-top: 1em; 
     color: white;  
 }
 footer ul{
@@ -47,6 +47,10 @@ footer a{
 .img_logo{
     width: 5em;
     height: 5em;
+}
+.img_technologies{
+    width: 4em;
+    height: 4em;
 }
 .img_user{
     width: 7em;

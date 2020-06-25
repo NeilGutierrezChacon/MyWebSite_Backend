@@ -189,6 +189,12 @@ router.get("/LegalNotice", (req, res) => {
   res.render("legalNotice.html");
 });
 
+router.get("/Project/:id", async (req,res)=>{
+  const project = await Project.findById({_id:req.params.id});
+  console.log(project);
+  res.render("projectDetail.html",{project});
+});
+
 router.get("/dbTest", async (req, res) => {
   try {
     const projects = await Project.find();

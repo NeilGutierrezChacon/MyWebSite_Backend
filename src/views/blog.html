@@ -15,10 +15,9 @@
           <div class="container">
             <h1 class="display-4">Blog</h1>
             <p class="lead">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor
-              qui similique vitae veritatis voluptatum ad laudantium maxime.
-              Tempora delectus odio rerum aliquid, nulla laudantium a soluta
-              asperiores, cumque beatae quod?
+              In this blog, I will publish the topics of my interest,
+              information and knowledge that I can use to develop my different
+              projects. And it can be an interesting way to see my training.
             </p>
           </div>
         </div>
@@ -26,30 +25,30 @@
         <div class="row"></div>
         <!-- Post -->
         <% posts.forEach(function(post){ %>
-          <div class="row">
-            <div class="col pb-5">
-              <%- include('partials/post.html',{post})%> 
-            </div>
-          </div>
-        <% }); %>
-        
         <div class="row">
-            <div class="col px-5">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                      <li class="page-item">
-                        <a class="page-link" href="#">Previous</a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                  </nav>
-            </div>
+          <div class="col pb-5">
+            <%- include('partials/post.html',{post})%>
+          </div>
         </div>
+        <% }); %>
 
-        
+        <div class="row">
+          <div class="col px-5">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a class="page-link" href="#">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#">Next</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
       </div>
     </main>
   </body>

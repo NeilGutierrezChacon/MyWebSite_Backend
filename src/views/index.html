@@ -21,21 +21,28 @@
                   and my way of working
                 </p>
                 <hr class="my-4" />
-                <a class="btn btn-primary btn-lg" href="#title-projects" role="button">
+                <a
+                  class="btn btn-primary btn-lg"
+                  href="#title-projects"
+                  role="button"
+                >
                   See projects
                 </a>
               </div>
             </div>
           </div>
         </div>
+
         <div class="row">
           <div class="col-sm p-0">
             <div class="cont-info">
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Dolorum modi reprehenderit laboriosam. Ipsam aliquam vero magnam
-                dolores iure quasi, cum, temporibus molestiae doloribus
-                necessitatibus inventore, harum vitae et odit ducimus.
+                <i>
+                  "I am a junior web developer eager to work and develop
+                  projects. I am a self-taught person who likes to learn and
+                  keep improving, I consider myself to be quite sociable and I
+                  like to work as a team."
+                </i>
               </p>
             </div>
           </div>
@@ -57,12 +64,12 @@
         <div class="row">
           <div class="col d-flex justify-content-center">
             <div class="card-deck">
-              <% projects.forEach(function(project){ %>
-                <%- include ('partials/cartProject.html',{project})%>
-              <% }); %>
+              <% projects.forEach(function(project){ %> <%- include
+              ('partials/cartProject.html',{project})%> <% }); %>
             </div>
           </div>
         </div>
+        <%- include('partials/bannerMarcas.html') %>
       </div>
     </main>
     <%- include ('partials/footer.html')%>

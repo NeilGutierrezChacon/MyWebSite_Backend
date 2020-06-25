@@ -121,6 +121,11 @@
       "methods": ["GET"]
     },
     {
+      "src": "/Project/(?<id>[^/]*)",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
       "src": "/dbTest",
       "dest": "src/index.js",
       "methods": ["GET"]
