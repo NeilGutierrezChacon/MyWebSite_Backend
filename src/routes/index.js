@@ -3,29 +3,27 @@ const router = express.Router();
 const Project = require("../models/project");
 const Post = require("../models/post");
 
-const verifyToken = require('../verifyToken');
+const verifyToken = require("../verifyToken");
 
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 
-router.get("/",async (req, res) => {
-
+router.get("/", async (req, res) => {
   let projects = await Project.find().limit(4);
   console.log(projects);
 
-  res.render("index.html",{projects});
+  res.render("index.html", { projects });
 });
 
-router.get("/MyProjects", async(req, res) => {
+router.get("/MyProjects", async (req, res) => {
   let projects = await Project.find();
-  res.render("my_projects.html",{projects});
+  res.render("my_projects.html", { projects });
 });
 
 router.get("/Blog", async (req, res) => {
-
   const posts = await Post.find();
   console.log(posts);
-  res.render("blog.html",{posts});
+  res.render("blog.html", { posts });
 });
 
 router.get("/Contact", (req, res) => {
@@ -81,7 +79,6 @@ router.post("/Contact", async (req, res) => {
 });
 
 router.get("/AdminSignIn", (req, res) => {
-  
   res.render("signIn.html");
 });
 
@@ -92,82 +89,88 @@ router.post("/AdminSignIn", (req, res) => {
     email == process.env.ADMIN_NAME &&
     password == process.env.ADMIN_PASSWORD
   ) {
-    const token = jwt.sign({adminName:process.env.ADMIN_NAME}, process.env.TOKEN_SECRET, {
-      expiresIn: 60 * 60 * 24, // expires in 24 hours
-    });
+    const token = jwt.sign(
+      { adminName: process.env.ADMIN_NAME },
+      process.env.TOKEN_SECRET,
+      {
+        expiresIn: 60 * 60 * 24, // expires in 24 hours
+      }
+    );
     console.log(token);
-    res.json({auth:true,token});
+    /* res.json({auth:true,token}); */
+    res
+      .cookie("token", token, { path: "/" })
+      .redirect(301, "/AdminManageProjects");
   } else {
-    res.json({auth:false});
+    res.json({ auth: false });
   }
 });
 
-router.get("/AdminMyProfile",verifyToken,(req, res) => {
+router.get("/AdminMyProfile", verifyToken, (req, res) => {
   res.render("adminMyProfile.html");
 });
 
-router.get("/AdminManageProjects",async (req, res) => {
-
+router.get("/AdminManageProjects", async (req, res) => {
   const projects = await Project.find();
-  res.render("admin/adminManageProjects.html",{projects});
+  res.render("admin/adminManageProjects.html", { projects });
 });
 
-router.delete("/AdminManageProjects",async(req,res)=>{
-  const {id} = req.query;
-  const info = await Project.deleteOne({_id:id});
+router.delete("/AdminManageProjects", async (req, res) => {
+  const { id } = req.query;
+  const info = await Project.deleteOne({ _id: id });
   console.log(info);
-  res.status(200).json({delete:true});
+  res.status(200).json({ delete: true });
 });
 
 router.get("/AdminEditProject", async (req, res) => {
-  const {id} = req.query;
-  const project = await Project.findById({_id:id});
+  const { id } = req.query;
+  const project = await Project.findById({ _id: id });
   console.log(project);
-  res.render("admin/adminEditProject.html",{project});
+  res.render("admin/adminEditProject.html", { project });
 });
 
 router.put("/AdminEditProject", async (req, res) => {
-  const {id} =  req.body;
+  const { id } = req.body;
   console.log(req.body);
-  const info = await Project.updateOne({_id:id},req.body);
+  const info = await Project.updateOne({ _id: id }, req.body);
   console.log(info);
-  res.status(200).json({update:true});
+  res.status(200).json({ update: true });
 });
 
-router.get("/AdminAddProject",(req, res) => {
+router.get("/AdminAddProject", (req, res) => {
   res.render("adminAddProject.html");
 });
 
-router.post("/AdminAddProject",async(req, res) => {
-  const {title,description,github,website,image} =  req.body;
-  console.log(image)
-  const project = new Project ({
+router.post("/AdminAddProject", async (req, res) => {
+  const { title, description, github, website, image } = req.body;
+  console.log(image);
+  const project = new Project({
     title,
     description,
     github,
     website,
-    img:image
+    img: image,
   });
   console.log(project);
   await project.save();
   res.redirect("/AdminAddProject");
 });
 
-router.get("/AdminAddPost",(req, res) => {
+router.get("/AdminAddPost", (req, res) => {
   res.render("admin/adminAddPost.html");
 });
 
-router.post("/AdminAddPost",async(req, res) => {
+router.post("/AdminAddPost", async (req, res) => {
   console.log(req.body);
-  const {title,summary,introduction,body,conclusion} = req.body;
+  const { title, summary, introduction, body, conclusion } = req.body;
 
   const post = new Post({
     title,
-    updateDate:new Date(),
+    updateDate: new Date(),
     summary,
     introduction,
     body,
-    conclusion
+    conclusion,
   });
   await post.save();
   res.render("admin/adminAddPost.html");
@@ -189,10 +192,10 @@ router.get("/LegalNotice", (req, res) => {
   res.render("legalNotice.html");
 });
 
-router.get("/Project/:id", async (req,res)=>{
-  const project = await Project.findById({_id:req.params.id});
+router.get("/Project/:id", async (req, res) => {
+  const project = await Project.findById({ _id: req.params.id });
   console.log(project);
-  res.render("projectDetail.html",{project});
+  res.render("projectDetail.html", { project });
 });
 
 router.get("/dbTest", async (req, res) => {
@@ -209,6 +212,9 @@ router.get("/dbTest", async (req, res) => {
   }
 });
 
-
+router.get("/SignOut", (req, res) => {
+  console.log("Clear cookies");
+  res.clearCookie("token", { path: "/" }).redirect(301,"/");
+});
 
 module.exports = router;

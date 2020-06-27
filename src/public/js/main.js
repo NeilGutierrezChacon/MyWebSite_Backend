@@ -6,6 +6,7 @@ model = {
 var controller = {
   init: function () {
     console.log("init controller");
+    
     view.init();
   },
   sendFormSignIn: function (email, passowrd) {
@@ -15,12 +16,12 @@ var controller = {
         password: passowrd,
       })
       .then(function (response) {
-        console.log(response.data);
-        let token = response.data.token;
+        console.log(response);
+        /* let token = response.data.token;
         if (token) {
           document.cookie = `token=${token}`;
           window.location.replace("/AdminMyProfile");
-        }
+        } */
       })
       .catch(function (error) {
         console.log(error);
@@ -57,6 +58,29 @@ var controller = {
         console.log(error);
       });
   },
+  getCookie: function (cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(";");
+    for (i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  },
+  checkCookie: function (cookieName) {
+    let result = controller.getCookie(cookieName);
+    if (result != "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
 };
 
 var view = {
@@ -66,6 +90,7 @@ var view = {
     view.eventShowInputNewPassword();
     view.eventDeleteProject();
     view.eventUpdateProject();
+    view.showAdminView()
   },
   getEmail: function () {
     try {
@@ -140,10 +165,10 @@ var view = {
   eventSendFormSignIn: function () {
     try {
       let signIn = document.getElementById("signIn");
-      let email = view.getEmail();
-      let password = view.getPassword();
+
       signIn.addEventListener("click", (event) => {
-        console.log(event);
+        let email = view.getEmail();
+        let password = view.getPassword();
         event.preventDefault();
         controller.sendFormSignIn(email, password);
       });
@@ -193,6 +218,11 @@ var view = {
   eventSeeProjectDetail: function (id) {
     window.location.replace("/Project/" + id);
   },
+  showAdminView: function(){
+    if(controller.checkCookie("token")){
+      document.getElementById("adminMenu").style.display="list-item";
+    }
+  }
 };
 
 controller.init();

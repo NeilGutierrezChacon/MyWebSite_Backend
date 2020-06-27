@@ -1,7 +1,11 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-dark py-2">
     <a class="navbar-brand" href="/">
-        <img class="img_logo" src="/img/logo_ngch43_blanco_200x200.png" alt="Logo de ngch43" >
+      <img
+        class="img_logo"
+        src="/img/logo_ngch43_blanco_200x200.png"
+        alt="Logo de ngch43"
+      />
     </a>
     <button
       class="navbar-toggler"
@@ -28,6 +32,30 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/Contact">Contact</a>
+        </li>
+        <li id="adminMenu" class="nav-item dropdown" style="display: none;">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Admin
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/AdminMyProfile">My profile</a>
+            <a class="dropdown-item" href="/AdminManageProjects">Manage projects</a>
+            <a class="dropdown-item" href="/AdminAddProject">Add project</a>
+            <a class="dropdown-item" href="/AdminAddPost">Add post</a>
+            <div class="dropdown-divider"></div>
+            <form action="/SignOut" method="GET">
+              <button class="dropdown-item" type="submit">Sign out</button>
+            </form>
+            
+          </div>
         </li>
       </ul>
     </div>

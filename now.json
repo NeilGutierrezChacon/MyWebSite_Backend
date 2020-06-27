@@ -126,6 +126,11 @@
       "methods": ["GET"]
     },
     {
+      "src": "/SignOut",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
       "src": "/dbTest",
       "dest": "src/index.js",
       "methods": ["GET"]
