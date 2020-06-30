@@ -112,9 +112,28 @@ var controller = {
     };
     reader.readAsDataURL(file);
     view.getImage().img = file; */
+    /* let files = event.target.files;
+    console.log(files);
+    view.getImage().files = files; */
+
+    /* Preview with of images */
+
+    let conteiner = view.getContPreViewImages();
+    conteiner.innerHTML="";
     let files = event.target.files;
-    /* console.log(files); */
-    view.getImage().files = files;
+    for (let i = 0; i < files.length; i++) {
+      let reader = new FileReader();
+      reader.onload = function (e) {
+        // The file's text will be printed here
+        console.log(e.target.result);
+        view.getImage().src = e.target.result;
+
+        let img = document.createElement("img");
+        img.src = e.target.result;
+        conteiner.appendChild(img);
+      };
+      reader.readAsDataURL(files[i]);
+    }
   },
 };
 
@@ -205,6 +224,13 @@ var view = {
       console.log(e);
     }
   },
+  getContPreViewImages:function(){
+    try {
+      return document.getElementById("contPreViewImages");
+    } catch (error) {
+      console.log(error);
+    }
+  },
   eventSendFormSignIn: function () {
     try {
       let signIn = document.getElementById("signIn");
@@ -250,10 +276,10 @@ var view = {
         formData.append("title", view.getTitle());
         formData.append("github", view.getUrlGitHub());
         formData.append("website", view.getUrlWebSite());
-        for(let i = 0 ;i<view.getImage().files.length;i++){
+        for (let i = 0; i < view.getImage().files.length; i++) {
           formData.append(`images`, view.getImage().files[i]);
         }
-        
+
         formData.append("description", view.getDescription());
 
         controller.updateProject(formData);
@@ -276,7 +302,7 @@ var view = {
         formData.append("website", view.getUrlWebSite());
         formData.append("image", view.getImage().src);
         formData.append("description", view.getDescription());
-        formData.append("images",view.getImage().files);
+        formData.append("images", view.getImage().files);
 
         controller.addProject(formData);
         console.log("Add project");

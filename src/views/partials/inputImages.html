@@ -1,0 +1,27 @@
+<div class="form-group">
+  <label for="inputImage">
+      Upload your images:
+    <img
+      src="/img/input_image.svg"
+      alt="Selecciones una imagen"
+      width="30"
+      height="30"
+    />
+  </label>
+  <input
+    id="inputImage"
+    name="images"
+    type="file"
+    accept="image/*"
+    style="display: none;"
+    onchange="controller.onChange(event)"
+    multiple
+  />
+  <div id="contPreViewImages" class="preViewImages">
+    <% if (imgs) { %>
+        <% imgs.forEach(function(img){ %>
+            <img src="<%= img %>" alt="Image of project">
+        <% }); %>
+      <% } %>
+  </div>
+</div>

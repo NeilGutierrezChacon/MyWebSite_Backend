@@ -63,20 +63,8 @@
                   value="<%= project.website %>"
                 />
               </div>
-              <div class="form-group">
-                <label for="inputUrlImage">URL Image</label>
-                <input
-                  type="url"
-                  name="image"
-                  id="inputUrlImage"
-                  placeholder="https://Image.com"
-                  pattern="https://.*"
-                  class="form-control"
-                  value="<%= project.img %>"
-                />
-              </div>
             </div>
-            <div
+            <!-- <div
               class="col-sm-12 col-md-2 d-flex justify-content-center align-items-center"
             >
               <div class="form-group">
@@ -88,15 +76,6 @@
                     height="48"
                   />
                 </label>
-                <!-- <input
-                  id="inputImage"
-                  name="images"
-                  type="file"
-                  accept="image/*"
-                  style="display: none;"
-                  onchange="controller.onChange(event)"
-                  multiple
-                /> -->
                 <input
                   id="inputImage"
                   name="images"
@@ -106,8 +85,10 @@
                   multiple
                 />
               </div>
-            </div>
+            </div> -->
           </div>
+          <!-- Input with a preview of images -->
+          <%- include ('../partials/inputImages.html',{imgs:project.imgs}) %>
           <div class="form-group">
             <label for="inputDescription">Descriptión</label>
             <textarea

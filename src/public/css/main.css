@@ -115,3 +115,15 @@ footer a{
         font-size: 3.5rem;
     }
 }
+.preViewImages{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px solid black;
+    min-height: 10em;
+}
+.preViewImages img{
+    width: 6em;
+    height: 6em;
+    margin: 2em;
+}
