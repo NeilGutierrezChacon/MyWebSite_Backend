@@ -6,7 +6,7 @@ model = {
 var controller = {
   init: function () {
     console.log("init controller");
-    
+
     view.init();
   },
   sendFormSignIn: function (email, passowrd) {
@@ -48,9 +48,29 @@ var controller = {
   },
   updateProject: function (project) {
     axios
-      .put("/AdminEditProject", project)
+      .put("/AdminEditProject", project, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then(function (response) {
         if (response.data.update) {
+          window.location.replace("/AdminManageProjects");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
+  addProject: function (project) {
+    axios
+      .post("/AdminAddProject", project, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(function (response) {
+        if (response.data.add) {
           window.location.replace("/AdminManageProjects");
         }
       })
@@ -80,7 +100,22 @@ var controller = {
     } else {
       return false;
     }
-  }
+  },
+  onChange: function (event) {
+    /* let file = event.target.files[0];
+    let reader = new FileReader();
+    console.log(event.target.files);
+    reader.onload = function(e) {
+      // The file's text will be printed here
+      console.log(e.target.result);
+      view.getImage().src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    view.getImage().img = file; */
+    let files = event.target.files;
+    /* console.log(files); */
+    view.getImage().files = files;
+  },
 };
 
 var view = {
@@ -90,7 +125,8 @@ var view = {
     view.eventShowInputNewPassword();
     view.eventDeleteProject();
     view.eventUpdateProject();
-    view.showAdminView()
+    view.showAdminView();
+    view.eventAddProject();
   },
   getEmail: function () {
     try {
@@ -148,6 +184,13 @@ var view = {
       console.log(e);
     }
   },
+  getImage: function () {
+    try {
+      return document.getElementById("inputImage");
+    } catch (e) {
+      console.log(e);
+    }
+  },
   getDescription: function () {
     try {
       return document.getElementById("inputDescription").value;
@@ -200,16 +243,43 @@ var view = {
       let btnUpdate = document.getElementById("updateProject");
       btnUpdate.addEventListener("click", function (e) {
         e.preventDefault();
-        let project = {
-          id: view.getProjectId(),
-          title: view.getTitle(),
-          github: view.getUrlGitHub(),
-          website: view.getUrlWebSite(),
-          img: view.getUrlImage(),
-          description: view.getDescription(),
-        };
-        controller.updateProject(project);
+        console.log(view.getImage().files);
+
+        let formData = new FormData();
+        formData.append("id", view.getProjectId());
+        formData.append("title", view.getTitle());
+        formData.append("github", view.getUrlGitHub());
+        formData.append("website", view.getUrlWebSite());
+        for(let i = 0 ;i<view.getImage().files.length;i++){
+          formData.append(`images`, view.getImage().files[i]);
+        }
+        
+        formData.append("description", view.getDescription());
+
+        controller.updateProject(formData);
         console.log("Update project");
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  eventAddProject: function () {
+    try {
+      let btnAdd = document.getElementById("addProject");
+      btnAdd.addEventListener("click", function (e) {
+        e.preventDefault();
+        console.log(view.getImage().files);
+
+        let formData = new FormData();
+        formData.append("title", view.getTitle());
+        formData.append("github", view.getUrlGitHub());
+        formData.append("website", view.getUrlWebSite());
+        formData.append("image", view.getImage().src);
+        formData.append("description", view.getDescription());
+        formData.append("images",view.getImage().files);
+
+        controller.addProject(formData);
+        console.log("Add project");
       });
     } catch (e) {
       console.log(e);
@@ -218,11 +288,11 @@ var view = {
   eventSeeProjectDetail: function (id) {
     window.location.replace("/Project/" + id);
   },
-  showAdminView: function(){
-    if(controller.checkCookie("token")){
-      document.getElementById("adminMenu").style.display="list-item";
+  showAdminView: function () {
+    if (controller.checkCookie("token")) {
+      document.getElementById("adminMenu").style.display = "list-item";
     }
-  }
+  },
 };
 
 controller.init();

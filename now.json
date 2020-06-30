@@ -7,7 +7,10 @@
     "PASSWORD": "CRPhLO7wSob5",
     "ADMIN_NAME": "n.g.ch43@gmail.com",
     "ADMIN_PASSWORD": "n.g.ch43@98",
-    "TOKEN_SECRET": "7bc78545b1a3923cc1e1e19523fd5c3f20b409509..."
+    "TOKEN_SECRET": "7bc78545b1a3923cc1e1e19523fd5c3f20b409509...",
+    "CLOUDINARY_CLOUD_NAME":"ngch43",
+    "CLOUDINARY_API_KEY":"789198446368858",
+    "CLOUDINARY_API_SECRET":"PbfHyvoY2Inz5xmso8C8xGefnNk"
   },
   "builds": [
     {
@@ -16,7 +19,7 @@
     },
     {
       "src": "src/index.js",
-      "use": "@now/node-server"
+      "use": "@now/node@canary"
     }
   ],
   "routes": [

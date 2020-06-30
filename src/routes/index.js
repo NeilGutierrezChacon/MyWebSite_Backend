@@ -7,6 +7,15 @@ const verifyToken = require("../verifyToken");
 
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
+const cloudinary = require("cloudinary");
+const multer = require("multer");
+const upload = multer();
+const uploadFromBuffer = require("../helpers/functions");
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 router.get("/", async (req, res) => {
   let projects = await Project.find().limit(4);
@@ -115,10 +124,15 @@ router.get("/AdminManageProjects", async (req, res) => {
   res.render("admin/adminManageProjects.html", { projects });
 });
 
-router.delete("/AdminManageProjects", async (req, res) => {
+router.delete("/AdminManageProjects", verifyToken, async (req, res) => {
+  console.log("...Delete project...");
   const { id } = req.query;
-  const info = await Project.deleteOne({ _id: id });
+  const info = await Project.findByIdAndDelete({ _id: id });
   console.log(info);
+  info.imgsPubId.forEach(async (element) => {
+    let infoDestroy = await cloudinary.v2.uploader.destroy(element);
+    console.log(infoDestroy);
+  });
   res.status(200).json({ delete: true });
 });
 
@@ -129,32 +143,86 @@ router.get("/AdminEditProject", async (req, res) => {
   res.render("admin/adminEditProject.html", { project });
 });
 
-router.put("/AdminEditProject", async (req, res) => {
-  const { id } = req.body;
-  console.log(req.body);
-  const info = await Project.updateOne({ _id: id }, req.body);
-  console.log(info);
-  res.status(200).json({ update: true });
-});
+router.put(
+  "/AdminEditProject",
+  verifyToken,
+  upload.array("images"),
+  async (req, res) => {
+    console.log("...AdminEditProject...");
+    let imgs = Array();
+    let imgsPubId = Array();
+    const { id, title, github, website, description, image } = req.body;
+    console.log(req.body);
+    console.log("info files");
+    console.log(req.files);
+    const project = await Project.findById({ _id: id });
+    project.imgsPubId.forEach(async (element) => {
+      /* Destroy de image in clodinary */
+      let infoDestroy = await cloudinary.v2.uploader.destroy(element);
+      console.log("info destroy");
+      console.log(infoDestroy);
+      
+    });
+    for(let i=0;i<req.files.length;i++){
+      /* Uploadd de new image in clodunary */
+      let result = await uploadFromBuffer(req.files[i], "myWebSite");
+      console.log("info update");
+      console.log(result);
+      imgs.push(result.secure_url);
+      imgsPubId.push(result.public_id);
+    }
+    const info = await Project.updateOne(
+      { _id: id },
+      {
+        title,
+        description,
+        github,
+        website,
+        imgs,
+        imgsPubId
+      }
+    );
+    res.status(200).json({ update: true });
+  }
+);
 
 router.get("/AdminAddProject", (req, res) => {
   res.render("adminAddProject.html");
 });
 
-router.post("/AdminAddProject", async (req, res) => {
-  const { title, description, github, website, image } = req.body;
-  console.log(image);
-  const project = new Project({
-    title,
-    description,
-    github,
-    website,
-    img: image,
-  });
-  console.log(project);
-  await project.save();
-  res.redirect("/AdminAddProject");
-});
+router.post(
+  "/AdminAddProject",
+  verifyToken,
+  upload.array("images"),
+  async (req, res) => {
+    try {
+      let imgs = Array();
+      let imgsPubId = Array();
+      const { title, description, github, website } = req.body;
+      console.log("...AddProject...");
+      console.log(req.body);
+      for (let i = 0; i < req.files.length; i++) {
+        let result = await uploadFromBuffer(req.files[i], "myWebSite");
+        imgs.push(result.secure_url);
+        imgsPubId.push(result.public_id);
+      }
+      const project = new Project({
+        title,
+        description,
+        github,
+        website,
+        imgs,
+        imgsPubId,
+      });
+      console.log(project);
+      await project.save();
+      res.redirect(301, "/AdminManageProjects");
+    } catch (error) {
+      console.log(error);
+      res.status(500);
+    }
+  }
+);
 
 router.get("/AdminAddPost", (req, res) => {
   res.render("admin/adminAddPost.html");

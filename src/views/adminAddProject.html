@@ -16,7 +16,12 @@
             <h3>Add project</h3>
           </div>
         </div>
-        <form class="w-50 mx-auto" action="/AdminAddProject" method="POST">
+        <form
+          class="w-50 mx-auto"
+          action="/AdminAddProject"
+          method="POST"
+          enctype="multipart/form-data"
+        >
           <div class="form-row">
             <div class="col-sm-12 col-md-10">
               <div class="form-group">
@@ -54,7 +59,7 @@
                 <label for="inputUrlWebSite">URL Image</label>
                 <input
                   type="url"
-                  name="image"
+                  name="imageUrl"
                   id="inputUrlImage"
                   placeholder="https://Image.com"
                   pattern="https://.*"
@@ -74,27 +79,47 @@
                     height="48"
                   />
                 </label>
-                <input
+                <!-- <input
                   id="inputImage"
-                  name="imageFile"
+                  name="image"
                   type="file"
                   accept="image/*"
                   style="display: none;"
+                  onchange="controller.onChange(event)"
+                  multiple
+                /> -->
+                <input
+                  id="inputImage"
+                  name="images"
+                  type="file"
+                  accept="image/*"
+                  style="display: none;"
+                  multiple
                 />
               </div>
             </div>
           </div>
           <div class="form-group">
-            <label for="inputTextArea">Descriptión</label>
+            <label for="inputDescription">Descriptión</label>
             <textarea
               class="form-control"
-              id="inputTextArea"
+              id="inputDescription"
               name="description"
               rows="7"
             ></textarea>
           </div>
           <div class="form-row">
-            <button type="submit" id="addProject" class="btn btn-primary mx-auto">
+            <!-- <button
+              type="submit"
+              id="addProject"
+              class="btn btn-primary mx-auto"
+            >
+              Add
+            </button> -->
+            <button
+              type="submit"
+              class="btn btn-primary mx-auto"
+            >
               Add
             </button>
           </div>

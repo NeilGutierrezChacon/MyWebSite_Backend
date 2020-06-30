@@ -88,12 +88,22 @@
                     height="48"
                   />
                 </label>
-                <input
+                <!-- <input
                   id="inputImage"
-                  name="imageFile"
+                  name="images"
                   type="file"
                   accept="image/*"
                   style="display: none;"
+                  onchange="controller.onChange(event)"
+                  multiple
+                /> -->
+                <input
+                  id="inputImage"
+                  name="images"
+                  type="file"
+                  accept="image/*"
+                  style="display: none;"
+                  multiple
                 />
               </div>
             </div>
