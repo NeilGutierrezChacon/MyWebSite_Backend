@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <%- include ('partials/head.html')%>
+    <style>
+      /* .swiper-container {
+        width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+      }
+
+      .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 300px;
+        height: 300px;
+      } */
+    </style>
   </head>
   <body>
     <%- include ('partials/header.html')%>
@@ -51,22 +65,25 @@
           </div>
         </div>
         <!-- Images carrusel -->
-        <div class="row d-flex justify-content-center">
+        <!-- <div class="row d-flex justify-content-center">
           <div class="prev">
             <i class="fas fa-arrow-circle-left"></i>
           </div>
           <div class="col-10">
-            <div class="images-project">
-              <img src="/img/img_not_found.png" alt="Imagen del proyecto" />
-              <img src="/img/img_not_found.png" alt="Imagen del proyecto" />
-              <img src="/img/img_not_found.png" alt="Imagen del proyecto" />
-              <img src="/img/img_not_found.png" alt="Imagen del proyecto" />
-              <!-- Falta implementar las imagenes generadas dinamicamente ya que no tenemos un array de imagenes en el esquema de la base de datos -->
-            </div>
+            
           </div>
           <div class="next">
             <i class="fas fa-arrow-circle-right"></i>
           </div>
+        </div> -->
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <% project.imgs.forEach(function(img){ %>
+            <img src="<%= img %>" alt="Image project" class="swiper-slide" />
+            <% }); %>
+          </div>
+          <!-- Add Pagination -->
+          <div class="swiper-pagination"></div>
         </div>
       </div>
     </main>

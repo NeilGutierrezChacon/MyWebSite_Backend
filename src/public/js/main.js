@@ -6,7 +6,7 @@ model = {
 var controller = {
   init: function () {
     console.log("init controller");
-
+    controller.initSlider();
     view.init();
   },
   sendFormSignIn: function (email, passowrd) {
@@ -135,6 +135,25 @@ var controller = {
       reader.readAsDataURL(files[i]);
     }
   },
+  initSlider:function(){
+    console.log("init slider");
+    var swiper = new Swiper('.swiper-container', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+      },
+    });
+  }
 };
 
 var view = {
@@ -324,7 +343,7 @@ var view = {
 controller.init();
 /* }; */
 
-$(document).ready(function () {
+/* $(document).ready(function () {
   $(".images-project").slick({
     infinite: true,
     slidesToShow: 3,
@@ -338,3 +357,4 @@ $(document).ready(function () {
     nextArrow: $(".next"),
   });
 });
+ */
