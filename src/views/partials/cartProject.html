@@ -1,4 +1,8 @@
-<div class="card" style="max-width: 18rem;" onclick="view.eventSeeProjectDetail('<%= project.id %>')">
+<div
+  class="card"
+  style="max-width: 18rem;"
+  onclick="view.eventSeeProjectDetail('<%= project.id %>')"
+>
   <img
     src="<%= project.imgs[0] %>"
     class="card-img-top"
@@ -7,7 +11,11 @@
   <div class="card-body">
     <h4 class="card-title"><%= project.title %></h4>
 
-    <h6 class="card-subtitle mb-2 text-muted">Update:1 day ago</h6>
+    <h6 class="card-subtitle mb-2 text-muted">
+      Update:<%=
+      `${project.updateDate.getDate()}/${project.updateDate.getMonth()+1}/${project.updateDate.getFullYear()}`
+      %>
+    </h6>
     <a href="<%= project.github %>" class="card-link text-info">GitHub</a>
     <a href="<%= project.website %>" class="card-link text-info">WebSite</a>
 

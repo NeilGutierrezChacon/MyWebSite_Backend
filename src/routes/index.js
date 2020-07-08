@@ -10,7 +10,14 @@ const jwt = require("jsonwebtoken");
 const cloudinary = require("cloudinary");
 const multer = require("multer");
 const upload = multer();
-const uploadFromBuffer = require("../helpers/functions");
+
+/* Functions from helpers */
+const {
+  uploadFromBuffer,
+  calcBlogPags,
+  reduceTextDescription,
+} = require("../helpers/functions");
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -21,18 +28,38 @@ router.get("/", async (req, res) => {
   let projects = await Project.find().limit(4);
   console.log(projects);
 
+  projects.forEach((project) => {
+    project.description = reduceTextDescription(project.description, 20, "...");
+  });
   res.render("index.html", { projects });
 });
 
 router.get("/MyProjects", async (req, res) => {
   let projects = await Project.find();
+
+  projects.forEach((project) => {
+    project.description = reduceTextDescription(project.description, 20, "...");
+  });
+
   res.render("my_projects.html", { projects });
 });
 
-router.get("/Blog", async (req, res) => {
-  const posts = await Post.find();
+router.get("/Blog/:pagination", async (req, res) => {
+  const numPosts = 5;
+  const pagination = req.params.pagination - 1;
+  console.log("Pagination:" + pagination);
+  const posts = await Post.find()
+    .skip(pagination * numPosts)
+    .limit(numPosts);
   console.log(posts);
-  res.render("blog.html", { posts });
+  const totalPost = await Post.find().countDocuments();
+  console.log("Total posts: " + totalPost);
+
+  let pags = calcBlogPags(numPosts, totalPost);
+
+  console.log(pags);
+
+  res.render("blog.html", { posts, pags });
 });
 
 router.get("/Contact", (req, res) => {
@@ -153,35 +180,48 @@ router.put(
     let imgsPubId = Array();
     const { id, title, github, website, description, image } = req.body;
     console.log(req.body);
-    console.log("info files");
-    console.log(req.files);
-    const project = await Project.findById({ _id: id });
-    project.imgsPubId.forEach(async (element) => {
-      /* Destroy de image in clodinary */
-      let infoDestroy = await cloudinary.v2.uploader.destroy(element);
-      console.log("info destroy");
-      console.log(infoDestroy);
-      
-    });
-    for(let i=0;i<req.files.length;i++){
-      /* Uploadd de new image in clodunary */
-      let result = await uploadFromBuffer(req.files[i], "myWebSite");
-      console.log("info update");
-      console.log(result);
-      imgs.push(result.secure_url);
-      imgsPubId.push(result.public_id);
-    }
-    const info = await Project.updateOne(
-      { _id: id },
-      {
-        title,
-        description,
-        github,
-        website,
-        imgs,
-        imgsPubId
+    if (req.files.length > 0) {
+      console.log("Files request");
+      console.log(req.files.length);
+      const project = await Project.findById({ _id: id });
+      project.imgsPubId.forEach(async (element) => {
+        /* Destroy de image in clodinary */
+        let infoDestroy = await cloudinary.v2.uploader.destroy(element);
+        console.log("info destroy");
+        console.log(infoDestroy);
+      });
+      for (let i = 0; i < req.files.length; i++) {
+        /* Upload de new image in clodunary */
+        let result = await uploadFromBuffer(req.files[i], "myWebSite");
+        console.log("info update");
+        console.log(result);
+        imgs.push(result.secure_url);
+        imgsPubId.push(result.public_id);
       }
-    );
+      const info = await Project.updateOne(
+        { _id: id },
+        {
+          title,
+          description,
+          github,
+          website,
+          imgs,
+          imgsPubId,
+          updateDate: new Date(),
+        }
+      );
+    } else {
+      const info = await Project.updateOne(
+        { _id: id },
+        {
+          title,
+          description,
+          github,
+          website,
+          updateDate: new Date(),
+        }
+      );
+    }
     res.status(200).json({ update: true });
   }
 );
@@ -213,6 +253,7 @@ router.post(
         website,
         imgs,
         imgsPubId,
+        updateDate: new Date(),
       });
       console.log(project);
       await project.save();
@@ -282,7 +323,7 @@ router.get("/dbTest", async (req, res) => {
 
 router.get("/SignOut", (req, res) => {
   console.log("Clear cookies");
-  res.clearCookie("token", { path: "/" }).redirect(301,"/");
+  res.clearCookie("token", { path: "/" }).redirect(301, "/");
 });
 
 module.exports = router;

@@ -34,7 +34,7 @@
       "methods": ["GET"]
     },
     {
-      "src": "/Blog",
+      "src": "/Blog/(?<pagination>[^/]*)",
       "dest": "src/index.js",
       "methods": ["GET"]
     },

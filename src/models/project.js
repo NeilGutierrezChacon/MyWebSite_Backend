@@ -30,6 +30,10 @@ var projectSchema = new mongoose.Schema({
   imgsPubId: {
     type: Array,
   },
+  updateDate: {
+    type: Date,
+    required: 'Date cannot be blank'
+  },
 });
 
 /* let encKey= process.env.MONGOOSE_ENC_KEY;

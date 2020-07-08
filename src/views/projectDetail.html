@@ -5,20 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <%- include ('partials/head.html')%>
-    <style>
-      /* .swiper-container {
-        width: 100%;
-        padding-top: 50px;
-        padding-bottom: 50px;
-      }
-
-      .swiper-slide {
-        background-position: center;
-        background-size: cover;
-        width: 300px;
-        height: 300px;
-      } */
-    </style>
   </head>
   <body>
     <%- include ('partials/header.html')%>
@@ -28,7 +14,11 @@
         <div class="row mt-5">
           <div class="col-12 d-flex justify-content-between">
             <h1 class="mt-0"><%= project.title %></h1>
-            <span>0 day Ago</span>
+            <span>
+              <%=
+              `${project.updateDate.getDate()}/${project.updateDate.getMonth()+1}/${project.updateDate.getFullYear()}`
+              %>
+            </span>
           </div>
         </div>
         <!-- Links -->
@@ -43,24 +33,6 @@
           <div class="col-12">
             <p>
               <%= project.description %>
-            </p>
-          </div>
-        </div>
-        <!-- Large description (Developing) -->
-        <div class="row">
-          <div class="col-12">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi,
-              ullam! Vero, accusantium libero quam amet minima quibusdam
-              similique. Iusto cum autem officiis eveniet soluta commodi?
-              Voluptas ducimus explicabo reiciendis molestiae? Lorem ipsum dolor
-              sit amet consectetur adipisicing elit. Nisi, doloremque ea. Autem,
-              veniam qui necessitatibus, eius recusandae, ipsam quo eligendi
-              facilis quaerat tempore asperiores porro pariatur quas cum
-              voluptas id? Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Consectetur soluta, autem nesciunt vitae debitis placeat
-              dolorem ullam culpa labore minus suscipit nulla? Magnam sequi
-              voluptates deserunt aperiam maxime harum a.
             </p>
           </div>
         </div>

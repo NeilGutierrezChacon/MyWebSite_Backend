@@ -119,7 +119,7 @@ var controller = {
     /* Preview with of images */
 
     let conteiner = view.getContPreViewImages();
-    conteiner.innerHTML="";
+    conteiner.innerHTML = "";
     let files = event.target.files;
     for (let i = 0; i < files.length; i++) {
       let reader = new FileReader();
@@ -135,13 +135,13 @@ var controller = {
       reader.readAsDataURL(files[i]);
     }
   },
-  initSlider:function(){
+  initSlider: function () {
     console.log("init slider");
-    var swiper = new Swiper('.swiper-container', {
-      effect: 'coverflow',
+    var swiper = new Swiper(".swiper-container", {
+      effect: "coverflow",
       grabCursor: true,
       centeredSlides: true,
-      slidesPerView: 'auto',
+      slidesPerView: "auto",
       coverflowEffect: {
         rotate: 50,
         stretch: 0,
@@ -150,10 +150,10 @@ var controller = {
         slideShadows: true,
       },
       pagination: {
-        el: '.swiper-pagination',
+        el: ".swiper-pagination",
       },
     });
-  }
+  },
 };
 
 var view = {
@@ -165,6 +165,9 @@ var view = {
     view.eventUpdateProject();
     view.showAdminView();
     view.eventAddProject();
+    view.eventPaginationBlogNext();
+    view.eventPaginationBlogPrevious();
+    
   },
   getEmail: function () {
     try {
@@ -243,9 +246,23 @@ var view = {
       console.log(e);
     }
   },
-  getContPreViewImages:function(){
+  getContPreViewImages: function () {
     try {
       return document.getElementById("contPreViewImages");
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getPaginationBlogNext: function () {
+    try {
+      return document.getElementById("next");
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getPaginationBlogPrevious: function () {
+    try {
+      return document.getElementById("previous");
     } catch (error) {
       console.log(error);
     }
@@ -337,6 +354,30 @@ var view = {
     if (controller.checkCookie("token")) {
       document.getElementById("adminMenu").style.display = "list-item";
     }
+  },
+  eventPaginationBlogNext: function () {
+    let btn_next = view.getPaginationBlogNext();
+    btn_next.addEventListener("click", (e) => {
+      e.preventDefault();
+      let path = window.location.pathname;
+      let pagination = path.split("/")[path.split("/").length - 1];
+      console.log("Pagination: " + (parseInt(pagination) + 1));
+      window.location.replace("/Blog/" + (parseInt(pagination) + 1));
+    });
+  },
+  eventPaginationBlogPrevious: function () {
+    let btn_previous = view.getPaginationBlogPrevious();
+    btn_previous.addEventListener("click", (e) => {
+      e.preventDefault();
+      let path = window.location.pathname;
+      let pagination = path.split("/")[path.split("/").length - 1];
+      pagination = parseInt(pagination) - 1;
+      if(pagination>0){
+        console.log("Pagination: " + pagination);
+        window.location.replace("/Blog/" + pagination);
+      }
+      
+    });
   },
 };
 
