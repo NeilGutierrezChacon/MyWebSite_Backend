@@ -1,3 +1,9 @@
+ /**
+  * @file mongodb.js
+  * 
+  * @description Connect to the mongodb cloud database
+  */
+
 const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGODB_URI,{

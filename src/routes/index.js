@@ -1,15 +1,21 @@
 const express = require("express");
 const router = express.Router();
+const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
+
+
 const Project = require("../models/project");
 const Post = require("../models/post");
 
-const verifyToken = require("../verifyToken");
 
-const nodemailer = require("nodemailer");
-const jwt = require("jsonwebtoken");
-const cloudinary = require("cloudinary");
+const verifyToken = require("../verifyToken");
+const cloudinary = require("../cloudinary");
+
 const multer = require("multer");
 const upload = multer();
+
+
+
 
 /* Functions from helpers */
 const {
@@ -18,11 +24,6 @@ const {
   reduceTextDescription,
 } = require("../helpers/functions");
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
 router.get("/", async (req, res) => {
   let projects = await Project.find().limit(4);
@@ -44,8 +45,12 @@ router.get("/MyProjects", async (req, res) => {
   res.render("my_projects.html", { projects });
 });
 
-router.get("/Blog/:pagination", async (req, res) => {
-  const numPosts = 5;
+
+/* Provisional paging functionality */
+
+router.get("/Blog/", async (req, res) => {
+
+  /* const numPosts = 5;
   const pagination = req.params.pagination - 1;
   console.log("Pagination:" + pagination);
   const posts = await Post.find()
@@ -57,9 +62,19 @@ router.get("/Blog/:pagination", async (req, res) => {
 
   let pags = calcBlogPags(numPosts, totalPost);
 
-  console.log(pags);
+  console.log(pags); */
 
-  res.render("blog.html", { posts, pags });
+  const posts = await Post.find();
+  console.log(posts);
+
+  res.render("blog.html", {posts});
+});
+
+router.get("/Blog/:pagination", async (req, res) => {
+  const post_id = req.params.pagination;
+  const post = await Post.findById({ _id: post_id });
+  console.log(post);
+  res.render("postDetail.html",{post});
 });
 
 router.get("/Contact", (req, res) => {
@@ -152,15 +167,20 @@ router.get("/AdminManageProjects", async (req, res) => {
 });
 
 router.delete("/AdminManageProjects", verifyToken, async (req, res) => {
-  console.log("...Delete project...");
+
+
   const { id } = req.query;
   const info = await Project.findByIdAndDelete({ _id: id });
+
   console.log(info);
+  
   info.imgsPubId.forEach(async (element) => {
     let infoDestroy = await cloudinary.v2.uploader.destroy(element);
     console.log(infoDestroy);
   });
   res.status(200).json({ delete: true });
+
+
 });
 
 router.get("/AdminEditProject", async (req, res) => {

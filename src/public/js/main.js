@@ -1,14 +1,25 @@
+/**
+ * @File main.js
+ * @description Structuring in MCV
+ */
+
 /* window.onload = function () { */
-model = {
+
+/* MODEL */
+var model = {
   init: function () {},
 };
 
+
+/* CONTROLLER */
 var controller = {
+
   init: function () {
     console.log("init controller");
     controller.initSlider();
     view.init();
   },
+
   sendFormSignIn: function (email, passowrd) {
     axios
       .post("/AdminSignIn", {
@@ -156,6 +167,7 @@ var controller = {
   },
 };
 
+/* VIEW */
 var view = {
   init: function () {
     console.log("init view");
@@ -350,6 +362,9 @@ var view = {
   eventSeeProjectDetail: function (id) {
     window.location.replace("/Project/" + id);
   },
+  event_see_post_detail: function (id){
+    window.location.replace("/Blog/"+id);
+  },
   showAdminView: function () {
     if (controller.checkCookie("token")) {
       document.getElementById("adminMenu").style.display = "list-item";
@@ -383,19 +398,3 @@ var view = {
 
 controller.init();
 /* }; */
-
-/* $(document).ready(function () {
-  $(".images-project").slick({
-    infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    infinite: true,
-    centerMode: true,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    pauseOnHover: true,
-    prevArrow: $(".prev"),
-    nextArrow: $(".next"),
-  });
-});
- */

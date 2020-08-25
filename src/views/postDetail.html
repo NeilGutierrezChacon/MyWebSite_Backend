@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= post.title  %> </title>
+    <%- include ('partials/head.html')%>
+  </head>
+  <body>
+    <%- include ('partials/header.html')%>
+    <main>
+      <div class="page_template_post">
+        <div class="container">
+          <!-- Title -->
+          <div class="row mt-5">
+            <div class="col-12">
+              <h1 class="mt-0"><%= post.title %></h1>
+              <!-- Date update -->
+              <span>
+                <%=
+                `${post.updateDate.getDate()}/${post.updateDate.getMonth()+1}/${post.updateDate.getFullYear()}`
+                %>
+              </span>
+            </div>
+          </div>
+          <!-- Summary -->
+          <div class="row mt-5">
+            <div class="col-12">
+              <p>
+                <%= post.summary %>
+              </p>
+            </div>
+          </div>
+  
+          <!-- Introduction -->
+          <div class="row mt-5">
+            <div class="col-12">
+              <p>
+                <%= post.introduction %>
+              </p>
+            </div>
+          </div>
+  
+          <!-- Image post -->
+          <div class="row mt-5">
+            <div class="col-12">
+              <div class = "post_cont_image">
+                <img class = "post_image" src="/img/img_not_found.png" alt="Provisional image">
+              </div>
+            </div>
+          </div>
+  
+          <!-- Body -->
+          <div class="row mt-5">
+            <div class="col-12">
+              <p>
+                <%= post.body %>
+              </p>
+            </div>
+          </div>
+  
+          <!-- Conclusion -->
+          <div class="row mt-5">
+            <div class="col-12">
+              <p>
+                <%= post.conclusion %>
+              </p>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+      
+    </main>
+  </body>
+  <%- include ('partials/footer.html')%>
+</html>
