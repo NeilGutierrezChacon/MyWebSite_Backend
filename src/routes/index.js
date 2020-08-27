@@ -46,33 +46,26 @@ router.get("/MyProjects", async (req, res) => {
 });
 
 
-/* Provisional paging functionality */
-
+/* Blog */
 router.get("/Blog/", async (req, res) => {
-
-  /* const numPosts = 5;
-  const pagination = req.params.pagination - 1;
-  console.log("Pagination:" + pagination);
-  const posts = await Post.find()
-    .skip(pagination * numPosts)
-    .limit(numPosts);
+  const posts = await Post.paginate({},{limit:5});
   console.log(posts);
-  const totalPost = await Post.find().countDocuments();
-  console.log("Total posts: " + totalPost);
-
-  let pags = calcBlogPags(numPosts, totalPost);
-
-  console.log(pags); */
-
-  const posts = await Post.find();
-  console.log(posts);
-
   res.render("blog.html", {posts});
 });
 
-router.get("/Blog/:pagination", async (req, res) => {
-  const post_id = req.params.pagination;
-  const post = await Post.findById({ _id: post_id });
+/* Blog for page */
+
+router.get("/Blog/:page", async (req, res) => {
+  const page = parseInt(req.params.page,10) || 1 ;
+  const limit = 5 ;
+  const posts = await Post.paginate({},{limit,page});
+  console.log(posts);
+  res.render("blog.html", {posts});
+});
+
+router.get("/Blog/Post/:id", async (req, res) => {
+  const postId = req.params.id;
+  const post = await Post.findById({ _id: postId });
   console.log(post);
   res.render("postDetail.html",{post});
 });

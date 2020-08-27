@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const encrypt = require("mongoose-encryption");
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 
-var postSchema = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
     title: {
         type: String,
         required: 'Title cannot be blank!'
@@ -29,6 +29,8 @@ var postSchema = new mongoose.Schema({
         required: 'Conclusion cannot be blank!'
     },
 });
+
+postSchema.plugin(mongoosePaginate);
 
 const Post = mongoose.model('Post', postSchema, 'post');
 

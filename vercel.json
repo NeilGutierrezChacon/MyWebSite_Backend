@@ -39,7 +39,12 @@
       "methods": ["GET"]
     },
     {
-      "src": "/Blog/(?<pagination>[^/]*)",
+      "src": "/Blog/(?<page>[^/]*)",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/Blog/Post/(?<id>[^/]*)",
       "dest": "src/index.js",
       "methods": ["GET"]
     },

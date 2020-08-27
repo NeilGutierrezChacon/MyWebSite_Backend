@@ -362,8 +362,8 @@ var view = {
   eventSeeProjectDetail: function (id) {
     window.location.replace("/Project/" + id);
   },
-  event_see_post_detail: function (id){
-    window.location.replace("/Blog/"+id);
+  eventSeePostDetail: function (id){
+    window.location.replace("/Blog/Post/"+id);
   },
   showAdminView: function () {
     if (controller.checkCookie("token")) {

@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-const encrypt = require("mongoose-encryption");
 
+const mongoosePaginate = require('mongoose-paginate-v2');
 
-
-var projectSchema = new mongoose.Schema({
+const projectSchema = new mongoose.Schema({
   title: {
     type: String,
     required: "Title cannot be blank!",
@@ -36,6 +35,8 @@ var projectSchema = new mongoose.Schema({
   },
 });
 
-var Project = mongoose.model("Project", projectSchema, "project");
+projectSchema.plugin(mongoosePaginate);
+
+const Project = mongoose.model("Project", projectSchema, "project");
 
 module.exports = Project;

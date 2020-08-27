@@ -23,8 +23,9 @@
         </div>
         <!-- Post Recomendados (2 cartas)  -->
         <div class="row"></div>
-        <!-- Post -->
-        <% posts.forEach(function(post){ %>
+
+        <!-- List of post -->
+        <% posts.docs.forEach(function(post){ %>
         <div class="row">
           <div class="col pb-5">
             <%- include('partials/post.html',{post})%>
@@ -39,9 +40,9 @@
                 <li class="page-item">
                   <a id="previous" class="page-link">Previous</a>
                 </li>
-                <% for(let i = 1 ;i <= 5; i++){ %>
+                <% for(let i = 1 ;i <= posts.totalPages; i++){ %>
                   <li class="page-item">
-                    <a class="page-link" href="/Blog"><%= i %></a>
+                    <a class="page-link" href="/Blog/<%= i %>"><%= i %></a>
                   </li>
                 <% } %>
                 <li class="page-item">
