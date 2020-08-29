@@ -282,20 +282,24 @@ router.get("/AdminAddPost", (req, res) => {
   res.render("admin/adminAddPost.html");
 });
 
-router.post("/AdminAddPost", async (req, res) => {
+router.post("/Admin/SavePost",verifyToken,upload.array("images"), async (req, res) => {
   console.log(req.body);
-  const { title, summary, introduction, body, conclusion } = req.body;
+  const { title, content } = req.body;
 
   const post = new Post({
     title,
     updateDate: new Date(),
-    summary,
-    introduction,
-    body,
-    conclusion,
+    content
+
   });
-  await post.save();
-  res.render("admin/adminAddPost.html");
+  try {
+    await post.save();
+    res.json({save:true});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({save:false});
+  }
+  
 });
 
 router.get("/Cookies", (req, res) => {

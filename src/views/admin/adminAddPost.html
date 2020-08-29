@@ -8,70 +8,46 @@
   </head>
   <body>
     <%- include ('../partials/header.html')%>
-    <main>
-      <div class="container">
-        <div class="row d-flex justify-content-center mt-5">
-          <div class="col-sm-12">
-            <h3>Add Post</h3>
+    <main class="container admin page-add-post">
+      <div class="row row-main">
+        <section class="col-md-10 col-sm-12">
+          <div class="row mb-3">
+            <div class="col">
+              <h3>Add post</h3>
+            </div>
+            
           </div>
-        </div>
-        <form class="w-50 mx-auto" action="/AdminAddPost" method="POST">
-          <div class="form-row">
-            <div class="col-sm-12 col-md-10">
-              <div class="form-group">
+          <form id="form-add-post">
+            <div class="mb-3">
+                <!-- Title post -->
                 <label for="inputTitle">Title</label>
                 <input
                   type="text"
-                  class="form-control"
+                  class=" form-control process-form"
                   name="title"
                   id="inputTitle"
                 />
-              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="inputSummary">Summary:</label>
-            <textarea
-              class="form-control"
-              id="inputSummary"
-              name="summary"
-              rows="7"
-            ></textarea>
-          </div>
-          <div class="form-group">
-            <label for="inputIntroduction">Introduction:</label>
-            <textarea
-              class="form-control"
-              id="inputIntroduction"
-              name="introduction"
-              rows="7"
-            ></textarea>
-          </div>
-          <div class="form-group">
-            <label for="inputBody">Body:</label>
-            <textarea
-              class="form-control"
-              id="inputBody"
-              name="body"
-              rows="7"
-            ></textarea>
-          </div>
-          <div class="form-group">
-            <label for="inputConclusion">Conclusion:</label>
-            <textarea
-              class="form-control"
-              id="inputConclusion"
-              name="conclusion"
-              rows="7"
-            ></textarea>
-          </div>
-          <div class="form-row">
-            <button type="submit" class="btn btn-primary mx-auto">
-              Add
+            <!-- Text Editor -->
+            <div id="scrolling-container">
+              <div id="editor" class="editor process-form" name="content">
+              </div>  
+            </div>
+            
+            <button type="button" id-form="form-add-post" class="btn-save btn btn-primary mx-auto mt-3">
+              Save
+            </button>
+          </form>
+        </section>
+        <section class="col-md-2 col-sm-12 d-none d-md-block">
+          <div class="row">
+            <button type="button" id-form="form-add-post" class="btn-save btn btn-primary mx-auto">
+              Save
             </button>
           </div>
-        </form>
+        </section>
       </div>
+        
     </main>
   </body>
   <%- include ('../partials/footer.html')%>

@@ -5,9 +5,22 @@
 
 /* window.onload = function () { */
 
+var data = {
+  editor: null
+}
 /* MODEL */
 var model = {
-  init: function () {},
+
+  
+  init: function () {
+
+  },
+  saveEditor: function( editor ){
+    data.editor = editor;
+  },
+  getEditor: function(){
+    return data.editor;
+  }
 };
 
 
@@ -17,6 +30,7 @@ var controller = {
   init: function () {
     console.log("init controller");
     controller.initSlider();
+    controller.initQuillJs();
     view.init();
   },
 
@@ -82,6 +96,23 @@ var controller = {
       })
       .then(function (response) {
         if (response.data.add) {
+          window.location.replace("/AdminManageProjects");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
+  savePost: function (post){
+    axios
+      .post("/Admin/SavePost", post, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(function (response) {
+        console.log(response.data.save);
+        if (response.data.save) {
           window.location.replace("/AdminManageProjects");
         }
       })
@@ -165,6 +196,22 @@ var controller = {
       },
     });
   },
+  initQuillJs: function (){
+    var options = {
+      modules: {
+      toolbar: true
+      },
+      scrollingContainer: '#scrolling-container', 
+      placeholder: 'Compose an epic...',
+      theme: 'snow'
+    };
+    var editor = new Quill('#editor', options);
+    model.saveEditor(editor);
+  },
+  getEditor:function(){
+    return model.getEditor();
+  }
+
 };
 
 /* VIEW */
@@ -179,7 +226,7 @@ var view = {
     view.eventAddProject();
     view.eventPaginationBlogNext();
     view.eventPaginationBlogPrevious();
-    
+    view.eventSaveProcessForm();
   },
   getEmail: function () {
     try {
@@ -359,6 +406,33 @@ var view = {
       console.log(e);
     }
   },
+  eventSaveProcessForm: function(){
+    try {
+      let btns = document.getElementsByClassName("btn-save");
+      
+      Array.from(btns).forEach( btn => {
+        btn.addEventListener("click", function () {
+          var formData = new FormData();
+          let idForm = this.getAttribute('id-form');
+          let form = document.getElementById(idForm);
+          let fields = form.getElementsByClassName('process-form');
+          Array.from(fields).forEach(field => {
+            let name = field.getAttribute('name');
+            let value = field.value;
+            if(field.classList.contains('editor')){
+              value = JSON.stringify(controller.getEditor().getContents());
+            }
+            formData.append(name,value);
+          });
+          controller.savePost(formData);
+
+        });
+      });
+      
+    } catch (e) {
+      console.log(e);
+    }
+  },
   eventSeeProjectDetail: function (id) {
     window.location.replace("/Project/" + id);
   },
@@ -371,28 +445,38 @@ var view = {
     }
   },
   eventPaginationBlogNext: function () {
-    let btn_next = view.getPaginationBlogNext();
-    btn_next.addEventListener("click", (e) => {
-      e.preventDefault();
-      let path = window.location.pathname;
-      let pagination = path.split("/")[path.split("/").length - 1];
-      console.log("Pagination: " + (parseInt(pagination) + 1));
-      window.location.replace("/Blog/" + (parseInt(pagination) + 1));
-    });
+    try{
+      let btn_next = view.getPaginationBlogNext();
+      btn_next.addEventListener("click", (e) => {
+        e.preventDefault();
+        let path = window.location.pathname;
+        let pagination = path.split("/")[path.split("/").length - 1];
+        console.log("Pagination: " + (parseInt(pagination) + 1));
+        window.location.replace("/Blog/" + (parseInt(pagination) + 1));
+      });
+    }catch(e){
+      console.log(e);
+    }
+    
   },
   eventPaginationBlogPrevious: function () {
-    let btn_previous = view.getPaginationBlogPrevious();
-    btn_previous.addEventListener("click", (e) => {
-      e.preventDefault();
-      let path = window.location.pathname;
-      let pagination = path.split("/")[path.split("/").length - 1];
-      pagination = parseInt(pagination) - 1;
-      if(pagination>0){
-        console.log("Pagination: " + pagination);
-        window.location.replace("/Blog/" + pagination);
-      }
-      
-    });
+    try{
+      let btn_previous = view.getPaginationBlogPrevious();
+      btn_previous.addEventListener("click", (e) => {
+        e.preventDefault();
+        let path = window.location.pathname;
+        let pagination = path.split("/")[path.split("/").length - 1];
+        pagination = parseInt(pagination) - 1;
+        if(pagination>0){
+          console.log("Pagination: " + pagination);
+          window.location.replace("/Blog/" + pagination);
+        }
+        
+      });
+    }catch(e){
+      console.log(e);
+    }
+    
   },
 };
 

@@ -12,21 +12,9 @@ const postSchema = new mongoose.Schema({
         type: Date,
         required: 'Date cannot be blank'
     },
-    summary: {
-        type: String,
-        required: 'Summary cannot be blank!'
-    },
-    introduction: {
-        type: String,
-        required: 'Introduction cannot be blank!'
-    },
-    body: {
+    content: {
         type: String,
         required: 'Body cannot be blank!'
-    },
-    conclusion: {
-        type: String,
-        required: 'Conclusion cannot be blank!'
     },
 });
 

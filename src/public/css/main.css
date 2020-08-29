@@ -11,13 +11,16 @@ header {
   position: fixed;
   width: 100%;
   z-index: 2;
+  top: 0;
+  left: 0;
 }
 
 
 main {
-  height: 100%;
+  min-height: 45em;
   width: 100%;
   padding-top: 6.9em;
+  margin-bottom: 3em;
 }
 
 
@@ -27,7 +30,7 @@ footer {
   width: 100%;
   height: auto;
   z-index: 2;
-  margin-top: 1em;
+  /* margin-top: 1em; */
   color: white;
 }
 footer ul {
@@ -206,3 +209,11 @@ footer a {
   height: 100%;
 }
 
+
+.editor{
+  min-height: 20em;
+}
+
+.row-main{
+  margin-top: 2em;
+}
