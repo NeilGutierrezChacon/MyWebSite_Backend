@@ -278,26 +278,62 @@ router.post(
   }
 );
 
-router.get("/AdminAddPost", (req, res) => {
-  res.render("admin/adminAddPost.html");
+router.get("/Admin/SavePost", async (req, res) => {
+
+  let post = {
+      id:"",title:"",content:""
+    }
+
+  res.render("admin/savePost.html",{post});
+
+});
+
+router.get("/Admin/SavePost/:id", async (req, res) => {
+
+  let id = req.params.id;
+  let post = await Post.findById({ _id: id });
+  console.log(post);
+  res.render("admin/savePost.html",{post});
+
 });
 
 router.post("/Admin/SavePost",verifyToken,upload.array("images"), async (req, res) => {
   console.log(req.body);
-  const { title, content } = req.body;
-
-  const post = new Post({
-    title,
-    updateDate: new Date(),
-    content
-
-  });
-  try {
-    await post.save();
-    res.json({save:true});
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({save:false});
+  const {id ,title, content } = req.body;
+  if(!id){
+    console.log("-- New post Add --");
+    const post = new Post({
+      title,
+      updateDate: new Date(),
+      content
+  
+    });
+    try {
+      const info = await post.save();
+      console.log(info);
+      res.json({save:true});
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({save:false});
+    }
+  }else{
+    console.log("-- Post update --");
+    try {
+      const info = await Post.updateOne(
+        { _id: id },
+        {
+          title,
+          updateDate: new Date(),
+          content
+        }
+      );
+      console.log(info);
+      res.json({save:true});
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({save:false});
+    }
+    
   }
   
 });

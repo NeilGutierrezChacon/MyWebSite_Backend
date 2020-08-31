@@ -6,9 +6,9 @@
       <%= post.title %>
     </h2>
     <span class="date"><%= `${post.updateDate.getDay()}/${post.updateDate.getMonth()}/${post.updateDate.getFullYear()}` %></span>
-    <p class="resumen">
-      <%= post.summary %>
-    </p>
+    <div id='delta-<%= post.id %>' class="post-content delta delta-summary" value="<%= post.content %>">
+      
+    </div>
   </div>
   <div class = "post_cont_image">
     <img class = "post_image" src="/img/img_not_found.png" alt="Provisional image">

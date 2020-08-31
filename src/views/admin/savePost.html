@@ -15,10 +15,12 @@
             <div class="col">
               <h3>Add post</h3>
             </div>
-            
           </div>
           <form id="form-add-post">
             <div class="mb-3">
+                <!-- ID post -->
+                <input type="hidden" class="process-form" name="id" value="<%= post.id %>">
+
                 <!-- Title post -->
                 <label for="inputTitle">Title</label>
                 <input
@@ -26,12 +28,11 @@
                   class=" form-control process-form"
                   name="title"
                   id="inputTitle"
+                  value="<%= post.title %>"
                 />
             </div>
             <!-- Text Editor -->
-            <div id="scrolling-container">
-              <div id="editor" class="editor process-form" name="content">
-              </div>  
+            <div name="content" class="editor process-form load-delta" id="editor" value="<%= post.content %>">
             </div>
             
             <button type="button" id-form="form-add-post" class="btn-save btn btn-primary mx-auto mt-3">

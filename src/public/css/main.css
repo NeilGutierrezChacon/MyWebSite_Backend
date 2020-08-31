@@ -214,6 +214,10 @@ footer a {
   min-height: 20em;
 }
 
+.ck-content{
+  min-height: 20em;
+}
+
 .row-main{
   margin-top: 2em;
 }

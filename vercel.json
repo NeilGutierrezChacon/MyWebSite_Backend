@@ -92,12 +92,12 @@
       "methods": ["POST"]
     },
     {
-      "src": "/AdminAddPost",
+      "src": "/Admin/SavePost",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/AdminAddPost",
+      "src": "/Admin/SavePost",
       "dest": "src/index.js",
       "methods": ["POST"]
     },

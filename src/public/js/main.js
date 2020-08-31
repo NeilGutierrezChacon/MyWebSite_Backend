@@ -30,7 +30,7 @@ var controller = {
   init: function () {
     console.log("init controller");
     controller.initSlider();
-    controller.initQuillJs();
+    controller.initEditor();
     view.init();
   },
 
@@ -196,17 +196,36 @@ var controller = {
       },
     });
   },
-  initQuillJs: function (){
-    var options = {
+  initEditor: function (){
+    let toolbarOptions = [
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+      
+      ['bold', 'italic', 'underline'],        // toggled buttons
+      
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+
+      [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+      [{ 'font': [] }],
+      [{ 'align': [] }],
+      ['image','blockquote', 'code-block']
+    
+    ];
+    let options = {
       modules: {
-      toolbar: true
+        toolbar: toolbarOptions
       },
-      scrollingContainer: '#scrolling-container', 
       placeholder: 'Compose an epic...',
       theme: 'snow'
     };
-    var editor = new Quill('#editor', options);
-    model.saveEditor(editor);
+    try {
+      let editor = new Quill('#editor', options);
+      console.log(editor);
+      model.saveEditor(editor);
+    } catch (error) {
+      console.log(error);
+    }
+      
   },
   getEditor:function(){
     return model.getEditor();
@@ -227,6 +246,8 @@ var view = {
     view.eventPaginationBlogNext();
     view.eventPaginationBlogPrevious();
     view.eventSaveProcessForm();
+    view.processDeltaToHtml();
+    view.loadDeltaToEditor();
   },
   getEmail: function () {
     try {
@@ -423,6 +444,7 @@ var view = {
               value = JSON.stringify(controller.getEditor().getContents());
             }
             formData.append(name,value);
+
           });
           controller.savePost(formData);
 
@@ -431,6 +453,44 @@ var view = {
       
     } catch (e) {
       console.log(e);
+    }
+  },
+  processDeltaToHtml: function(){
+    try {
+      let deltas = document.getElementsByClassName("delta");
+      Array.from(deltas).forEach(delta => {
+        let inputDelta = JSON.parse(delta.getAttribute("value"));
+        let contTemp = document.createElement("div");
+        let quill = new Quill(contTemp,{});
+        quill.setContents(inputDelta.ops);
+        if(delta.classList.contains("delta-summary")){
+          /* console.log(contTemp.getElementsByTagName('blockquote')[0].innerHTML); */
+          let summary = contTemp.getElementsByTagName('blockquote')[0];
+          if(summary){
+            delta.innerHTML = summary.innerHTML;
+          }
+        }else{
+          delta.innerHTML = quill.root.innerHTML;
+        }
+        
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    
+  },
+  loadDeltaToEditor:function(){
+    try {
+      let deltas = document.getElementsByClassName("editor");
+      Array.from(deltas).forEach(delta => {
+        
+        if(delta.classList.contains("load-delta") && delta.getAttribute("value")){
+            controller.getEditor().setContents(JSON.parse(delta.getAttribute("value")));
+        }
+      
+      });
+    } catch (error) {
+      console.log(error);
     }
   },
   eventSeeProjectDetail: function (id) {
