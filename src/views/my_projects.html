@@ -3,26 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Projects</title>
     <%- include ('partials/head.html')%>
   </head>
   <body>
     <%- include ('partials/header.html')%>
-    <main>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-xl-12">
-            <h1>My projects</h1>
+    <main class="page-projects container-fluid">
+      <!-- Title -->
+      <div class="row">
+        <div class="col-sm-12 col-xl-12">
+          <h1 class="text-center">¡WELCOME TO MY PROJECTS!</h1>
+          <p class="text-center">Take a look at the jobs that I develop or am developing.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 class="text-center">Search by categories</h2>
+        </div>
+        <div class="col-sm-12">
+          <div class="group-categories">
+            <button class="btn btn-light btn-categorie">Html</button>
+            <button class="btn btn-categorie">Css</button>
+            <button class="btn btn-categorie">JavaScript</button>
+            <button class="btn btn-categorie">NodeJs</button>
+            <button class="btn btn-categorie">Bootstrap</button>
+            <button class="btn btn-categorie">Angular</button>
+            <button class="btn btn-categorie">MongoDB</button>
+          </div>    
+        </div>
+        <div class="col-sm-12">
+          <div class="nav-search">
+            <div class="input-group my-4">
+              <input type="text" class="form-control" placeholder="Write a project" aria-label="Write a project" aria-describedby="button-search">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="button-search"><i class="fas fa-search fa-lg"></i> Search</button>
+              </div>
+            </div>
           </div>
+          
         </div>
-        <!-- Proyects (Se mostraran los proyectos por categorias) -->
-        <div class="row row-cols-1 row-cols-md-3 ">
-            <% projects.forEach(function(project){ %>
-                <div class="col mb-4 d-flex justify-content-center">
-                    <%- include('partials/cartProject.html',{project})%> 
-                </div>
-            <% }); %>
-        </div>
+      </div>
+      <!-- Proyects -->
+      <div class="row row-cols-1 row-cols-md-4">
+          <% projects.forEach(function(project){ %>
+              <div class="col mb-4">
+                  <%- include('partials/cartProject.html',{project})%> 
+              </div>
+          <% }); %>
       </div>
     </main>
   </body>

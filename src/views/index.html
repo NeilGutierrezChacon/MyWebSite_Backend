@@ -3,20 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inicio</title>
+    <title>NGCH43</title>
     <%- include ('partials/head.html')%>
   </head>
   <body>
     <%- include ('partials/header.html')%>
-    <main>
-      <div class="container-fluid">
-
-        <!-- Content Header -->
+    <main class="page-home container-fluid">
+        <!-- Jumbotrom -->
         <div class="row">
-          <div class="col-sm-12 d-flex justify-content-center p-0">
-            <div class="image-landing bg-image" style="background-image: url('/img/25552.png');">
+          <div class="col-sm-12 p-0">
+            <div class="image-landing bg-image">
+              <img src="/img/image_jumbotron_1200x540.png" alt="Imagen de un programador con logos de las tecnologias conocidas">
               <div class="jumbotron content-header">
-                <h1 class="display-4">Hello, world!</h1>
+                <h1 class="py-4">NGCH43</h1>
                 <p class="lead">
                   This page has been created to show the projects that I have
                   developed or am developing in this way to show my knowledge
@@ -35,49 +34,49 @@
           </div>
         </div>
 
+        <!-- Features list  -->
         <div class="row">
-          <div class="col-sm p-0">
-            <div class="cont-info">
-              <p>
-                <i>
-                  "I am a junior web developer eager to work and develop
-                  projects. I am a self-taught person who likes to learn and
-                  keep improving, I consider myself to be quite sociable and I
-                  like to work as a team."
-                </i>
-              </p>
-            </div>
+          <div class="col-12">
+            <h2 class="text-center my-5">¿Who am i?</h2>
           </div>
-          <div class="col-sm p-0 container-image bg-color-primary">
-            <img
-              src="/img/home-image-2(220x205).png"
-              alt="Imagen del landing"
-            />
-            <!-- <div 
-              class="bg-image parallax-image"
-              style="background-image: url('/img/home-image-2(220x205).png');"
-            > -->
-
-            </div>
+          <div class="col-md-4 col-sm-12">
+            <img src="/img/icon_programacion.png" class="mx-auto d-block" width="50px" height="50px" alt="Programming icon">
+            <h3 class="text-center mt-4">Lorem ipsum</h3>
+            <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nulla voluptatibus alias magnam ratione, soluta saepe illo est sit natus quod tempore hic at, culpa dicta dolorum possimus? Impedit, atque!</p>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <img src="/img/icon_list.png" class="mx-auto d-block" width="50px" height="50px" alt="List icon">
+            <h3 class="text-center mt-4">Lorem ipsum</h3>
+            <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nulla voluptatibus alias magnam ratione, soluta saepe illo est sit natus quod tempore hic at, culpa dicta dolorum possimus? Impedit, atque!</p>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <img src="/img/icon_trabajo_grupo.png" class="mx-auto d-block" width="50px" height="50px" alt="Group work icon">
+            <h3 class="text-center mt-4">Lorem ipsum</h3>
+            <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nulla voluptatibus alias magnam ratione, soluta saepe illo est sit natus quod tempore hic at, culpa dicta dolorum possimus? Impedit, atque!</p>
           </div>
         </div>
+        </div>
+        <!-- Featured project -->
         <div class="row">
-          <div class="col">
-            <h2 id="title-projects" class="mt-3 mb-2">
-              Last projects
+          <div class="col-12">
+            <h2 class="my-5 ml-3">
+              Featured project
             </h2>
           </div>
-        </div>
-        <div class="row">
-          <div class="col d-flex justify-content-center">
+          <!-- <div class="col-12">
             <div class="card-deck">
               <% projects.forEach(function(project){ %> <%- include
               ('partials/cartProject.html',{project})%> <% }); %>
             </div>
-          </div>
+          </div> -->
         </div>
-        <%- include('partials/bannerMarcas.html') %>
-      </div>
+        <div class="row row-cols-1 row-cols-md-4">
+          <% projects.forEach(function(project){ %>
+              <div class="col mb-4">
+                  <%- include('partials/cartProject.html',{project})%> 
+              </div>
+          <% }); %>
+        </div>
     </main>
     <%- include ('partials/footer.html')%>
   </body>

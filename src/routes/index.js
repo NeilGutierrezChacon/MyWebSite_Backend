@@ -3,6 +3,8 @@ const router = express.Router();
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 
+const querystring = require('querystring');  
+
 
 const Project = require("../models/project");
 const Post = require("../models/post");
@@ -23,6 +25,7 @@ const {
   calcBlogPags,
   reduceTextDescription,
 } = require("../helpers/functions");
+const { Router } = require("express");
 
 
 router.get("/", async (req, res) => {
@@ -122,44 +125,56 @@ router.post("/Contact", async (req, res) => {
   res.render("contact.html");
 });
 
-router.get("/AdminSignIn", (req, res) => {
-  res.render("signIn.html");
+router.get("/Admin", (req, res) => {
+  let info = {
+    message:""
+  };
+  if(req.query.message) info.message = req.query.message;  
+  res.render("admin/signIn.html",{info});
 });
 
-router.post("/AdminSignIn", (req, res) => {
+router.post("/Admin", (req, res) => {
+
   const { email, password } = req.body;
+  const admin_name = process.env.ADMIN_NAME;
+  const admin_password = process.env.ADMIN_PASSWORD;
+
   console.log(req.body);
   if (
-    email == process.env.ADMIN_NAME &&
-    password == process.env.ADMIN_PASSWORD
+    email == admin_name &&
+    password == admin_password
   ) {
     const token = jwt.sign(
-      { adminName: process.env.ADMIN_NAME },
+      { adminName: admin_name },
       process.env.TOKEN_SECRET,
       {
         expiresIn: 60 * 60 * 24, // expires in 24 hours
       }
     );
     console.log(token);
-    /* res.json({auth:true,token}); */
+    
     res
       .cookie("token", token, { path: "/" })
-      .redirect(301, "/AdminManageProjects");
+      .redirect("/Admin/ManageProjects");
   } else {
-    res.json({ auth: false });
+    /* Access denied... */
+    let query = querystring.stringify({
+      "message":"Bad credentials"
+    });
+    res.redirect(`/Admin/?${query}`);
   }
 });
 
-router.get("/AdminMyProfile", verifyToken, (req, res) => {
-  res.render("adminMyProfile.html");
+router.get("/Admin/MyProfile", verifyToken, (req, res) => {
+  res.render("admin/myProfile.html");
 });
 
-router.get("/AdminManageProjects", async (req, res) => {
+router.get("/Admin/ManageProjects",verifyToken, async (req, res) => {
   const projects = await Project.find();
-  res.render("admin/adminManageProjects.html", { projects });
+  res.render("admin/manageProjects.html", { projects });
 });
 
-router.delete("/AdminManageProjects", verifyToken, async (req, res) => {
+router.delete("/Admin/ManageProjects", verifyToken, async (req, res) => {
 
 
   const { id } = req.query;
@@ -176,19 +191,19 @@ router.delete("/AdminManageProjects", verifyToken, async (req, res) => {
 
 });
 
-router.get("/AdminEditProject", async (req, res) => {
+router.get("/Admin/EditProject",verifyToken, async (req, res) => {
   const { id } = req.query;
   const project = await Project.findById({ _id: id });
   console.log(project);
-  res.render("admin/adminEditProject.html", { project });
+  res.render("admin/editProject.html", { project });
 });
 
 router.put(
-  "/AdminEditProject",
+  "/Admin/EditProject",
   verifyToken,
   upload.array("images"),
   async (req, res) => {
-    console.log("...AdminEditProject...");
+    console.log("...Edit Project...");
     let imgs = Array();
     let imgsPubId = Array();
     const { id, title, github, website, description, image } = req.body;
@@ -239,12 +254,12 @@ router.put(
   }
 );
 
-router.get("/AdminAddProject", (req, res) => {
-  res.render("adminAddProject.html");
+router.get("/Admin/AddProject",verifyToken, (req, res) => {
+  res.render("admin/addProject.html");
 });
 
 router.post(
-  "/AdminAddProject",
+  "/Admin/AddProject",
   verifyToken,
   upload.array("images"),
   async (req, res) => {
@@ -270,7 +285,7 @@ router.post(
       });
       console.log(project);
       await project.save();
-      res.redirect(301, "/AdminManageProjects");
+      res.redirect(301, "/Admin/ManageProjects");
     } catch (error) {
       console.log(error);
       res.status(500);
@@ -377,6 +392,29 @@ router.get("/dbTest", async (req, res) => {
 router.get("/SignOut", (req, res) => {
   console.log("Clear cookies");
   res.clearCookie("token", { path: "/" }).redirect(301, "/");
+});
+
+
+
+/* Routers for error pages */
+
+router.get('/404', function(req, res, next){
+  // trigger a 404 since no other middleware
+  // will match /404 after this one, and we're not
+  // responding here
+  next();
+});
+
+router.get('/403', function(req, res, next){
+  // trigger a 403 error
+  var err = new Error('not allowed!');
+  err.status = 403;
+  next(err);
+});
+
+router.get('/500', function(req, res, next){
+  // trigger a generic (500) error
+  next(new Error('keyboard cat!'));
 });
 
 module.exports = router;

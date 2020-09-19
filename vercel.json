@@ -47,47 +47,47 @@
       "methods": ["POST"]
     },
     {
-      "src": "/AdminSignIn",
+      "src": "/Admin",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/AdminSignIn",
+      "src": "/Admin",
       "dest": "src/index.js",
       "methods": ["POST"]
     },
     {
-      "src": "/AdminMyProfile",
+      "src": "/Admin/MyProfile",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/AdminManageProjects",
+      "src": "/Admin/ManageProjects",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/AdminManageProjects",
+      "src": "/Admin/ManageProjects",
       "dest": "src/index.js",
       "methods": ["DELETE"]
     },
     {
-      "src": "/AdminEditProject",
+      "src": "/Admin/EditProject",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/AdminEditProject",
+      "src": "/Admin/EditProject",
       "dest": "src/index.js",
       "methods": ["PUT"]
     },
     {
-      "src": "/AdminAddProject",
+      "src": "/Admin/AddProject",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/AdminAddProject",
+      "src": "/Admin/AddProject",
       "dest": "src/index.js",
       "methods": ["POST"]
     },

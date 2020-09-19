@@ -1,16 +1,20 @@
 /* CSS Colors */
 /* Specify the color on the website */
 
+
+main,div{background-color: transparent;}
+
+body{
+    background-color: #c0c8d144;
+}
+
 header{
     background-color: #042145;
 }
 
 
 footer{
-    background: #0575E6;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #042446, #0575E6);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to top, #042446, #0575E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+    background-color: #042145;
 }
 
 

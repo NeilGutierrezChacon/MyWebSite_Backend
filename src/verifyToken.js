@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const querystring = require('querystring');  
 
 /**
  * @file verifyToken.js
@@ -18,18 +19,17 @@ const jwt = require('jsonwebtoken');
 async function verifyToken(req, res, next) {
     const token = req.cookies.token;
     console.log("Token: ",token);
-    if (!token) {
-        return res.status(401).send({ auth: false, text: 'token no enviado.' });
-    }
     try{
         const decoded = await jwt.verify(token,process.env.TOKEN_SECRET);
         console.log(decoded);
         console.log("decoded token: ",decoded.adminName);
         req.adminName = decoded.adminName;
     }catch(e){
-        return res.status(401).send({ auth: false, text: 'token invalido.' });
+        let query = querystring.stringify({
+            "message":"Don't have token"
+            });
+        return res.status(401).redirect(`/Admin/?${query}`);
     }
-    
     next();
 }
 

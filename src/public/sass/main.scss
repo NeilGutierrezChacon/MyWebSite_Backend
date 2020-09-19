@@ -1,0 +1,223 @@
+body{
+    background-color: black;
+}
+
+/* CSS Main */
+/* Specify all the css of the web site */
+
+body {
+    position: relative;
+    min-height: 100vh;
+    & header {
+        position: fixed;
+        width: 100%;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        & .img_logo {
+            width: 4em;
+            height: 4em;
+        }
+    }
+    & main {
+        min-height: 45em;
+        width: 100%;
+        padding-top: 6.9em;
+        margin-bottom: 3em;
+    }
+    & footer {
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        height: auto;
+        z-index: 2;
+        /* margin-top: 1em; */
+        color: white;
+        & ul {
+            list-style: none;
+            padding: 0px;
+            li{
+                font-size: 1.1em;
+                font-weight: bold;
+            }
+        }
+        & p {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        & a {
+            text-decoration: none;
+            color: white;
+        }
+    }
+}
+  
+/* .cont-info {
+    width: 100%;
+    height: 100%;
+    padding: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+  
+/* .img_technologies {
+    width: 4em;
+    height: 4em;
+} */
+
+/* .cont-proyectos {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  } */
+  /* .cont-proyecto {
+    width: 7em;
+    height: 9em;
+    border: 1px solid black;
+  } */
+  
+/* Page Contact */
+.img_user {
+    width: 7em;
+    height: 7em;
+}
+.card{
+    & img {
+        width: 100%;
+        height: auto;
+  }
+}
+
+/* Page Home */
+
+.page-hom{
+    & .image-landing {
+        width: 100%;
+        height: 35em;
+        @media (min-width: 576px) {
+            height: 40em;
+            background-size: 100% 40em;
+        }
+    }
+    & .content-header{
+        padding: 0 2em;
+        @media (min-width: 576px) {
+            padding: 0 5em;
+        }
+    } 
+
+
+}
+  
+  
+/* .form-signIn {
+    width: 35%;
+    padding: 2em;
+} */
+  
+  
+  #form-group-new-password {
+    display: none;
+  }
+  
+  .jumbotron {
+    width: 100%;
+    & h1 {
+        font-size: 2.5rem;
+        @media (min-width: 576px) {
+            font-size: 3.5rem;
+        }
+    }
+
+    @media (min-width: 576px) {
+        width: 50%;
+    }
+  }
+  
+  .preViewImages {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px solid black;
+    min-height: 10em;
+    & img {
+        width: 6em;
+        height: 6em;
+        margin: 2em;
+    }
+  }
+  .bg-image {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  
+  /* .parallax-image{
+    min-width: 50%;
+    min-height: 30em;
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: center;
+    background-attachment: fixed;
+    background-size: cover;
+  } */
+  /* .container-image{
+    min-width: 50%;
+    min-height: 25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        width: 100%;
+        height: auto;
+    }
+  } */
+  
+  /* Post desing */
+  .post{
+    display: flex;
+    padding: 1em 0em 1em;
+    border-bottom: 1px solid gray;
+    & .post_cont_text{
+        height: 100%;
+        width: 70%;
+    }
+    & .post_cont_image{
+        height: 100%;
+        width: 30%;
+        & .post_image{
+            height: 100%;
+            width: 100%;
+        }
+    }
+  
+  }
+
+
+  /* Template post */
+
+  .page_template_post{
+    & .post_cont_image{
+        margin:auto;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+    }
+    & .post_image{
+        width: 100%;
+        height: 100%;
+    }
+
+  }
+  .editor{
+    min-height: 20em;
+  }
+  
+  .ck-content{
+    min-height: 20em;
+  }
+  
+  .row-main{
+    margin-top: 2em;
+  }

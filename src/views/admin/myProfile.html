@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <%- include ('partials/head.html')%>
+    <%- include ('../partials/head.html')%>
   </head>
   <body>
-    <%- include ('partials/header.html')%>
+    <%- include ('../partials/header.html')%>
     <main>
       <div class="container">
         <!-- Formulario de mensaje directo -->
@@ -20,7 +20,7 @@
           <div class="col-sm-6">
             <div class="card">
               <div class="card-body">
-                <form action="/AdminMyProfile" method="POST">
+                <form action="/Admin/MyProfile" method="POST">
                   <div class="form-group">
                     <!-- Input email -->
                     <label for="inputEmail">Email</label>
@@ -57,5 +57,5 @@
       </div>
     </main>
   </body>
-  <%- include ('partials/footer.html')%>
+  <%- include ('../partials/footer.html')%>
 </html>

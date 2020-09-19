@@ -4,17 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <%- include ('partials/head.html')%>
+    <%- include ('../partials/head.html')%>
   </head>
   <body>
-    <%- include ('partials/header.html')%>
+    <%- include ('../partials/header.html')%>
     <main>
       <div class="container-fluid">
         <!-- Formulario de mensaje directo -->
         <div class="row d-flex justify-content-center mt-5">
           <div class="card">
+            <div class="card-header">
+              <% if(info.message != ""){ %>
+                <p class="text-center"><%= info.message %></p>
+              <% } %>
+            </div>
             <div class="card-body">
-              <form id="formSignIn" action="/AdminSignIn" method="POST">
+              <form id="formSignIn" action="/Admin" method="POST">
                 <div class="form-row">
                   <h3 class="mx-auto">SignIn</h3>
                 </div>
@@ -43,5 +48,5 @@
       </div>
     </main>
   </body>
-  <%- include ('partials/footer.html')%>
+  <%- include ('../partials/footer.html')%>
 </html>

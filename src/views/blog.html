@@ -3,56 +3,88 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Blog</title>
     <%- include ('partials/head.html')%>
   </head>
   <body>
     <%- include ('partials/header.html')%>
-    <main>
-      <div class="container p-0">
-        <!-- Jumbotron Title -->
-        <div class="jumbotron jumbotron-fluid">
-          <div class="container">
-            <h1 class="display-4">Blog</h1>
-            <p class="lead">
-              In this blog, I will publish the topics of my interest,
-              information and knowledge that I can use to develop my different
-              projects. And it can be an interesting way to see my training.
-            </p>
-          </div>
+    <main class="page-blog container-fluid">
+      <!-- Title -->
+      <div class="row">
+        <div class="col-sm-12 col-xl-12">
+          <h1 class="text-center">Blog</h1>
         </div>
-        <!-- Post Recomendados (2 cartas)  -->
-        <div class="row"></div>
+      </div>
 
-        <!-- List of post -->
-        <% posts.docs.forEach(function(post){ %>
-        <div class="row">
-          <div class="col pb-5">
-            <%- include('partials/post.html',{post})%>
-          </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="nav-search">
+            <div class="input-group my-4">
+              <input type="text" class="form-control" placeholder="Write a project" aria-label="Write a project" aria-describedby="button-search">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="button-search"><i class="fas fa-search fa-lg"></i> Search</button>
+              </div>
+            </div>
+          </div> 
         </div>
-        <% }); %>
-        <!-- Pagination -->
-        <div class="row">
-          <div class="col px-5">
-            <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item">
-                  <a id="previous" class="page-link">Previous</a>
-                </li>
-                <% for(let i = 1 ;i <= posts.totalPages; i++){ %>
-                  <li class="page-item">
-                    <a class="page-link" href="/Blog/<%= i %>"><%= i %></a>
-                  </li>
-                <% } %>
-                <li class="page-item">
-                  <a id="next" class="page-link" href="#">Next</a>
-                </li>
-              </ul>
-            </nav>
+      </div>
+
+
+      <!-- Post Recomendados (2 cartas)  -->
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- Swiper -->
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">Slide 1</div>
+              <div class="swiper-slide">Slide 2</div>
+              <div class="swiper-slide">Slide 3</div>
+              <div class="swiper-slide">Slide 4</div>
+              <div class="swiper-slide">Slide 5</div>
+              <div class="swiper-slide">Slide 6</div>
+              <div class="swiper-slide">Slide 7</div>
+              <div class="swiper-slide">Slide 8</div>
+              <div class="swiper-slide">Slide 9</div>
+              <div class="swiper-slide">Slide 10</div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
           </div>
         </div>
       </div>
+
+      <!-- List of post -->
+      <% posts.docs.forEach(function(post){ %>
+      <div class="row">
+        <div class="col pb-5">
+          <%- include('partials/post.html',{post})%>
+        </div>
+      </div>
+      <% }); %>
+      <!-- Pagination -->
+      <div class="row">
+        <div class="col px-5">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item">
+                <a id="previous" class="page-link">Previous</a>
+              </li>
+              <% for(let i = 1 ;i <= posts.totalPages; i++){ %>
+                <li class="page-item">
+                  <a class="page-link" href="/Blog/<%= i %>"><%= i %></a>
+                </li>
+              <% } %>
+              <li class="page-item">
+                <a id="next" class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      
     </main>
   </body>
   <%- include ('partials/footer.html')%>

@@ -36,7 +36,7 @@ var controller = {
 
   sendFormSignIn: function (email, passowrd) {
     axios
-      .post("/AdminSignIn", {
+      .post("/Admin", {
         email: email,
         password: passowrd,
       })
@@ -45,7 +45,7 @@ var controller = {
         /* let token = response.data.token;
         if (token) {
           document.cookie = `token=${token}`;
-          window.location.replace("/AdminMyProfile");
+          window.location.replace("/Admin/MyProfile");
         } */
       })
       .catch(function (error) {
@@ -58,13 +58,13 @@ var controller = {
   deleteProject: function (id) {
     console.log(id);
     axios
-      .delete("/AdminManageProjects", {
+      .delete("/Admin/ManageProjects", {
         params: { id },
       })
       .then(function (response) {
         console.log(response);
         if (response.data.delete) {
-          window.location.replace("/AdminManageProjects");
+          window.location.replace("/Admin/ManageProjects");
         }
       })
       .catch(function (error) {
@@ -73,14 +73,14 @@ var controller = {
   },
   updateProject: function (project) {
     axios
-      .put("/AdminEditProject", project, {
+      .put("/Admin/EditProject", project, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then(function (response) {
         if (response.data.update) {
-          window.location.replace("/AdminManageProjects");
+          window.location.replace("/Admin/ManageProjects");
         }
       })
       .catch(function (error) {
@@ -89,14 +89,14 @@ var controller = {
   },
   addProject: function (project) {
     axios
-      .post("/AdminAddProject", project, {
+      .post("/Admin/AddProject", project, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then(function (response) {
         if (response.data.add) {
-          window.location.replace("/AdminManageProjects");
+          window.location.replace("/Admin/ManageProjects");
         }
       })
       .catch(function (error) {
@@ -113,7 +113,7 @@ var controller = {
       .then(function (response) {
         console.log(response.data.save);
         if (response.data.save) {
-          window.location.replace("/AdminManageProjects");
+          window.location.replace("/Admin/ManageProjects");
         }
       })
       .catch(function (error) {
@@ -179,20 +179,21 @@ var controller = {
   },
   initSlider: function () {
     console.log("init slider");
-    var swiper = new Swiper(".swiper-container", {
-      effect: "coverflow",
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: "auto",
-      coverflowEffect: {
-        rotate: 50,
-        stretch: 0,
-        depth: 100,
-        modifier: 1,
-        slideShadows: true,
+    var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 3,
+      loop: true,
+      loopFillGroupWithBlank: true,
+      spaceBetween: 30,
+      autoplay: {
+        delay: 2000,
       },
       pagination: {
-        el: ".swiper-pagination",
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
       },
     });
   },
