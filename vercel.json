@@ -17,7 +17,12 @@
       "methods": ["GET"]
     },
     {
-      "src": "/MyProjects",
+      "src": "/Projects",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/Projects/(?<id>[^/]*)",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
