@@ -16,7 +16,7 @@
               <img src="/img/image_jumbotron_1200x540.png" alt="Imagen de un programador con logos de las tecnologias conocidas">
               <div class="jumbotron content-header">
                 <h1 class="py-4">NGCH43</h1>
-                <p class="lead">
+                <p>
                   This page has been created to show the projects that I have
                   developed or am developing in this way to show my knowledge
                   and my way of working
@@ -24,7 +24,7 @@
                 <hr class="my-4" />
                 <a
                   class="btn btn-primary btn-lg"
-                  href="#title-projects"
+                  href="/Projects"
                   role="button"
                 >
                   See projects
@@ -35,24 +35,101 @@
         </div>
 
         <!-- Features list  -->
-        <div class="row">
+        <div class="row block-what-i-do">
           <div class="col-12">
-            <h2 class="text-center my-5">¿Who am i?</h2>
+            <h2 class="text-center">¿What i do?</h2>
           </div>
           <div class="col-md-4 col-sm-12">
-            <img src="/img/icon_programacion.png" class="mx-auto d-block" width="50px" height="50px" alt="Programming icon">
-            <h3 class="text-center mt-4">Lorem ipsum</h3>
-            <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nulla voluptatibus alias magnam ratione, soluta saepe illo est sit natus quod tempore hic at, culpa dicta dolorum possimus? Impedit, atque!</p>
+            <!-- <img src="/img/icon_programacion.png" class="mx-auto d-block" width="50px" height="50px" alt="Programming icon"> -->
+            <h3 class="text-center mt-4">Education</h3>
+            <ul class="list list-education">
+              <li>
+                <span>Web developer</span><br>
+                <span>Instituto Pedralbes, Barcelona(España)</span><br>
+                <span>9/18 - 06/20</span>
+              </li>
+              <li>
+                <span>Docker for developers</span><br>
+                <span>OpenWebinars, Barcelona(España)</span><br>
+                <span>5/20 - 5/20</span><br>
+              </li>
+            </ul>
           </div>
           <div class="col-md-4 col-sm-12">
-            <img src="/img/icon_list.png" class="mx-auto d-block" width="50px" height="50px" alt="List icon">
-            <h3 class="text-center mt-4">Lorem ipsum</h3>
-            <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nulla voluptatibus alias magnam ratione, soluta saepe illo est sit natus quod tempore hic at, culpa dicta dolorum possimus? Impedit, atque!</p>
+            <!-- <img src="/img/icon_list.png" class="mx-auto d-block" width="50px" height="50px" alt="List icon"> -->
+            <h3 class="text-center mt-4">Experience</h3>
+            <ul class="list list-experience">
+              <li>
+                <span>Web developer</span><br>
+                <span>Deideasmarketing, Barcelona(España)</span><br>
+                <span>07/20 - 09/20</span>
+              </li>
+            </ul>
           </div>
           <div class="col-md-4 col-sm-12">
-            <img src="/img/icon_trabajo_grupo.png" class="mx-auto d-block" width="50px" height="50px" alt="Group work icon">
-            <h3 class="text-center mt-4">Lorem ipsum</h3>
-            <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nulla voluptatibus alias magnam ratione, soluta saepe illo est sit natus quod tempore hic at, culpa dicta dolorum possimus? Impedit, atque!</p>
+            <!-- <img src="/img/icon_trabajo_grupo.png" class="mx-auto d-block" width="50px" height="50px" alt="Group work icon"> -->
+            <h3 class="text-center mt-4">Skills & Tools</h3>
+            <ul class="list list-skills">  
+              <li>
+                <span list-id="FrontEnd" class="block-list-toggle">FrontEnd <i class="fas fa-caret-up"></i></span>
+                <ul id="FrontEnd" class="block-list" init_state="visible">
+                  <li>Html</li>
+                  <li>Css</li>
+                  <li>JavaScript</li>
+                  <li>Sass</li>
+                  <li>WebPack</li>
+                  <li>Gulp</li>
+                </ul>
+              </li>
+              <li>
+                <span list-id="BackEnd" class="block-list-toggle">BackEnd <i class="fas fa-caret-down"></i></span>
+                <ul id="BackEnd" class="block-list" init_state="hidden">
+                  <li>Sistemas Linux</li>
+                  <li>Apache</li>
+                  <li>Nginx</li>
+                  <li>Php</li>
+                  <li>NodeJs - Express</li>
+                  <li>MySql</li>
+                  <li>MongoDB</li>
+                  <li>Docker</li>
+                </ul>
+              </li>
+              <li>
+                <span list-id="Graphic-Design" class="block-list-toggle">Graphic design <i class="fas fa-caret-down"></i></span>
+                <ul id="Graphic-Design" class="block-list">
+                  <li>Figma - Mockup and prototyping</li>
+                  <li>Gimp</li>
+                </ul>
+              </li>
+              <li>
+                <span list-id="Frameworks" class="block-list-toggle">Frameworks <i class="fas fa-caret-down"></i></span>
+                <ul id="Frameworks" class="block-list">
+                  <li>Symfony</li>
+                  <li>Angular</li>
+                  <li>Vue</li>
+                </ul>
+              </li>
+              <li>
+                <span list-id="CMD" class="block-list-toggle">CMD <i class="fas fa-caret-down"></i></span>
+                <ul id="CMD" class="block-list">
+                  <li>WordPress</li>
+                  <li>Prestashop</li>
+                </ul>
+              </li>
+              <li>
+                <span list-id="Development-Tools" class="block-list-toggle">Development tools <i class="fas fa-caret-down"></i></span>
+                <ul id="Development-Tools" class="block-list">
+                  <li>Git</li>
+                  <li>Jira</li>
+                  <li>Docker Hub</li>
+                  <li>GitHub</li>
+                  <li>Vercel - Now</li>
+                  <li>Heroku</li>
+                  <li>AWS</li>
+                </ul>
+              </li>
+              
+            </ul>
           </div>
         </div>
         </div>

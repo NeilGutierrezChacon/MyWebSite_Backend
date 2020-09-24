@@ -180,10 +180,20 @@ var controller = {
   initSlider: function () {
     console.log("init slider");
     var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 3,
+      slidesPerView: 1,
+      spaceBetween: 0,
+      centeredSlides: true,
+      centeredSlidesBounds: true,
+      breakpoints: {
+        // min width is >= 576px
+        576: {
+          slidesPerView: 'auto',
+          
+          spaceBetween: 5
+        }
+      },
       loop: true,
       loopFillGroupWithBlank: true,
-      spaceBetween: 30,
       autoplay: {
         delay: 2000,
       },
@@ -249,6 +259,7 @@ var view = {
     view.eventSaveProcessForm();
     view.processDeltaToHtml();
     view.loadDeltaToEditor();
+    view.eventShowBlockList();
   },
   getEmail: function () {
     try {
@@ -495,7 +506,7 @@ var view = {
     }
   },
   eventSeeProjectDetail: function (id) {
-    window.location.replace("/Project/" + id);
+    window.location.replace("/Projects/" + id);
   },
   eventSeePostDetail: function (id){
     window.location.replace("/Blog/Post/"+id);
@@ -539,6 +550,51 @@ var view = {
     }
     
   },
+  eventShowBlockList: function(){
+    let toggles = document.getElementsByClassName("block-list-toggle");
+    Array.from(toggles).forEach(toggle => {
+      var list_id = toggle.getAttribute("list-id");
+      var list = document.getElementById(list_id);
+      if(list.clientHeight > 0){
+        list.setAttribute('block-list-height',list.clientHeight);
+        if(list.getAttribute('init_state') == "visible"){
+          list.style.visibility = 'visible';
+          list.style.height = list.clientHeight + 'px';
+        }else{
+          list.style.visibility = 'hidden';
+          list.style.height = '0';
+        }
+      }
+      toggle.addEventListener('click',() => {
+        /* console.log(toggle); */
+        let toggle_icon = toggle.getElementsByTagName('i')[0];
+        console.log(toggle_icon);
+        /* let list_id = toggle.getAttribute("list-id"); */
+        /* console.log(list_id); */
+        /* let list = document.getElementById(list_id); */
+        /* console.log(list); */
+        let list_height = list.getAttribute('block-list-height');
+        /* console.log(list_height); */
+        console.log(list.style.visibility);
+        if(list.style.visibility == 'hidden' || list.style.visibility == '' ){
+          list.style.visibility = 'visible';
+          /* list.style.display = 'block'; */
+          list.style.height = list_height + 'px';
+
+          toggle_icon.classList.remove('fa-caret-down');
+          toggle_icon.classList.add('fa-caret-up');
+        }else{
+          list.style.visibility = 'hidden';
+          /* list.style.display = 'block'; */
+          list.style.height = '0';
+          toggle_icon.classList.remove('fa-caret-up');
+          toggle_icon.classList.add('fa-caret-down');
+        }
+      })
+    
+
+    });
+  }
 };
 
 controller.init();

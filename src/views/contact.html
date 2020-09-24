@@ -3,89 +3,87 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Contact</title>
     <%- include ('partials/head.html')%>
   </head>
   <body>
     <%- include ('partials/header.html')%>
-    <main>
-      <div class="container-fluid">
-        <div class="row mt-3">
-          <div class="col-sm-12 col-xl-12">
-            <h1 class="ml-5">
-              How to find me?
-            </h1>
-          </div>
+    <main class="page-contact container-fluid">
+      <!-- Title -->
+      <div class="row mt-3">
+        <div class="col-sm-12 col-md-12">
+          <h1 class="text-center">
+            How to find me?
+          </h1>
         </div>
-        <!-- My profile -->
-        <div class="row">
-          <div class="col-sm-12 d-flex flex-column align-items-center">
-            <img
-              class="img_user"
-              src="./img/user_default.svg"
-              alt="Imagen de usuario"
-            />
+      </div>
+      <!-- My profile -->
+      <div class="row">
+        <div class="col-sm-12 block-profile">
+          <img
+            src="./img/user_default.svg"
+            alt="Imagen de usuario"
+          />
+          <div class="cont-text">
             <h3>Neil Gutierrez Chacon</h3>
             <p>Email: n.g.ch43@gmail.com</p>
           </div>
-        </div>
-        <!-- Redes sociales -->
-        <div class="row">
-          <div class="col-sm-4 d-flex justify-content-center">
-            <i class="fab fa-facebook fa-4x"></i>
-          </div>
-          <div class="col-sm-4 d-flex justify-content-center">
-            <i class="fab fa-github fa-4x"></i>
-          </div>
-          <div class="col-sm-4 d-flex justify-content-center">
-            <i class="fab fa-linkedin-in fa-4x"></i>
-          </div>
-        </div>
-        <!-- Formulario de mensaje directo -->
-        <div class="row d-flex justify-content-center mt-5">
-          <form class="w-50" action="/Contact" method="POST">
-            <div class="form-row">
-              <h3 class="mx-auto">Envia un mensaje</h3>
-            </div>
-            <div class="form-group">
-              <label for="inputName">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                name="name"
-                id="inputName"
-                placeholder="Name"
-              />
-            </div>
-            <div class="form-group">
-              <label for="inputEmail">Email</label>
-              <input
-                type="email"
-                class="form-control"
-                name="email"
-                id="inputEmail"
-                placeholder="Email"
-              />
-            </div>
-            <div class="form-group d-flex flex-column">
-              <label for="inputMessage2">Write your message</label>
-              <textarea
-                name="message"
-                id="inputMessage"
-                class="form-control"
-                cols="30"
-                rows="10"
-                placeholder="Message"
-              ></textarea>
-            </div>
-            <div class="form-row">
-              <button type="submit" class="btn btn-primary mx-auto">
-                Sign in
-              </button>
-            </div>
-          </form>
+          
         </div>
       </div>
+      <!-- Redes sociales -->
+      <div class="row">
+        <div class="col-12 social">
+          <i class="fab fa-facebook fa-4x"></i>
+          <i class="fab fa-github fa-4x"></i>
+          <i class="fab fa-linkedin-in fa-4x"></i>
+        </div>
+      </div>
+      <!-- Formulario de mensaje directo -->
+      <div class="row d-flex justify-content-center mt-5">
+        <form class="form-contact" action="/Contact" method="POST">
+          <div class="form-row">
+            <h3 class="mx-auto">Envia un mensaje</h3>
+          </div>
+          <div class="form-group">
+            <label for="inputName">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="inputName"
+              placeholder="Name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              id="inputEmail"
+              placeholder="Email"
+            />
+          </div>
+          <div class="form-group d-flex flex-column">
+            <label for="inputMessage2">Write your message</label>
+            <textarea
+              name="message"
+              id="inputMessage"
+              class="form-control"
+              cols="30"
+              rows="10"
+              placeholder="Message"
+            ></textarea>
+          </div>
+          <div class="form-row">
+            <button type="submit" class="btn btn-primary mx-auto">
+              Sign in
+            </button>
+          </div>
+        </form>
+      </div>
+      
     </main>
   </body>
   <%- include ('partials/footer.html')%>

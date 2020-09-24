@@ -11,20 +11,17 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: "Description cannot be blank!",
   },
+  content: {
+    type: String,
+  },
   github: {
     type: String,
   },
   website: {
     type: String,
   },
-  img: {
-    type: String,
-  },
   imgs: {
     type: Array,
-  },
-  imgPublicId: {
-    type: String,
   },
   imgsPubId: {
     type: Array,

@@ -38,7 +38,9 @@ router.get("/", async (req, res) => {
   res.render("index.html", { projects });
 });
 
-router.get("/MyProjects", async (req, res) => {
+/* Projects */
+
+router.get("/Projects", async (req, res) => {
   let projects = await Project.find();
 
   projects.forEach((project) => {
@@ -46,6 +48,12 @@ router.get("/MyProjects", async (req, res) => {
   });
 
   res.render("my_projects.html", { projects });
+});
+
+router.get("/Projects/:id", async (req, res) => {
+  const project = await Project.findById({ _id: req.params.id });
+  console.log(project);
+  res.render("projectDetail.html", { project });
 });
 
 
@@ -206,7 +214,7 @@ router.put(
     console.log("...Edit Project...");
     let imgs = Array();
     let imgsPubId = Array();
-    const { id, title, github, website, description, image } = req.body;
+    const { id, title, github, website, description, content } = req.body;
     console.log(req.body);
     if (req.files.length > 0) {
       console.log("Files request");
@@ -231,6 +239,7 @@ router.put(
         {
           title,
           description,
+          content,
           github,
           website,
           imgs,
@@ -244,6 +253,7 @@ router.put(
         {
           title,
           description,
+          content,
           github,
           website,
           updateDate: new Date(),
@@ -369,12 +379,6 @@ router.get("/LegalNotice", (req, res) => {
   res.render("legalNotice.html");
 });
 
-router.get("/Project/:id", async (req, res) => {
-  const project = await Project.findById({ _id: req.params.id });
-  console.log(project);
-  res.render("projectDetail.html", { project });
-});
-
 router.get("/dbTest", async (req, res) => {
   try {
     const projects = await Project.find();
@@ -393,8 +397,6 @@ router.get("/SignOut", (req, res) => {
   console.log("Clear cookies");
   res.clearCookie("token", { path: "/" }).redirect(301, "/");
 });
-
-
 
 /* Routers for error pages */
 

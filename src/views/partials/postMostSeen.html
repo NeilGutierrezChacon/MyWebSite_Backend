@@ -1,0 +1,10 @@
+<div class="post-most-seen"
+  onclick="view.eventSeePostDetail('<%= post.id %>')"
+>
+  <img width="110" height="110" src="/img/img_not_found.png" alt="Provisional image">
+  <div class = "cont-text">
+    <div id='delta-<%= post.id %>' class="post-content delta delta-summary" value="<%= post.content %>"></div>
+    <span class="date"><%= `${post.updateDate.getDay()}/${post.updateDate.getMonth()}/${post.updateDate.getFullYear()}` %></span>
+    
+  </div>
+</div>

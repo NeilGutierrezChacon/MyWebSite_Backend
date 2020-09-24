@@ -1,0 +1,152 @@
+{
+  "version": 2,
+  "env": {
+    "MONGODB_URI": "mongodb://ngch43:6fi0YvfSc28kCTyx@cluster0-shard-00-00-9xpme.mongodb.net:27017,cluster0-shard-00-01-9xpme.mongodb.net:27017,cluster0-shard-00-02-9xpme.mongodb.net:27017/myWebSite?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority",
+    "HOST_EMAIL": "server111.web-hosting.com",
+    "USER_NAME": "n.g.ch98@ngch43.xyz",
+    "PASSWORD": "CRPhLO7wSob5",
+    "ADMIN_NAME": "n.g.ch43@gmail.com",
+    "ADMIN_PASSWORD": "n.g.ch43@98",
+    "TOKEN_SECRET": "7bc78545b1a3923cc1e1e19523fd5c3f20b409509...",
+    "CLOUDINARY_CLOUD_NAME":"ngch43",
+    "CLOUDINARY_API_KEY":"789198446368858",
+    "CLOUDINARY_API_SECRET":"PbfHyvoY2Inz5xmso8C8xGefnNk"
+  },
+  "builds": [
+    {
+      "src": "src/public/**",
+      "use": "@now/static"
+    },
+    {
+      "src": "src/index.js",
+      "use": "@now/node@canary"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/Projects",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/Projects/(?<id>[^/]*)",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/Blog",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/Blog/(?<pagination>[^/]*)",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/Contact",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/Contact",
+      "dest": "src/index.js",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/AdminSignIn",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/AdminSignIn",
+      "dest": "src/index.js",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/AdminMyProfile",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/AdminManageProjects",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/AdminManageProjects",
+      "dest": "src/index.js",
+      "methods": ["DELETE"]
+    },
+    {
+      "src": "/AdminEditProject",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/AdminEditProject",
+      "dest": "src/index.js",
+      "methods": ["PUT"]
+    },
+    {
+      "src": "/AdminAddProject",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/AdminAddProject",
+      "dest": "src/index.js",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/AdminAddPost",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/AdminAddPost",
+      "dest": "src/index.js",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/Cookies",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/PrivacyPolicy",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/UserManual",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/LegalNotice",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    
+    {
+      "src": "/SignOut",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/dbTest",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/(.*)",
+      "dest": "src/public/$1"
+    }
+  ]
+}
