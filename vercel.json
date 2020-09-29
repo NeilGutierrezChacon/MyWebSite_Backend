@@ -17,127 +17,127 @@
       "methods": ["GET"]
     },
     {
-      "src": "/Projects",
+      "src": "/projects",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Projects/(?<id>[^/]*)",
+      "src": "/projects/(?<id>[^/]*)",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Blog",
+      "src": "/blog",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Blog/(?<page>[^/]*)",
+      "src": "/blog/(?<page>[^/]*)",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Blog/Post/(?<id>[^/]*)",
+      "src": "/blog/post/(?<id>[^/]*)",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Contact",
+      "src": "/contact",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Contact",
+      "src": "/contact",
       "dest": "src/index.js",
       "methods": ["POST"]
     },
     {
-      "src": "/Admin",
+      "src": "/admin",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Admin",
+      "src": "/admin",
       "dest": "src/index.js",
       "methods": ["POST"]
     },
     {
-      "src": "/Admin/MyProfile",
+      "src": "/admin/my-profile",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Admin/ManageProjects",
+      "src": "/admin/manage-projects",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Admin/ManageProjects",
+      "src": "/admin/manage-projects",
       "dest": "src/index.js",
       "methods": ["DELETE"]
     },
     {
-      "src": "/Admin/EditProject",
+      "src": "/admin/edit-project",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Admin/EditProject",
+      "src": "/admin/edit-project",
       "dest": "src/index.js",
       "methods": ["PUT"]
     },
     {
-      "src": "/Admin/AddProject",
+      "src": "/admin/add-project",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Admin/AddProject",
+      "src": "/admin/add-project",
       "dest": "src/index.js",
       "methods": ["POST"]
     },
     {
-      "src": "/Admin/SavePost",
+      "src": "/admin/save-post",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Admin/SavePost",
+      "src": "/admin/save-post",
       "dest": "src/index.js",
       "methods": ["POST"]
     },
     {
-      "src": "/Cookies",
+      "src": "/cookies",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/PrivacyPolicy",
+      "src": "/privacy-policy",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/UserManual",
+      "src": "/user-manual",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/LegalNotice",
+      "src": "/legal-notice",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/Project/(?<id>[^/]*)",
+      "src": "/project/(?<id>[^/]*)",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/SignOut",
+      "src": "/sign-out",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/dbTest",
+      "src": "/db-test",
       "dest": "src/index.js",
       "methods": ["GET"]
     },

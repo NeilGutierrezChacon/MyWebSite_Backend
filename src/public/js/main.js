@@ -29,8 +29,10 @@ var controller = {
 
   init: function () {
     console.log("init controller");
+    controller.settingNavMenu();
     controller.initSlider();
     controller.initEditor();
+    controller.settingNavMenu();
     view.init();
   },
 
@@ -240,6 +242,23 @@ var controller = {
   },
   getEditor:function(){
     return model.getEditor();
+  },
+  settingNavMenu:function(){
+    let menu = document.getElementById('nav-menu');
+    let nav_items = menu.getElementsByClassName("nav-item");
+    let current_path = window.location.pathname.split('/')[1];
+    Array.from(nav_items).forEach(item => {
+      let item_path = item.getElementsByClassName('nav-link')[0]
+                            .getAttribute('href')
+                              .split('/')[1];
+      if(item_path == current_path){
+        item.classList.add('active');
+      }else if(item.classList.contains('active')){
+        item.classList.remove('active');
+      }
+      
+    });
+
   }
 
 };
@@ -505,12 +524,9 @@ var view = {
       console.log(error);
     }
   },
-  eventSeeProjectDetail: function (id) {
-    window.location.replace("/Projects/" + id);
-  },
-  eventSeePostDetail: function (id){
+  /* eventSeePostDetail: function (id){
     window.location.replace("/Blog/Post/"+id);
-  },
+  }, */
   showAdminView: function () {
     if (controller.checkCookie("token")) {
       document.getElementById("adminMenu").style.display = "list-item";

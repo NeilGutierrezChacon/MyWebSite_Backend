@@ -5,7 +5,9 @@
                 <img src="/img/img_not_found.png" alt="Featured image of the post">
                 <span class="date"><%= `${post.updateDate.getDay()}/${post.updateDate.getMonth()}/${post.updateDate.getFullYear()}` %></span>
                 <h6 class="text-center">
-                    <%= post.title %>
+                    <a href="/blog/post/<%= post.id %>">
+                        <%= post.title %>
+                    </a>
                 </h6>
             </div>
         <% }); %>

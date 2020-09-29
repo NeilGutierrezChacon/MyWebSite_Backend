@@ -1,15 +1,22 @@
 <div
   class="card mt-4 mx-auto h-100"
   style="max-width: 18rem;"
-  onclick="view.eventSeeProjectDetail('<%= project.id %>')"
 >
-  <img
+  <a href="/projects/<%= project.id %>">
+    <img
     src="<%= (project.imgs[0]) ? project.imgs[0]: '/img/img_not_found.png'  %>"
     class="card-img-top"
     alt="Image of the project"
-  />
+    />
+  </a>
+  
   <div class="card-body">
-    <h4 class="card-title"><%= project.title %></h4>
+    
+    <h4 class="card-title">
+      <a href="/projects/<%= project.id %>">
+        <%= project.title %>
+      </a>
+    </h4>
 
     <h6 class="card-subtitle mb-2 text-muted">
       Update:<%=

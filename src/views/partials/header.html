@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-dark py-2">
+  <nav id="nav-menu" class="navbar navbar-expand-lg navbar-dark py-2">
     <a class="navbar-brand" href="/">
       <img
         class="img_logo"
@@ -21,22 +21,22 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/Projects">Projects</a>
+          <a class="nav-link" href="/projects">Projects</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/Blog">Blog</a>
+          <a class="nav-link" href="/blog">Blog</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/Contact">Contact</a>
+          <a class="nav-link" href="/contact">Contact</a>
         </li>
         <li id="adminMenu" class="nav-item dropdown" style="display: none;">
           <a
             class="nav-link dropdown-toggle"
-            href="/Admin"
+            href="/admin"
             id="navbarDropdown"
             role="button"
             data-toggle="dropdown"
@@ -46,12 +46,12 @@
             Admin
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="/Admin/MyProfile">My profile</a>
-            <a class="dropdown-item" href="/Admin/ManageProjects">Manage projects</a>
-            <a class="dropdown-item" href="/Admin/AddProject">Add project</a>
-            <a class="dropdown-item" href="/Admin/SavePost">Add post</a>
+            <a class="dropdown-item" href="/admin/my-profile">My profile</a>
+            <a class="dropdown-item" href="/admin/manage-projects">Manage projects</a>
+            <a class="dropdown-item" href="/admin/add-project">Add project</a>
+            <a class="dropdown-item" href="/admin/save-post">Add post</a>
             <div class="dropdown-divider"></div>
-            <form action="/SignOut" method="GET">
+            <form action="/sign-out" method="GET">
               <button class="dropdown-item" type="submit">Sign out</button>
             </form>
             

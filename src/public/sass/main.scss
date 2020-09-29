@@ -285,6 +285,7 @@ body {
                 height: auto;
                 position: absolute;
                 top: 0;
+                left: 0;
                 z-index: -1;
                 opacity: 0.6;
             }
@@ -294,6 +295,10 @@ body {
                 width: 100%;
                 top: 45%; */
                 color: white;
+                & a{
+                    color: white;
+                }
+                
             }
             & span{
                 color: white;
@@ -355,11 +360,14 @@ body {
                     margin-top: 0;
                 }
             }
-            & img{
+            & a{
                 width: 100%;
                 height: auto;
                 @media (min-width: 576px){
                     width: 35%;
+                }
+                & img{
+                    width: 100%;
                 }
             }  
         }
@@ -473,7 +481,7 @@ body {
 
 /* Single Project */
 .page-single-project{
-    
+
 }
     
   

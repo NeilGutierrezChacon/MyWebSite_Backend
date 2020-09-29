@@ -28,7 +28,7 @@ async function verifyToken(req, res, next) {
         let query = querystring.stringify({
             "message":"Don't have token"
             });
-        return res.status(401).redirect(`/Admin/?${query}`);
+        return res.status(401).redirect(`/admin/?${query}`);
     }
     next();
 }

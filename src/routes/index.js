@@ -40,7 +40,7 @@ router.get("/", async (req, res) => {
 
 /* Projects */
 
-router.get("/Projects", async (req, res) => {
+router.get("/projects", async (req, res) => {
   let projects = await Project.find();
 
   projects.forEach((project) => {
@@ -50,7 +50,7 @@ router.get("/Projects", async (req, res) => {
   res.render("my_projects.html", { projects });
 });
 
-router.get("/Projects/:id", async (req, res) => {
+router.get("/projects/:id", async (req, res) => {
   const project = await Project.findById({ _id: req.params.id });
   console.log(project);
   res.render("projectDetail.html", { project });
@@ -58,7 +58,7 @@ router.get("/Projects/:id", async (req, res) => {
 
 
 /* Blog */
-router.get("/Blog/", async (req, res) => {
+router.get("/blog/", async (req, res) => {
   const posts = await Post.paginate({},{limit:5});
   console.log(posts);
   res.render("blog.html", {posts});
@@ -66,7 +66,7 @@ router.get("/Blog/", async (req, res) => {
 
 /* Blog for page */
 
-router.get("/Blog/:page", async (req, res) => {
+router.get("/blog/:page", async (req, res) => {
   const page = parseInt(req.params.page,10) || 1 ;
   const limit = 5 ;
   const posts = await Post.paginate({},{limit,page});
@@ -74,18 +74,18 @@ router.get("/Blog/:page", async (req, res) => {
   res.render("blog.html", {posts});
 });
 
-router.get("/Blog/Post/:id", async (req, res) => {
+router.get("/blog/post/:id", async (req, res) => {
   const postId = req.params.id;
   const post = await Post.findById({ _id: postId });
   console.log(post);
   res.render("postDetail.html",{post});
 });
 
-router.get("/Contact", (req, res) => {
+router.get("/contact", (req, res) => {
   res.render("contact.html");
 });
 
-router.post("/Contact", async (req, res) => {
+router.post("/contact", async (req, res) => {
   const { name, email, message } = req.body;
 
   let contentHTML = `
@@ -133,7 +133,7 @@ router.post("/Contact", async (req, res) => {
   res.render("contact.html");
 });
 
-router.get("/Admin", (req, res) => {
+router.get("/admin", (req, res) => {
   let info = {
     message:""
   };
@@ -141,7 +141,7 @@ router.get("/Admin", (req, res) => {
   res.render("admin/signIn.html",{info});
 });
 
-router.post("/Admin", (req, res) => {
+router.post("/admin", (req, res) => {
 
   const { email, password } = req.body;
   const admin_name = process.env.ADMIN_NAME;
@@ -163,26 +163,26 @@ router.post("/Admin", (req, res) => {
     
     res
       .cookie("token", token, { path: "/" })
-      .redirect("/Admin/ManageProjects");
+      .redirect("/admin/manage-projects");
   } else {
     /* Access denied... */
     let query = querystring.stringify({
       "message":"Bad credentials"
     });
-    res.redirect(`/Admin/?${query}`);
+    res.redirect(`/admin/?${query}`);
   }
 });
 
-router.get("/Admin/MyProfile", verifyToken, (req, res) => {
+router.get("/admin/my-profile", verifyToken, (req, res) => {
   res.render("admin/myProfile.html");
 });
 
-router.get("/Admin/ManageProjects",verifyToken, async (req, res) => {
+router.get("/admin/manage-projects",verifyToken, async (req, res) => {
   const projects = await Project.find();
   res.render("admin/manageProjects.html", { projects });
 });
 
-router.delete("/Admin/ManageProjects", verifyToken, async (req, res) => {
+router.delete("/admin/manage-projects", verifyToken, async (req, res) => {
 
 
   const { id } = req.query;
@@ -199,7 +199,7 @@ router.delete("/Admin/ManageProjects", verifyToken, async (req, res) => {
 
 });
 
-router.get("/Admin/EditProject",verifyToken, async (req, res) => {
+router.get("/admin/edit-project",verifyToken, async (req, res) => {
   const { id } = req.query;
   const project = await Project.findById({ _id: id });
   console.log(project);
@@ -207,7 +207,7 @@ router.get("/Admin/EditProject",verifyToken, async (req, res) => {
 });
 
 router.put(
-  "/Admin/EditProject",
+  "/admin/edit-project",
   verifyToken,
   upload.array("images"),
   async (req, res) => {
@@ -264,12 +264,12 @@ router.put(
   }
 );
 
-router.get("/Admin/AddProject",verifyToken, (req, res) => {
+router.get("/admin/add-project",verifyToken, (req, res) => {
   res.render("admin/addProject.html");
 });
 
 router.post(
-  "/Admin/AddProject",
+  "/admin/add-project",
   verifyToken,
   upload.array("images"),
   async (req, res) => {
@@ -295,7 +295,7 @@ router.post(
       });
       console.log(project);
       await project.save();
-      res.redirect(301, "/Admin/ManageProjects");
+      res.redirect(301, "/admin/manage-projects");
     } catch (error) {
       console.log(error);
       res.status(500);
@@ -303,7 +303,7 @@ router.post(
   }
 );
 
-router.get("/Admin/SavePost", async (req, res) => {
+router.get("/admin/save-post", async (req, res) => {
 
   let post = {
       id:"",title:"",content:""
@@ -313,7 +313,7 @@ router.get("/Admin/SavePost", async (req, res) => {
 
 });
 
-router.get("/Admin/SavePost/:id", async (req, res) => {
+router.get("/admin/save-post/:id", async (req, res) => {
 
   let id = req.params.id;
   let post = await Post.findById({ _id: id });
@@ -322,7 +322,7 @@ router.get("/Admin/SavePost/:id", async (req, res) => {
 
 });
 
-router.post("/Admin/SavePost",verifyToken,upload.array("images"), async (req, res) => {
+router.post("/admin/save-post",verifyToken,upload.array("images"), async (req, res) => {
   console.log(req.body);
   const {id ,title, content } = req.body;
   if(!id){
@@ -363,23 +363,23 @@ router.post("/Admin/SavePost",verifyToken,upload.array("images"), async (req, re
   
 });
 
-router.get("/Cookies", (req, res) => {
+router.get("/cookies", (req, res) => {
   res.render("cookies.html");
 });
 
-router.get("/PrivacyPolicy", (req, res) => {
+router.get("/privacy-policy", (req, res) => {
   res.render("privacyPolicy.html");
 });
 
-router.get("/UserManual", (req, res) => {
+router.get("/user-manual", (req, res) => {
   res.render("userManual.html");
 });
 
-router.get("/LegalNotice", (req, res) => {
+router.get("/legal-notice", (req, res) => {
   res.render("legalNotice.html");
 });
 
-router.get("/dbTest", async (req, res) => {
+router.get("/db-test", async (req, res) => {
   try {
     const projects = await Project.find();
 
@@ -393,7 +393,7 @@ router.get("/dbTest", async (req, res) => {
   }
 });
 
-router.get("/SignOut", (req, res) => {
+router.get("/sign-out", (req, res) => {
   console.log("Clear cookies");
   res.clearCookie("token", { path: "/" }).redirect(301, "/");
 });

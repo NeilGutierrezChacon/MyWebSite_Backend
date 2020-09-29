@@ -1,10 +1,13 @@
 <div class="post"
-  onclick="view.eventSeePostDetail('<%= post.id %>')"
 >
-  <img src="/img/img_not_found.png" alt="Provisional image">
+  <a href="/blog/post/<%= post.id %>">
+    <img src="/img/img_not_found.png" alt="Provisional image">
+  </a>
   <div class = "cont-text">
     <h2 class="display-7">
-      <%= post.title %>
+      <a href="/blog/post/<%= post.id %>">
+        <%= post.title %>
+      </a>
     </h2>
     <span class="date"><%= `${post.updateDate.getDay()}/${post.updateDate.getMonth()}/${post.updateDate.getFullYear()}` %></span>
     <div id='delta-<%= post.id %>' class="post-content delta delta-summary" value="<%= post.content %>">
