@@ -138,18 +138,18 @@ router.get("/admin", (req, res) => {
     message:""
   };
   if(req.query.message) info.message = req.query.message;  
-  res.render("admin/signIn.html",{info});
+  res.render("admin/logIn.html",{info});
 });
 
 router.post("/admin", (req, res) => {
 
-  const { email, password } = req.body;
+  const { username, password } = req.body;
   const admin_name = process.env.ADMIN_NAME;
   const admin_password = process.env.ADMIN_PASSWORD;
 
   console.log(req.body);
   if (
-    email == admin_name &&
+    username == admin_name &&
     password == admin_password
   ) {
     const token = jwt.sign(
@@ -169,7 +169,7 @@ router.post("/admin", (req, res) => {
     let query = querystring.stringify({
       "message":"Bad credentials"
     });
-    res.redirect(`/admin/?${query}`);
+    res.redirect(`/admin?${query}`);
   }
 });
 

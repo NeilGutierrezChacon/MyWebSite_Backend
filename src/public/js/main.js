@@ -36,9 +36,9 @@ var controller = {
     view.init();
   },
 
-  sendFormSignIn: function (email, passowrd) {
+  sendFormLogIn: function (email, passowrd) {
     axios
-      .post("/Admin", {
+      .post("/admin", {
         email: email,
         password: passowrd,
       })
@@ -267,7 +267,7 @@ var controller = {
 var view = {
   init: function () {
     console.log("init view");
-    view.eventSendFormSignIn();
+    view.eventSendFormLogIn();
     view.eventShowInputNewPassword();
     view.eventDeleteProject();
     view.eventUpdateProject();
@@ -378,15 +378,15 @@ var view = {
       console.log(error);
     }
   },
-  eventSendFormSignIn: function () {
+  eventSendFormLogIn: function () {
     try {
-      let signIn = document.getElementById("signIn");
+      let logIn = document.getElementById("logIn");
 
-      signIn.addEventListener("click", (event) => {
+      logIn.addEventListener("click", (event) => {
         let email = view.getEmail();
         let password = view.getPassword();
         event.preventDefault();
-        controller.sendFormSignIn(email, password);
+        controller.sendFormLogIn(email, password);
       });
     } catch (e) {
       console.log(e);

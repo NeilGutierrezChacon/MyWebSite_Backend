@@ -113,18 +113,23 @@ body {
 .page-home{
     & .image-landing {
         width: 100%;
-        height: 29em;
+        height: 39em;
         position: relative;
-        background-color: #042145;
+        /* background-color: #042145; */
+        overflow: hidden;
         & img{
-            width: 100%;
+            
+            height: 39em;
             position: absolute;
             z-index: -1;
-            display: none;
+            display: block;
+            /* display: none; */
             @media (min-width: 576px) {
-                display: block;
+                height: auto;
+                width: 100%;
             }
         }
+        
         & .content-header{
             padding: 0 2em;
             width: 100%;
@@ -152,7 +157,7 @@ body {
         padding: 0;
 
         & h2{
-            margin:2em 0 0.5em;
+            margin:1em 0 0.5em;
             
         }
         & .list{
@@ -482,6 +487,41 @@ body {
 /* Single Project */
 .page-single-project{
 
+}
+
+
+/* Page LogIn */
+.page-log-in{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    & .block-info{
+        width: 25%;
+        padding: 2em 0em 2em 2em;
+        height: auto;
+        & .block-border{
+            border: 1px solid white;
+            padding: 2em;
+            background-color: white;
+            box-shadow: -5px 5px 5px #aaa;
+            min-height: 16em;
+            & .title{
+                text-align: center;
+            }
+            & .text-error{
+                margin-top: 1em;
+                text-align: center;
+                color: red;
+
+            }
+        }
+    }
+    & .block-form{
+        width: 30%;
+        box-shadow: 0px 5px 5px #aaaaaa;
+        padding: 2em;
+        min-height: 20em;
+    }
 }
     
   

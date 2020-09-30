@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In</title>
+    <%- include ('../partials/head.html')%>
+  </head>
+  <body>
+    <%- include ('../partials/header.html')%>
+    <main class="page-log-in container-fluid">
+      <!-- Formulario de mensaje directo -->
+      <div class="block-info">
+        <div class="block-border">
+          <h3 class="title">Log In</h3>
+          <% if(info.message != ""){ %>
+            <p class="text-error">** <%= info.message %></p>
+          <% } %>
+          
+        </div>
+      </div>
+      <div class="block-form">
+        <form id="formLogIn" action="/admin" method="POST">
+          <div class="form-group">
+            <label for="inputUserName">Username</label>
+            <input type="text" class="form-control" name="username" id="inputUserName" />
+          </div>
+          <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              id="inputPassword"
+            />
+          </div>
+          <div class="form-row">
+            <button type="submit" class="btn btn-primary mx-auto">
+              Sign in
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </body>
+  <%- include ('../partials/footer.html')%>
+</html>
