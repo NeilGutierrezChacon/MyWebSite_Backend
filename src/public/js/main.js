@@ -132,33 +132,65 @@ var controller = {
   },
   initSlider: function () {
     console.log("init slider");
-    var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 1,
-      spaceBetween: 0,
-      centeredSlides: true,
-      centeredSlidesBounds: true,
-      breakpoints: {
-        // min width is >= 576px
-        576: {
-          slidesPerView: 'auto',
-          
-          spaceBetween: 5
-        }
-      },
-      loop: true,
-      loopFillGroupWithBlank: true,
-      autoplay: {
-        delay: 2000,
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
+    let sliders = document.getElementsByClassName("swiper-container");
+    Array.from(sliders).forEach(slider => {
+      let type = slider.getAttribute("type-slider");
+      let config;
+      switch (type) {
+        case "3D-coverflow":
+          config = {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            centeredSlidesBounds: true,
+            loop: true,
+            loopFillGroupWithBlank: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+              rotate: 50,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: true,
+            },
+            pagination: {
+              el: '.swiper-pagination',
+            },
+          }
+          break;    
+        default:
+          config = {
+            slidesPerView: 1,
+            spaceBetween: 0,
+            centeredSlides: true,
+            centeredSlidesBounds: true,
+            breakpoints: {
+              // min width is >= 576px
+              576: {
+                slidesPerView: 'auto',
+                
+                spaceBetween: 5
+              }
+            },
+            loop: true,
+            loopFillGroupWithBlank: true,
+            autoplay: {
+              delay: 2000,
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            }
+          }
+          break;
+      }
+      var swiper = new Swiper(slider, config);
     });
+    
   },
   initEditor: function (){
     let toolbarOptions = [
@@ -385,6 +417,7 @@ var view = {
           }else{
             delta.innerHTML = quill.root.innerHTML;
           }
+          delta.setAttribute("value","");
         }
         
         

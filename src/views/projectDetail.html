@@ -11,20 +11,22 @@
     <main class="container page-single-project">
       <!-- Title -->
       <div class="row mt-5">
-        <div class="col-12 d-flex justify-content-between">
-          <h1 class="mt-0"><%= project.title %></h1>
-          <span>
-            <%=
-            `${project.updateDate.getDate()}/${project.updateDate.getMonth()+1}/${project.updateDate.getFullYear()}`
-            %>
-          </span>
+        <div class="col-12 block-title">
+          <h1 class="mt-0 text-center"><%= project.title %></h1>
         </div>
       </div>
       <!-- Links -->
       <div class="row">
-        <div class="col-12 d-flex flex-column">
-          <a href="<%= project.github %>" class="text-info">GitHub</a>
-          <a href="<%= project.website %>" class="text-info">WebSite</a>
+        <div class="col-12 block-info-header">
+          <div class="info-links">
+            <a href="<%= project.github %>" class="text-info link">GitHub</a>
+            <a href="<%= project.website %>" class="text-info link">WebSite</a>
+          </div>
+          <a class="info-date">
+            <%=
+            `${project.updateDate.getDate()}/${project.updateDate.getMonth()+1}/${project.updateDate.getFullYear()}`
+            %>
+          </a>
         </div>
       </div>
       <div class="row mt-5">
@@ -35,7 +37,7 @@
         </div>
       </div>
       <!-- Images carrusel -->
-      <div class="swiper-container">
+      <div class="swiper-container" type-slider="3D-coverflow">
         <div class="swiper-wrapper">
           <% project.imgs.forEach(function(img){ %>
           <img src="<%= img %>" alt="Image project" class="swiper-slide" />

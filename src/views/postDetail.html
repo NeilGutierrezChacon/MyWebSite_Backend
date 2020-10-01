@@ -8,36 +8,25 @@
   </head>
   <body>
     <%- include ('partials/header.html')%>
-    <main>
-      <div class="page_template_post">
-        <div class="container">
+    <main class="container page-single-post">
           
-          <div class="row mt-5">
-            <div class="col-12">
-              <!-- Title -->
-              <h1 class="mt-0"><%= post.title %></h1>
-              <!-- Date update -->
-              <span>
-                <%=
-                `${post.updateDate.getDate()}/${post.updateDate.getMonth()+1}/${post.updateDate.getFullYear()}`
-                %>
-              </span>
-            </div>
-            <div class="col-12 mt-3">
-              <!-- Image post -->
-              <div class = "post_cont_image">
-                <img class = "post_image" src="/img/img_not_found.png" alt="Provisional image">
-              </div>
-            </div>
-            <div class="col-12 mt-3">
-              <!-- Post content -->
-              <div class="post-content delta" value="<%= post.content %>">
-                
-              </div>
-              
-            </div>
+      <div class="row mt-5">
+        <div class="col-12 block-title">
+          <!-- Title -->
+          <h1 class="mt-0 text-center"><%= post.title %></h1>
+        </div>
+        <div class="col-12 block-info-header">
+          <a class="info-date">
+            <%=
+            `${post.updateDate.getDate()}/${post.updateDate.getMonth()+1}/${post.updateDate.getFullYear()}`
+            %>
+          </a>
+        </div>
+        <div class="col-12 mt-3 block-content">
+          <!-- Post content -->
+          <div class="delta content" value="<%= post.content %>">
+            
           </div>
-  
         </div>
       </div>
       
