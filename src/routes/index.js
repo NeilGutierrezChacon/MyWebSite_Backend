@@ -32,9 +32,9 @@ router.get("/", async (req, res) => {
   let projects = await Project.find().limit(4);
   console.log(projects);
 
-  projects.forEach((project) => {
+  /* projects.forEach((project) => {
     project.description = reduceTextDescription(project.description, 20, "...");
-  });
+  }); */
   res.render("index.html", { projects });
 });
 
@@ -43,9 +43,9 @@ router.get("/", async (req, res) => {
 router.get("/projects", async (req, res) => {
   let projects = await Project.find();
 
-  projects.forEach((project) => {
+  /* projects.forEach((project) => {
     project.description = reduceTextDescription(project.description, 20, "...");
-  });
+  }); */
 
   res.render("my_projects.html", { projects });
 });
@@ -182,11 +182,10 @@ router.get("/admin/manage-projects",verifyToken, async (req, res) => {
   res.render("admin/manageProjects.html", { projects });
 });
 
-router.delete("/admin/manage-projects", verifyToken, async (req, res) => {
+router.post("/admin/manage-projects/:project/delete", verifyToken, async (req, res) => {
 
-
-  const { id } = req.query;
-  const info = await Project.findByIdAndDelete({ _id: id });
+  const projectId  = req.params.project;
+  const info = await Project.findByIdAndDelete({ _id: projectId });
 
   console.log(info);
   
@@ -199,22 +198,23 @@ router.delete("/admin/manage-projects", verifyToken, async (req, res) => {
 
 });
 
-router.get("/admin/edit-project",verifyToken, async (req, res) => {
-  const { id } = req.query;
-  const project = await Project.findById({ _id: id });
+router.get("/admin/manage-projects/:project/edit",verifyToken, async (req, res) => {
+  const projectId = req.params.project;
+  const project = await Project.findById({ _id: projectId });
   console.log(project);
   res.render("admin/editProject.html", { project });
 });
 
-router.put(
-  "/admin/edit-project",
+router.post(
+  "/admin/manage-projects/:project/edit",
   verifyToken,
   upload.array("images"),
   async (req, res) => {
-    console.log("...Edit Project...");
+    console.log("-- Edit Project --");
     let imgs = Array();
     let imgsPubId = Array();
-    const { id, title, github, website, description, content } = req.body;
+    const { title, github, website, description, content } = req.body;
+    const id = req.params.project;
     console.log(req.body);
     if (req.files.length > 0) {
       console.log("Files request");
@@ -260,24 +260,24 @@ router.put(
         }
       );
     }
-    res.status(200).json({ update: true });
+    res.redirect("/admin/manage-projects");
   }
 );
 
-router.get("/admin/add-project",verifyToken, (req, res) => {
+router.get("/admin/manage-projects/add",verifyToken, (req, res) => {
   res.render("admin/addProject.html");
 });
 
 router.post(
-  "/admin/add-project",
+  "/admin/manage-projects/add",
   verifyToken,
   upload.array("images"),
   async (req, res) => {
     try {
       let imgs = Array();
       let imgsPubId = Array();
-      const { title, description, github, website } = req.body;
-      console.log("...AddProject...");
+      const { title, description, github, website, content } = req.body;
+      console.log("-- Add project --");
       console.log(req.body);
       for (let i = 0; i < req.files.length; i++) {
         let result = await uploadFromBuffer(req.files[i], "myWebSite");
@@ -287,6 +287,7 @@ router.post(
       const project = new Project({
         title,
         description,
+        content,
         github,
         website,
         imgs,

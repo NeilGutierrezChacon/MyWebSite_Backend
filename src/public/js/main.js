@@ -10,8 +10,6 @@ var data = {
 }
 /* MODEL */
 var model = {
-
-  
   init: function () {
 
   },
@@ -60,45 +58,12 @@ var controller = {
   deleteProject: function (id) {
     console.log(id);
     axios
-      .delete("/Admin/ManageProjects", {
+      .post("/admin/manage-projects/"+id+"/delete", {
         params: { id },
       })
       .then(function (response) {
-        console.log(response);
         if (response.data.delete) {
-          window.location.replace("/Admin/ManageProjects");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  },
-  updateProject: function (project) {
-    axios
-      .put("/Admin/EditProject", project, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        if (response.data.update) {
-          window.location.replace("/Admin/ManageProjects");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  },
-  addProject: function (project) {
-    axios
-      .post("/Admin/AddProject", project, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        if (response.data.add) {
-          window.location.replace("/Admin/ManageProjects");
+          window.location.replace("/admin/manage-projects");
         }
       })
       .catch(function (error) {
@@ -107,7 +72,7 @@ var controller = {
   },
   savePost: function (post){
     axios
-      .post("/Admin/SavePost", post, {
+      .post("/admin/save-post", post, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -115,7 +80,7 @@ var controller = {
       .then(function (response) {
         console.log(response.data.save);
         if (response.data.save) {
-          window.location.replace("/Admin/ManageProjects");
+          window.location.replace("/admin/manage-projects");
         }
       })
       .catch(function (error) {
@@ -146,20 +111,6 @@ var controller = {
     }
   },
   onChange: function (event) {
-    /* let file = event.target.files[0];
-    let reader = new FileReader();
-    console.log(event.target.files);
-    reader.onload = function(e) {
-      // The file's text will be printed here
-      console.log(e.target.result);
-      view.getImage().src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-    view.getImage().img = file; */
-    /* let files = event.target.files;
-    console.log(files);
-    view.getImage().files = files; */
-
     /* Preview with of images */
 
     let conteiner = view.getContPreViewImages();
@@ -233,10 +184,10 @@ var controller = {
     };
     try {
       let editor = new Quill('#editor', options);
-      console.log(editor);
+      /* console.log(editor); */
       model.saveEditor(editor);
     } catch (error) {
-      console.log(error);
+      /* console.log(error); */
     }
       
   },
@@ -269,16 +220,13 @@ var view = {
     console.log("init view");
     view.eventSendFormLogIn();
     view.eventShowInputNewPassword();
-    view.eventDeleteProject();
-    view.eventUpdateProject();
     view.showAdminView();
-    view.eventAddProject();
     view.eventPaginationBlogNext();
     view.eventPaginationBlogPrevious();
-    view.eventSaveProcessForm();
     view.processDeltaToHtml();
     view.loadDeltaToEditor();
     view.eventShowBlockList();
+    view.saveFormWithQuillEditor();
   },
   getEmail: function () {
     try {
@@ -410,99 +358,35 @@ var view = {
       console.log(e);
     }
   },
-  eventDeleteProject: function () {},
-  eventUpdateProject: function () {
-    try {
-      let btnUpdate = document.getElementById("updateProject");
-      btnUpdate.addEventListener("click", function (e) {
-        e.preventDefault();
-        console.log(view.getImage().files);
-
-        let formData = new FormData();
-        formData.append("id", view.getProjectId());
-        formData.append("title", view.getTitle());
-        formData.append("github", view.getUrlGitHub());
-        formData.append("website", view.getUrlWebSite());
-        for (let i = 0; i < view.getImage().files.length; i++) {
-          formData.append(`images`, view.getImage().files[i]);
-        }
-
-        formData.append("description", view.getDescription());
-
-        controller.updateProject(formData);
-        console.log("Update project");
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  eventAddProject: function () {
-    try {
-      let btnAdd = document.getElementById("addProject");
-      btnAdd.addEventListener("click", function (e) {
-        e.preventDefault();
-        console.log(view.getImage().files);
-
-        let formData = new FormData();
-        formData.append("title", view.getTitle());
-        formData.append("github", view.getUrlGitHub());
-        formData.append("website", view.getUrlWebSite());
-        formData.append("image", view.getImage().src);
-        formData.append("description", view.getDescription());
-        formData.append("images", view.getImage().files);
-
-        controller.addProject(formData);
-        console.log("Add project");
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  eventSaveProcessForm: function(){
-    try {
-      let btns = document.getElementsByClassName("btn-save");
-      
-      Array.from(btns).forEach( btn => {
-        btn.addEventListener("click", function () {
-          var formData = new FormData();
-          let idForm = this.getAttribute('id-form');
-          let form = document.getElementById(idForm);
-          let fields = form.getElementsByClassName('process-form');
-          Array.from(fields).forEach(field => {
-            let name = field.getAttribute('name');
-            let value = field.value;
-            if(field.classList.contains('editor')){
-              value = JSON.stringify(controller.getEditor().getContents());
-            }
-            formData.append(name,value);
-
-          });
-          controller.savePost(formData);
-
-        });
-      });
-      
-    } catch (e) {
-      console.log(e);
-    }
-  },
+  /**
+   * @function processDeltaToHtml
+   * @description Find all elements with class "delta", need a value
+   * attribute with the content in delta format, create a quill container
+   * in the DOM to be pre-processed in html format. If the element has a
+   * "delta-summary" class, it will take the text in "blockquote" format
+   * and take it as a summary of the content. 
+   */
   processDeltaToHtml: function(){
     try {
       let deltas = document.getElementsByClassName("delta");
       Array.from(deltas).forEach(delta => {
-        let inputDelta = JSON.parse(delta.getAttribute("value"));
-        let contTemp = document.createElement("div");
-        let quill = new Quill(contTemp,{});
-        quill.setContents(inputDelta.ops);
-        if(delta.classList.contains("delta-summary")){
-          /* console.log(contTemp.getElementsByTagName('blockquote')[0].innerHTML); */
-          let summary = contTemp.getElementsByTagName('blockquote')[0];
-          if(summary){
-            delta.innerHTML = summary.innerHTML;
+        console.log(delta);
+        if(delta.getAttribute("value")){
+          let inputDelta = JSON.parse(delta.getAttribute("value"));
+          console.log(inputDelta);
+          let contTemp = document.createElement("div");
+          let quill = new Quill(contTemp,{});
+          quill.setContents(inputDelta.ops);
+          if(delta.classList.contains("delta-summary")){
+            let summary = contTemp.getElementsByTagName('blockquote')[0];
+            if(summary){
+              delta.innerHTML = summary.innerHTML;
+            }
+          }else{
+            delta.innerHTML = quill.root.innerHTML;
           }
-        }else{
-          delta.innerHTML = quill.root.innerHTML;
         }
+        
         
       });
     } catch (error) {
@@ -510,6 +394,12 @@ var view = {
     }
     
   },
+  /**
+   *  @function loadDeltaToEditor
+   *  @description Finds all the elements that contain the class "editor"
+   *  and if these elements have the class "load-delta" and a "value" attribute
+   *  will load the content to the quill text editor in delta format.
+   */
   loadDeltaToEditor:function(){
     try {
       let deltas = document.getElementsByClassName("editor");
@@ -524,13 +414,30 @@ var view = {
       console.log(error);
     }
   },
-  /* eventSeePostDetail: function (id){
-    window.location.replace("/Blog/Post/"+id);
-  }, */
+
+  /**
+   * @function showAdminView
+   * @description Show the "admin" navigation item if you have token
+   * authentication.
+   */
   showAdminView: function () {
     if (controller.checkCookie("token")) {
       document.getElementById("adminMenu").style.display = "list-item";
     }
+  },
+  /**
+   * @function saveFormWithQuillEditor
+   * @description Load the content of the quill editor in an input tag
+   * to send the content with the form.
+   */
+  saveFormWithQuillEditor: function (){
+    var form = document.querySelector('.form-quill');
+    if(form){
+      form.onsubmit = function() {
+        var content = document.querySelector('input[name=content]');
+        content.value = JSON.stringify(controller.getEditor().getContents());
+      };
+    } 
   },
   eventPaginationBlogNext: function () {
     try{
@@ -582,33 +489,22 @@ var view = {
         }
       }
       toggle.addEventListener('click',() => {
-        /* console.log(toggle); */
         let toggle_icon = toggle.getElementsByTagName('i')[0];
         console.log(toggle_icon);
-        /* let list_id = toggle.getAttribute("list-id"); */
-        /* console.log(list_id); */
-        /* let list = document.getElementById(list_id); */
-        /* console.log(list); */
         let list_height = list.getAttribute('block-list-height');
-        /* console.log(list_height); */
         console.log(list.style.visibility);
         if(list.style.visibility == 'hidden' || list.style.visibility == '' ){
           list.style.visibility = 'visible';
-          /* list.style.display = 'block'; */
           list.style.height = list_height + 'px';
-
           toggle_icon.classList.remove('fa-caret-down');
           toggle_icon.classList.add('fa-caret-up');
         }else{
           list.style.visibility = 'hidden';
-          /* list.style.display = 'block'; */
           list.style.height = '0';
           toggle_icon.classList.remove('fa-caret-up');
           toggle_icon.classList.add('fa-caret-down');
         }
       })
-    
-
     });
   }
 };

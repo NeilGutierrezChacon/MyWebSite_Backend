@@ -3,123 +3,77 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Add project</title>
     <%- include ('../partials/head.html')%>
   </head>
   <body>
     <%- include ('../partials/header.html')%>
-    <main>
-      <div class="container">
-        <!-- Formulario de mensaje directo -->
-        <div class="row d-flex justify-content-center mt-5">
-          <div class="col-sm-12">
-            <h3>Add project</h3>
+    <main class="container">
+      
+      <div class="row d-flex justify-content-center mt-5">
+        <div class="col-sm-12">
+          <h3>Add project</h3>
+        </div>
+      </div>
+      <form
+        class="w-50 mx-auto form-quill"
+        action="/admin/manage-projects/add"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="form-row">
+          <div class="col-sm-12 col-md-10">
+            <div class="form-group">
+              <label for="inputTitle">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                name="title"
+                id="inputTitle"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputUrlGitHub">Link GitHub</label>
+              <input
+                type="url"
+                name="github"
+                id="inputUrlGitHub"
+                placeholder="https://github.com"
+                pattern="https://.*"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputUrlWebSite">Link WebSite</label>
+              <input
+                type="url"
+                name="website"
+                id="inputUrlWebSite"
+                placeholder="https://website.com"
+                pattern="https://.*"
+                class="form-control"
+              />
+            </div>
           </div>
         </div>
-        <form
-          class="w-50 mx-auto"
-          action="/admin/add-project"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          <div class="form-row">
-            <div class="col-sm-12 col-md-10">
-              <div class="form-group">
-                <label for="inputTitle">Title</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="title"
-                  id="inputTitle"
-                />
-              </div>
-              <div class="form-group">
-                <label for="inputUrlGitHub">Link GitHub</label>
-                <input
-                  type="url"
-                  name="github"
-                  id="inputUrlGitHub"
-                  placeholder="https://github.com"
-                  pattern="https://.*"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group">
-                <label for="inputUrlWebSite">Link WebSite</label>
-                <input
-                  type="url"
-                  name="website"
-                  id="inputUrlWebSite"
-                  placeholder="https://website.com"
-                  pattern="https://.*"
-                  class="form-control"
-                />
-              </div>
-              <!-- <div class="form-group">
-                <label for="inputUrlWebSite">URL Image</label>
-                <input
-                  type="url"
-                  name="imageUrl"
-                  id="inputUrlImage"
-                  placeholder="https://Image.com"
-                  pattern="https://.*"
-                  class="form-control"
-                />
-              </div> -->
-            </div>
-            <!-- <div
-              class="col-sm-12 col-md-2 d-flex justify-content-center align-items-center"
-            >
-              <div class="form-group">
-                <label for="inputImage">
-                  <img
-                    src="/img/input_image.svg"
-                    alt="Selecciones una imagen"
-                    width="48"
-                    height="48"
-                  />
-                </label>
-                <input
-                  id="inputImage"
-                  name="images"
-                  type="file"
-                  accept="image/*"
-                  style="display: none;"
-                  multiple
-                />
-              </div>
-
-            </div> -->
+        <!-- Input with a preview of images -->
+        <!-- When creating a new project, you need to send an object {img:[]} -->
+        <%- include ('../partials/inputImages.html',{imgs:[]}) %>
+        <div class="form-group">
+          <label for="content">Description</label>
+          <input id="content" name="content" type="hidden">
+          <div id="editor">
           </div>
-          <!-- Input with a preview of images -->
-          <!-- When creating a new project, you need to send an object {img:[]} -->
-          <%- include ('../partials/inputImages.html',{imgs:[]}) %>
-          <div class="form-group">
-            <label for="inputDescription">Descriptión</label>
-            <textarea
-              class="form-control"
-              id="inputDescription"
-              name="description"
-              rows="7"
-            ></textarea>
-          </div>
-          <div class="form-row">
-            <!-- <button
-              type="submit"
-              id="addProject"
-              class="btn btn-primary mx-auto"
-            >
-              Add
-            </button> -->
-            <button
-              type="submit"
-              class="btn btn-primary mx-auto"
-            >
-              Add
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="form-row">
+          <button
+            type="submit"
+            class="btn btn-primary mx-auto"
+          >
+            Add
+          </button>
+        </div>
+      </form>
     </main>
   </body>
   <%- include ('../partials/footer.html')%>

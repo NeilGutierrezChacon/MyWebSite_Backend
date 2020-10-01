@@ -72,27 +72,27 @@
       "methods": ["GET"]
     },
     {
-      "src": "/admin/manage-projects",
+      "src": "/admin/manage-projects/(?<project>[^/]*)/delete",
       "dest": "src/index.js",
-      "methods": ["DELETE"]
+      "methods": ["POST"]
     },
     {
-      "src": "/admin/edit-project",
-      "dest": "src/index.js",
-      "methods": ["GET"]
-    },
-    {
-      "src": "/admin/edit-project",
-      "dest": "src/index.js",
-      "methods": ["PUT"]
-    },
-    {
-      "src": "/admin/add-project",
+      "src": "/admin/manage-projects/(?<project>[^/]*)/edit",
       "dest": "src/index.js",
       "methods": ["GET"]
     },
     {
-      "src": "/admin/add-project",
+      "src": "/admin/manage-projects/(?<project>[^/]*)/edit",
+      "dest": "src/index.js",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/admin/manage-projects/add",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/admin/manage-projects/add",
       "dest": "src/index.js",
       "methods": ["POST"]
     },

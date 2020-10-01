@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Manage projects</title>
     <%- include ('../partials/head.html')%>
   </head>
   <body>
@@ -43,7 +43,7 @@
                     <%= project.title %>
                   </td>
                   <td>
-                    <a type="button" href="/admin/edit-project?id=<%= project.id %>" class="btn">
+                    <a type="button" href="/admin/manage-projects/<%= project.id %>/edit" class="btn">
                       <i class="fas fa-edit fa-lg"></i>
                     </a>
                     <button
@@ -62,7 +62,7 @@
             </table>
             <a
               type="button"
-              href="/admin/add-project"
+              href="/admin/manage-projects/add"
               class="btn btn-outline-primary float-right"
               >Add Project</a>
           </div>
