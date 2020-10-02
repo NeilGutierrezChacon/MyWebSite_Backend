@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add post</title>
+    <%- include ('../partials/head.html')%>
+  </head>
+  <body>
+    <%- include ('../partials/header.html')%>
+    <main class="container admin page-add-post">
+      <div class="row row-main">
+        <section class="col-md-10 col-sm-12">
+          <div class="row mb-3">
+            <div class="col">
+              <h3>Add post</h3>
+            </div>
+          </div>
+          <form
+            class="form-quill"
+            action="/admin/manage-posts/add"
+            method="POST"
+            enctype="multipart/form-data" 
+          >
+            <div class="mb-3">
+                <!-- Title post -->
+                <label for="inputTitle">Title</label>
+                <input
+                  type="text"
+                  class=" form-control"
+                  name="title"
+                  id="inputTitle"
+                />
+            </div>
+            <!-- Text Editor -->
+            <div class="form-group">
+              <label for="content">Description</label>
+              <input id="content" name="content" type="hidden">
+              <div id="editor">
+              </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary mx-auto mt-3">
+              Save
+            </button>
+          </form>
+        </section>
+        <section class="col-md-2 col-sm-12 d-none d-md-block">
+          <div class="row">
+            <button type="button" id-form="form-add-post" class="btn-save btn btn-primary mx-auto">
+              Save
+            </button>
+          </div>
+        </section>
+      </div>
+        
+    </main>
+  </body>
+  <%- include ('../partials/footer.html')%>
+</html>

@@ -97,7 +97,32 @@
       "methods": ["POST"]
     },
     {
-      "src": "/admin/save-post",
+      "src": "/admin/manage-posts",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/admin/manage-posts/add",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/admin/manage-posts/add",
+      "dest": "src/index.js",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/admin/manage-posts/(?<post>[^/]*)/edit",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/admin/manage-posts/(?<post>[^/]*)/edit",
+      "dest": "src/index.js",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/admin/manage-posts/(?<post>[^/]*)/delete",
       "dest": "src/index.js",
       "methods": ["GET"]
     },

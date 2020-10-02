@@ -304,64 +304,78 @@ router.post(
   }
 );
 
-router.get("/admin/save-post", async (req, res) => {
+router.get("/admin/manage-posts",verifyToken, async (req, res) => {
+  const posts = await Post.find();
+  res.render("admin/managePosts.html", { posts });
+});
 
-  let post = {
-      id:"",title:"",content:""
-    }
+router.get("/admin/manage-posts/add",verifyToken, async (req, res) => {
 
-  res.render("admin/savePost.html",{post});
+  res.render("admin/addPost.html");
 
 });
 
-router.get("/admin/save-post/:id", async (req, res) => {
-
-  let id = req.params.id;
-  let post = await Post.findById({ _id: id });
-  console.log(post);
-  res.render("admin/savePost.html",{post});
-
-});
-
-router.post("/admin/save-post",verifyToken,upload.array("images"), async (req, res) => {
+router.post("/admin/manage-posts/add",verifyToken,upload.array("images"), async (req, res) => {
+  console.log("-- New post Add --");
   console.log(req.body);
-  const {id ,title, content } = req.body;
-  if(!id){
-    console.log("-- New post Add --");
+  const {title, content } = req.body;
+  try {
     const post = new Post({
       title,
       updateDate: new Date(),
       content
   
     });
-    try {
-      const info = await post.save();
-      console.log(info);
-      res.json({save:true});
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({save:false});
-    }
-  }else{
-    console.log("-- Post update --");
-    try {
-      const info = await Post.updateOne(
-        { _id: id },
-        {
-          title,
-          updateDate: new Date(),
-          content
-        }
-      );
-      console.log(info);
-      res.json({save:true});
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({save:false});
-    }
-    
+    const info = await post.save();
+    console.log(info);
+    res.redirect("/admin/manage-posts");
+  } catch (error) {
+    console.error(error);
+    res.status(500);
   }
   
+});
+
+router.get("/admin/manage-posts/:post/edit",verifyToken, async (req, res) => {
+
+  let id = req.params.post;
+  let post = await Post.findById({ _id: id });
+  console.log(post);
+  res.render("admin/editPost.html",{post});
+
+});
+
+router.post("/admin/manage-posts/:post/edit",verifyToken,upload.array("images"), async (req, res) => {
+  console.log("-- Post update --");
+  try {
+    console.log(req.body);
+    const {title, content } = req.body;
+    const id = req.params.post;
+    const info = await Post.updateOne(
+      { _id: id },
+      {
+        title,
+        updateDate: new Date(),
+        content
+      }
+    );
+    console.log(info);
+    res.redirect("/admin/manage-posts");
+  } catch (error) {
+    console.error(error);
+    res.status(500);
+  }
+    
+});
+
+router.get("/admin/manage-posts/:post/delete", verifyToken, async (req, res) => {
+  console.log("-- Delete Post -- ")
+  const postId  = req.params.post;
+  const info = await Post.deleteOne({ _id: postId });
+
+  console.log(info);
+  
+  res.redirect("/admin/manage-posts");
 });
 
 router.get("/cookies", (req, res) => {
