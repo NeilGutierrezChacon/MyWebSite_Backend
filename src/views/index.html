@@ -154,6 +154,10 @@
               </div>
           <% }); %>
         </div>
+        <% if (auth) { %>
+          <%- include ('partials/controlAdmin.html')%>
+        <% } %>
+        
     </main>
     <%- include ('partials/footer.html')%>
   </body>

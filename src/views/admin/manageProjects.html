@@ -68,6 +68,9 @@
           </div>
         </div>
       </div>
+      <% if (auth) { %>
+        <%- include ('../partials/controlAdmin.html')%>
+      <% } %>
     </main>
   </body>
   <%- include ('../partials/footer.html')%>

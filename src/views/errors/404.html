@@ -9,13 +9,15 @@
   <body>
     <%- include ('../partials/header.html')%>
     <main class="container page-error-500">
-        <div class="row row-main">
-            <div class="col-12 text-center">
-                <h1>404</h1>
-                <p>URL: <%= url %>, Not Found  </p>
-            </div>
-        </div>
-
+      <div class="row row-main">
+          <div class="col-12 text-center">
+              <h1>404</h1>
+              <p>URL: <%= url %>, Not Found  </p>
+          </div>
+      </div>
+      <% if (auth) { %>
+        <%- include ('partials/controlAdmin.html')%>
+      <% } %>
     </main>
     <%- include ('../partials/footer.html')%>
   </body>

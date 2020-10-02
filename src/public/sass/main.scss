@@ -2,6 +2,7 @@
 /* Specify all the css of the web site */
 
 $primary-color: #042145;
+$secondary-color:#020C1A;
 
 body {
     position: relative;
@@ -28,7 +29,7 @@ body {
         bottom: 0;
         width: 100%;
         height: auto;
-        z-index: 2;
+        z-index: 1;
         background-color: #042145;
         padding: 3rem 0;
         /* margin-top: 1em; */
@@ -97,6 +98,76 @@ body {
         }
         @media (min-width: 576px) {
             padding: 3rem 1rem;
+        }
+    }
+    & .control-admin{
+        position: fixed;
+        bottom: 8%;
+        right: 1%;
+        background:transparent;
+        border-radius: 75%;
+        padding: 0.2em;
+        z-index: 2;
+        & .toggle-admin{
+            background-color: $secondary-color;
+            border-radius: 75%;
+            z-index: 2;
+            padding: 1.5em;
+            width: 5em;
+            height: 5em;
+            border: 1px solid $secondary-color;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* box-shadow: 0 4px 4px #aaa; */
+            & i{
+                color: white;
+            }
+            &:focus{
+                outline: none;
+            }
+        }
+        & .menu-admin{
+            margin: 0;
+            list-style: none;
+            visibility: hidden;
+            & .option-admin{
+                position: absolute;
+                background-color: $secondary-color;
+                border-radius: 75%;
+                padding: 0.6em;
+                color: white;
+                width: 4em;
+                height: 4em;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: all 0.5s ease;
+                bottom: 7%;
+                right: 3%;
+                & i{
+                    color: white;
+                }
+            }
+        }
+        & .active.menu-admin{
+            & .option-admin{
+                visibility: visible;
+                bottom: 8%;
+                right: 1%;
+                &:nth-of-type(1){
+                    transform: translate(0em,-6em);
+                }
+                &:nth-of-type(2){
+                    transform: translate(-4em,-5em);
+                }
+                &:nth-of-type(3){
+                    transform: translate(-6em,-1.3em);
+                }
+                &:nth-of-type(4){
+                    transform: translate(-5em,2.8em);
+                }
+            }
         }
     }
 }

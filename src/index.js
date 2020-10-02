@@ -46,11 +46,14 @@ app.use(express.static(path.join(__dirname, "public")));
 /*  Error handling middleware */
 
 app.use((req, res, next) => {
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
   res.status(404);
 
   res.format({
     html: function () {
-      res.render('errors/404.html', { url: req.url })
+      res.render('errors/404.html', { url: req.url, auth })
     },
     json: function () {
       res.json({ error: 'Not found' })
@@ -64,9 +67,11 @@ app.use((req, res, next) => {
 /* Only show in production */
 if(node_env == "prod"){
   app.use((err, req, res, next) => {
-  
+    let auth = false;
+    if(req.cookies.token) auth = true;
+
     res.status(err.status || 500);
-    res.render('errors/500.html', { error: err });
+    res.render('errors/500.html', { error: err, auth });
   
   }); 
 }

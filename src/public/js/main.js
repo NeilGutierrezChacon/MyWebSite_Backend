@@ -455,7 +455,20 @@ var view = {
    */
   showAdminView: function () {
     if (controller.checkCookie("token")) {
-      document.getElementById("adminMenu").style.display = "list-item";
+      let controls = document.getElementsByClassName("control-admin");
+      Array.from(controls).forEach(control => {
+        control.style.display = "block";
+        let toggle = control.getElementsByClassName("toggle-admin")[0];
+        toggle.addEventListener("click",()=>{
+          let menu = control.getElementsByClassName("menu-admin")[0];
+          if(menu.classList.contains("active")){
+            menu.classList.remove("active");
+          }else{
+            menu.classList.add("active");
+          }
+        });
+        
+      });
     }
   },
   /**

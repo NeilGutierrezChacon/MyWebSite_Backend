@@ -31,37 +31,40 @@ const { Router } = require("express");
 router.get("/", async (req, res) => {
   let projects = await Project.find().limit(4);
   console.log(projects);
-
-  /* projects.forEach((project) => {
-    project.description = reduceTextDescription(project.description, 20, "...");
-  }); */
-  res.render("index.html", { projects });
+  let auth = false;
+  if(req.cookies.token) auth = true;
+    
+  res.render("index.html", { projects,auth});
 });
 
 /* Projects */
 
 router.get("/projects", async (req, res) => {
   let projects = await Project.find();
+  let auth = false;
+  if(req.cookies.token) auth = true;
 
-  /* projects.forEach((project) => {
-    project.description = reduceTextDescription(project.description, 20, "...");
-  }); */
-
-  res.render("my_projects.html", { projects });
+  res.render("my_projects.html", { projects,auth });
 });
 
 router.get("/projects/:id", async (req, res) => {
   const project = await Project.findById({ _id: req.params.id });
   console.log(project);
-  res.render("projectDetail.html", { project });
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("projectDetail.html", { project,auth });
 });
 
 
 /* Blog */
-router.get("/blog/", async (req, res) => {
+router.get("/blog", async (req, res) => {
   const posts = await Post.paginate({},{limit:5});
   console.log(posts);
-  res.render("blog.html", {posts});
+  let auth = false;
+  if(req.cookies.token) auth = true;
+  
+  res.render("blog.html", {posts, auth});
 });
 
 /* Blog for page */
@@ -71,18 +74,27 @@ router.get("/blog/:page", async (req, res) => {
   const limit = 5 ;
   const posts = await Post.paginate({},{limit,page});
   console.log(posts);
-  res.render("blog.html", {posts});
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("blog.html", {posts,auth});
 });
 
 router.get("/blog/post/:id", async (req, res) => {
   const postId = req.params.id;
   const post = await Post.findById({ _id: postId });
   console.log(post);
-  res.render("postDetail.html",{post});
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("postDetail.html",{post,auth});
 });
 
 router.get("/contact", (req, res) => {
-  res.render("contact.html");
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("contact.html",{auth});
 });
 
 router.post("/contact", async (req, res) => {
@@ -137,8 +149,12 @@ router.get("/admin", (req, res) => {
   let info = {
     message:""
   };
-  if(req.query.message) info.message = req.query.message;  
-  res.render("admin/logIn.html",{info});
+  if(req.query.message) info.message = req.query.message;
+
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("admin/logIn.html",{info,auth});
 });
 
 router.post("/admin", (req, res) => {
@@ -174,40 +190,74 @@ router.post("/admin", (req, res) => {
 });
 
 router.get("/admin/my-profile", verifyToken, (req, res) => {
-  res.render("admin/myProfile.html");
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("admin/myProfile.html",{auth});
 });
 
 router.get("/admin/manage-projects",verifyToken, async (req, res) => {
   const projects = await Project.find();
-  res.render("admin/manageProjects.html", { projects });
+
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("admin/manageProjects.html", { projects, auth });
 });
 
-router.post("/admin/manage-projects/:project/delete", verifyToken, async (req, res) => {
+router.get("/admin/manage-projects/add",verifyToken, (req, res) => {
+  let auth = false;
+  if(req.cookies.token) auth = true;
 
-  const projectId  = req.params.project;
-  const info = await Project.findByIdAndDelete({ _id: projectId });
-
-  console.log(info);
-  
-  info.imgsPubId.forEach(async (element) => {
-    let infoDestroy = await cloudinary.v2.uploader.destroy(element);
-    console.log(infoDestroy);
-  });
-  res.status(200).json({ delete: true });
-
-
+  res.render("admin/addProject.html",{auth});
 });
+
+router.post("/admin/manage-projects/add",verifyToken,
+  upload.array("images"),
+  async (req, res) => {
+    try {
+      let imgs = Array();
+      let imgsPubId = Array();
+      const { title, description, github, website, content } = req.body;
+      console.log("-- Add project --");
+      console.log(req.body);
+      for (let i = 0; i < req.files.length; i++) {
+        let result = await uploadFromBuffer(req.files[i], "myWebSite");
+        imgs.push(result.secure_url);
+        imgsPubId.push(result.public_id);
+      }
+      const project = new Project({
+        title,
+        description,
+        content,
+        github,
+        website,
+        imgs,
+        imgsPubId,
+        updateDate: new Date(),
+      });
+      console.log(project);
+      await project.save();
+      res.redirect(301, "/admin/manage-projects");
+    } catch (error) {
+      console.log(error);
+      res.status(500);
+    }
+  }
+);
 
 router.get("/admin/manage-projects/:project/edit",verifyToken, async (req, res) => {
   const projectId = req.params.project;
   const project = await Project.findById({ _id: projectId });
   console.log(project);
-  res.render("admin/editProject.html", { project });
+
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("admin/editProject.html", { project, auth });
 });
 
-router.post(
-  "/admin/manage-projects/:project/edit",
-  verifyToken,
+router.post("/admin/manage-projects/:project/edit",verifyToken,
   upload.array("images"),
   async (req, res) => {
     console.log("-- Edit Project --");
@@ -264,55 +314,36 @@ router.post(
   }
 );
 
-router.get("/admin/manage-projects/add",verifyToken, (req, res) => {
-  res.render("admin/addProject.html");
-});
+router.post("/admin/manage-projects/:project/delete", verifyToken, async (req, res) => {
 
-router.post(
-  "/admin/manage-projects/add",
-  verifyToken,
-  upload.array("images"),
-  async (req, res) => {
-    try {
-      let imgs = Array();
-      let imgsPubId = Array();
-      const { title, description, github, website, content } = req.body;
-      console.log("-- Add project --");
-      console.log(req.body);
-      for (let i = 0; i < req.files.length; i++) {
-        let result = await uploadFromBuffer(req.files[i], "myWebSite");
-        imgs.push(result.secure_url);
-        imgsPubId.push(result.public_id);
-      }
-      const project = new Project({
-        title,
-        description,
-        content,
-        github,
-        website,
-        imgs,
-        imgsPubId,
-        updateDate: new Date(),
-      });
-      console.log(project);
-      await project.save();
-      res.redirect(301, "/admin/manage-projects");
-    } catch (error) {
-      console.log(error);
-      res.status(500);
-    }
-  }
-);
+  const projectId  = req.params.project;
+  const info = await Project.findByIdAndDelete({ _id: projectId });
+
+  console.log(info);
+  
+  info.imgsPubId.forEach(async (element) => {
+    let infoDestroy = await cloudinary.v2.uploader.destroy(element);
+    console.log(infoDestroy);
+  });
+  res.status(200).json({ delete: true });
+
+
+});
 
 router.get("/admin/manage-posts",verifyToken, async (req, res) => {
   const posts = await Post.find();
-  res.render("admin/managePosts.html", { posts });
+
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("admin/managePosts.html", { posts, auth });
 });
 
 router.get("/admin/manage-posts/add",verifyToken, async (req, res) => {
+  let auth = false;
+  if(req.cookies.token) auth = true;
 
-  res.render("admin/addPost.html");
-
+  res.render("admin/addPost.html",{ auth });
 });
 
 router.post("/admin/manage-posts/add",verifyToken,upload.array("images"), async (req, res) => {
@@ -341,7 +372,11 @@ router.get("/admin/manage-posts/:post/edit",verifyToken, async (req, res) => {
   let id = req.params.post;
   let post = await Post.findById({ _id: id });
   console.log(post);
-  res.render("admin/editPost.html",{post});
+
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("admin/editPost.html",{post, auth});
 
 });
 
@@ -379,19 +414,31 @@ router.get("/admin/manage-posts/:post/delete", verifyToken, async (req, res) => 
 });
 
 router.get("/cookies", (req, res) => {
-  res.render("cookies.html");
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("cookies.html",{auth});
 });
 
 router.get("/privacy-policy", (req, res) => {
-  res.render("privacyPolicy.html");
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("privacyPolicy.html",{auth});
 });
 
 router.get("/user-manual", (req, res) => {
-  res.render("userManual.html");
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("userManual.html",{auth});
 });
 
 router.get("/legal-notice", (req, res) => {
-  res.render("legalNotice.html");
+  let auth = false;
+  if(req.cookies.token) auth = true;
+
+  res.render("legalNotice.html",{auth});
 });
 
 router.get("/db-test", async (req, res) => {

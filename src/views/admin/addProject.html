@@ -74,6 +74,9 @@
           </button>
         </div>
       </form>
+      <% if (auth) { %>
+        <%- include ('../partials/controlAdmin.html')%>
+      <% } %>
     </main>
   </body>
   <%- include ('../partials/footer.html')%>
