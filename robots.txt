@@ -1,0 +1,6 @@
+User-agent: * 
+
+Disallow: /admin/
+
+
+Sitemap: https://ngch43.xyz/sitemap.xml
