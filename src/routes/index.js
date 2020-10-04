@@ -427,13 +427,6 @@ router.get("/privacy-policy", (req, res) => {
   res.render("privacyPolicy.html",{auth});
 });
 
-router.get("/user-manual", (req, res) => {
-  let auth = false;
-  if(req.cookies.token) auth = true;
-
-  res.render("userManual.html",{auth});
-});
-
 router.get("/legal-notice", (req, res) => {
   let auth = false;
   if(req.cookies.token) auth = true;

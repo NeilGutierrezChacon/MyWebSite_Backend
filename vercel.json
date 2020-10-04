@@ -142,11 +142,6 @@
       "methods": ["GET"]
     },
     {
-      "src": "/user-manual",
-      "dest": "src/index.js",
-      "methods": ["GET"]
-    },
-    {
       "src": "/legal-notice",
       "dest": "src/index.js",
       "methods": ["GET"]

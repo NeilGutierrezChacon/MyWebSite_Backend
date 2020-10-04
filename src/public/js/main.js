@@ -3,7 +3,7 @@
  * @description Structuring in MCV
  */
 
-/* window.onload = function () { */
+window.onload = function () {
 
 var data = {
   editor: null
@@ -26,60 +26,20 @@ var model = {
 var controller = {
 
   init: function () {
-    console.log("init controller");
+    /* console.log("init controller"); */
     controller.settingNavMenu();
     controller.initSlider();
     controller.initEditor();
     controller.settingNavMenu();
     view.init();
   },
-
-  sendFormLogIn: function (email, passowrd) {
-    axios
-      .post("/admin", {
-        email: email,
-        password: passowrd,
-      })
-      .then(function (response) {
-        console.log(response);
-        /* let token = response.data.token;
-        if (token) {
-          document.cookie = `token=${token}`;
-          window.location.replace("/Admin/MyProfile");
-        } */
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .then(function () {
-        // always executed
-      });
-  },
   deleteProject: function (id) {
-    console.log(id);
     axios
       .post("/admin/manage-projects/"+id+"/delete", {
         params: { id },
       })
       .then(function (response) {
         if (response.data.delete) {
-          window.location.replace("/admin/manage-projects");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  },
-  savePost: function (post){
-    axios
-      .post("/admin/save-post", post, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        console.log(response.data.save);
-        if (response.data.save) {
           window.location.replace("/admin/manage-projects");
         }
       })
@@ -110,28 +70,43 @@ var controller = {
       return false;
     }
   },
-  onChange: function (event) {
-    /* Preview with of images */
+  /**
+   * @function preViewImages
+   * @description Show a pre view of images upload in a input file type 
+   * @param {*} event Evento upload image.
+   */
+  preViewImages: function (event) {
 
-    let conteiner = view.getContPreViewImages();
-    conteiner.innerHTML = "";
-    let files = event.target.files;
-    for (let i = 0; i < files.length; i++) {
-      let reader = new FileReader();
-      reader.onload = function (e) {
-        // The file's text will be printed here
-        console.log(e.target.result);
-        view.getImage().src = e.target.result;
-
-        let img = document.createElement("img");
-        img.src = e.target.result;
-        conteiner.appendChild(img);
-      };
-      reader.readAsDataURL(files[i]);
+    let container = view.getContPreViewImages();
+    if(container){
+      container.innerHTML = "";
+      let files = event.target.files;
+      for (let i = 0; i < files.length; i++) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+          // The file's text will be printed here
+          /* console.log(e.target.result); */
+          let inputImage = view.getInputImage();
+          if(inputImage){
+            inputImage.src = e.target.result;
+          }
+          
+          let img = document.createElement("img");
+          img.src = e.target.result;
+          container.appendChild(img);
+        };
+        reader.readAsDataURL(files[i]);
+      }
     }
   },
+  /**
+   * @function initSlider
+   * @description look for all elements with class "swiper-container" 
+   * if the element has a "type-slider" attribute the slider starts with 
+   * this type otherwise the slider starts with the default settings.
+   * Supported type: 3D-coverflow.
+   */
   initSlider: function () {
-    console.log("init slider");
     let sliders = document.getElementsByClassName("swiper-container");
     Array.from(sliders).forEach(slider => {
       let type = slider.getAttribute("type-slider");
@@ -192,6 +167,11 @@ var controller = {
     });
     
   },
+  /**
+   * @function initEditor
+   * @description Find the first element with id "Editor" and started a quill editor
+   * with default config.
+   */
   initEditor: function (){
     let toolbarOptions = [
       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -214,43 +194,47 @@ var controller = {
       placeholder: 'Compose an epic...',
       theme: 'snow'
     };
-    try {
-      let editor = new Quill('#editor', options);
+    let editor = document.querySelector("#editor");
+    if(editor){
+      editor = new Quill(editor, options);
       /* console.log(editor); */
       model.saveEditor(editor);
-    } catch (error) {
-      /* console.log(error); */
     }
-      
   },
   getEditor:function(){
     return model.getEditor();
   },
+
+  /**
+   * @function settingNavMenu
+   * @description Add the "active" class when the page URL is equal 
+   * to the href of the menu item link and removed the "active" class when it is
+   * not equal.
+   */
   settingNavMenu:function(){
-    let menu = document.getElementById('nav-menu');
-    let nav_items = menu.getElementsByClassName("nav-item");
-    let current_path = window.location.pathname.split('/')[1];
-    Array.from(nav_items).forEach(item => {
-      let item_path = item.getElementsByClassName('nav-link')[0]
-                            .getAttribute('href')
-                              .split('/')[1];
-      if(item_path == current_path){
-        item.classList.add('active');
-      }else if(item.classList.contains('active')){
-        item.classList.remove('active');
-      }
-      
-    });
-
+    let menu = document.querySelector('#nav-menu');
+    if(menu){
+      let nav_items = menu.getElementsByClassName("nav-item");
+      let current_path = window.location.pathname.split('/')[1];
+      Array.from(nav_items).forEach(item => {
+        let item_path = item.getElementsByClassName('nav-link')[0]
+                              .getAttribute('href')
+                                .split('/')[1];
+        if(item_path == current_path){
+          item.classList.add('active');
+        }else if(item.classList.contains('active')){
+          item.classList.remove('active');
+        }
+        
+      });
+    }
   }
-
 };
 
 /* VIEW */
 var view = {
   init: function () {
-    console.log("init view");
-    view.eventSendFormLogIn();
+    /* console.log("init view"); */
     view.eventShowInputNewPassword();
     view.showAdminView();
     view.eventPaginationBlogNext();
@@ -260,124 +244,21 @@ var view = {
     view.eventShowBlockList();
     view.saveFormWithQuillEditor();
   },
-  getEmail: function () {
-    try {
-      return document.getElementById("inputEmail").value;
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  getPassword: function () {
-    try {
-      return document.getElementById("inputPassword").value;
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  getCheckNewPassword: function () {
-    try {
-      return document.getElementById("checkNewPassword");
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  getFormGroupNewPassword: function () {
-    try {
-      return document.getElementById("form-group-new-password");
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  getTitle: function () {
-    try {
-      return document.getElementById("inputTitle").value;
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  getUrlGitHub: function () {
-    try {
-      return document.getElementById("inputUrlGitHub").value;
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  getUrlWebSite: function () {
-    try {
-      return document.getElementById("inputUrlWebSite").value;
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  getUrlImage: function () {
-    try {
-      return document.getElementById("inputUrlImage").value;
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  getImage: function () {
-    try {
-      return document.getElementById("inputImage");
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  getDescription: function () {
-    try {
-      return document.getElementById("inputDescription").value;
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  getProjectId: function () {
-    try {
-      return document.getElementById("inputProjectId").value;
-    } catch (e) {
-      console.log(e);
-    }
+  getInputImage: function () {
+    return document.querySelector("#inputImage");
   },
   getContPreViewImages: function () {
-    try {
-      return document.getElementById("contPreViewImages");
-    } catch (error) {
-      console.log(error);
-    }
+    return document.querySelector("#contPreViewImages");
   },
-  getPaginationBlogNext: function () {
-    try {
-      return document.getElementById("next");
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  getPaginationBlogPrevious: function () {
-    try {
-      return document.getElementById("previous");
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  eventSendFormLogIn: function () {
-    try {
-      let logIn = document.getElementById("logIn");
-
-      logIn.addEventListener("click", (event) => {
-        let email = view.getEmail();
-        let password = view.getPassword();
-        event.preventDefault();
-        controller.sendFormLogIn(email, password);
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  },
+  /**
+   * @function eventShowInputNewPassword
+   * @description show the input to new password
+   */
   eventShowInputNewPassword: function () {
-    try {
-      /* Hide the new password field */
-      let checkNewPassword = view.getCheckNewPassword();
-      let formGroupNewPassword = view.getFormGroupNewPassword();
+    let checkNewPassword = document.querySelector("#checkNewPassword");
+    if(checkNewPassword){
       checkNewPassword.addEventListener("click", () => {
+        let formGroupNewPassword = document.querySelector("#form-group-new-password");
         if (!checkNewPassword.checked) {
           checkNewPassword.value = true;
           formGroupNewPassword.style.display = "none";
@@ -386,8 +267,6 @@ var view = {
           formGroupNewPassword.style.display = "block";
         }
       });
-    } catch (e) {
-      console.log(e);
     }
   },
   /**
@@ -402,10 +281,10 @@ var view = {
     try {
       let deltas = document.getElementsByClassName("delta");
       Array.from(deltas).forEach(delta => {
-        console.log(delta);
+        /* console.log(delta); */
         if(delta.getAttribute("value")){
           let inputDelta = JSON.parse(delta.getAttribute("value"));
-          console.log(inputDelta);
+          /* console.log(inputDelta); */
           let contTemp = document.createElement("div");
           let quill = new Quill(contTemp,{});
           quill.setContents(inputDelta.ops);
@@ -486,74 +365,75 @@ var view = {
     } 
   },
   eventPaginationBlogNext: function () {
-    try{
-      let btn_next = view.getPaginationBlogNext();
+    let btn_next = document.querySelector("#next");
+    if(btn_next){
       btn_next.addEventListener("click", (e) => {
         e.preventDefault();
         let path = window.location.pathname;
         let pagination = path.split("/")[path.split("/").length - 1];
-        console.log("Pagination: " + (parseInt(pagination) + 1));
         window.location.replace("/Blog/" + (parseInt(pagination) + 1));
       });
-    }catch(e){
-      console.log(e);
     }
-    
   },
   eventPaginationBlogPrevious: function () {
-    try{
-      let btn_previous = view.getPaginationBlogPrevious();
+    let btn_previous = document.querySelector("#previous");
+    if(btn_previous){
       btn_previous.addEventListener("click", (e) => {
         e.preventDefault();
         let path = window.location.pathname;
         let pagination = path.split("/")[path.split("/").length - 1];
         pagination = parseInt(pagination) - 1;
         if(pagination>0){
-          console.log("Pagination: " + pagination);
           window.location.replace("/Blog/" + pagination);
         }
         
       });
-    }catch(e){
-      console.log(e);
-    }
-    
+    } 
   },
+  /**
+   * @function eventShowBlockList
+   * @description Search all elements with class "block-list-toggle" and attribute 
+   * list-id with id of the list to control, then if the list has an "init_state" 
+   * attribute equal to "visible" shows the list otherwise, hide the list and 
+   * add block-list-height attribute with your default height, 
+   * then add a click event to the toggle item to display or hide the list.
+   * 
+   */
   eventShowBlockList: function(){
-    let toggles = document.getElementsByClassName("block-list-toggle");
+    let toggles = document.querySelectorAll(".block-list-toggle[list-id]");
     Array.from(toggles).forEach(toggle => {
       var list_id = toggle.getAttribute("list-id");
-      var list = document.getElementById(list_id);
-      if(list.clientHeight > 0){
-        list.setAttribute('block-list-height',list.clientHeight);
-        if(list.getAttribute('init_state') == "visible"){
-          list.style.visibility = 'visible';
-          list.style.height = list.clientHeight + 'px';
-        }else{
-          list.style.visibility = 'hidden';
-          list.style.height = '0';
+      var list = document.querySelector("#"+list_id);
+      if(list){
+        if(list.clientHeight > 0){
+          list.setAttribute('block-list-height',list.clientHeight);
+          if(list.getAttribute('init_state') == "visible"){
+            list.style.visibility = 'visible';
+            list.style.height = list.clientHeight + 'px';
+          }else{
+            list.style.visibility = 'hidden';
+            list.style.height = '0';
+          }
         }
-      }
-      toggle.addEventListener('click',() => {
-        let toggle_icon = toggle.getElementsByTagName('i')[0];
-        console.log(toggle_icon);
-        let list_height = list.getAttribute('block-list-height');
-        console.log(list.style.visibility);
-        if(list.style.visibility == 'hidden' || list.style.visibility == '' ){
-          list.style.visibility = 'visible';
-          list.style.height = list_height + 'px';
-          toggle_icon.classList.remove('fa-caret-down');
-          toggle_icon.classList.add('fa-caret-up');
-        }else{
-          list.style.visibility = 'hidden';
-          list.style.height = '0';
-          toggle_icon.classList.remove('fa-caret-up');
-          toggle_icon.classList.add('fa-caret-down');
-        }
-      })
+        toggle.addEventListener('click',() => {
+          let toggle_icon = toggle.getElementsByTagName('i')[0];
+          let list_height = list.getAttribute('block-list-height');
+          if(list.style.visibility == 'hidden' || list.style.visibility == '' ){
+            list.style.visibility = 'visible';
+            list.style.height = list_height + 'px';
+            toggle_icon.classList.remove('fa-caret-down');
+            toggle_icon.classList.add('fa-caret-up');
+          }else{
+            list.style.visibility = 'hidden';
+            list.style.height = '0';
+            toggle_icon.classList.remove('fa-caret-up');
+            toggle_icon.classList.add('fa-caret-down');
+          }
+        })
+      }     
     });
   }
 };
 
 controller.init();
-/* }; */
+};

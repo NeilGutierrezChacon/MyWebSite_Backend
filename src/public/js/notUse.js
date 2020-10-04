@@ -1,4 +1,22 @@
-notUser = {
+var notUsed = {
+    savePost: function (post){
+      
+      axios
+        .post("/admin/save-post", post, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(function (response) {
+          console.log(response.data.save);
+          if (response.data.save) {
+            window.location.replace("/admin/manage-projects");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     eventSaveProcessForm: function(){
         try {
             let btns = document.getElementsByClassName("btn-save");
@@ -25,6 +43,34 @@ notUser = {
         } catch (e) {
             console.log(e);
         }
+    },
+    eventSendFormLogIn: function () {
+      try {
+        let logIn = document.getElementById("logIn");
+  
+        logIn.addEventListener("click", (event) => {
+          let email = view.getEmail();
+          let password = view.getPassword();
+          event.preventDefault();
+          controller.sendFormLogIn(email, password);
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    getEmail: function () {
+      try {
+        return document.getElementById("inputEmail").value;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    getPassword: function () {
+      try {
+        return document.getElementById("inputPassword").value;
+      } catch (e) {
+        console.log(e);
+      }
     },
     onChange: function (event) {
         /* let file = event.target.files[0];
@@ -85,6 +131,48 @@ notUser = {
           console.log(e);
         }
     },
+    getProjectId: function () {
+      try {
+        return document.getElementById("inputProjectId").value;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    getDescription: function () {
+      try {
+        return document.getElementById("inputDescription").value;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    getUrlImage: function () {
+      try {
+        return document.getElementById("inputUrlImage").value;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    getTitle: function () {
+      try {
+        return document.getElementById("inputTitle").value;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    getUrlWebSite: function () {
+      try {
+        return document.getElementById("inputUrlWebSite").value;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    getUrlGitHub: function () {
+      try {
+        return document.getElementById("inputUrlGitHub").value;
+      } catch (e) {
+        console.log(e);
+      }
+    },
     eventAddProject: function () {
         try {
             let btnAdd = document.getElementById("addProject");
@@ -138,5 +226,27 @@ notUser = {
           .catch(function (error) {
             console.log(error);
           });
+    },
+    sendFormLogIn: function (email, passowrd) {
+      console.log("-- not used --")
+      axios
+        .post("/admin", {
+          email: email,
+          password: passowrd,
+        })
+        .then(function (response) {
+          console.log(response);
+          /* let token = response.data.token;
+          if (token) {
+            document.cookie = `token=${token}`;
+            window.location.replace("/Admin/MyProfile");
+          } */
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+        .then(function () {
+          // always executed
+        });
     },
 }
