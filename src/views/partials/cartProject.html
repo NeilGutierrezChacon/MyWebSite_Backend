@@ -1,14 +1,16 @@
 <div
-  class="card mt-4 mx-auto h-100"
-  style="max-width: 18rem;"
+  class="card mt-4 card-project"
 >
-  <a href="/projects/<%= project.id %>">
-    <img
-    src="<%= (project.imgs[0]) ? project.imgs[0]: '/img/img_not_found.png'  %>"
-    class="card-img-top"
-    alt="Image of the project"
-    />
-  </a>
+  <div class="cont-img-top">
+    <a href="/projects/<%= project.id %>">
+      <img
+      src="<%= (project.imgs[0]) ? project.imgs[0]: '/img/img_not_found.png'  %>"
+      class="card-img-top"
+      alt="Image of the project"
+      />
+    </a>
+  </div>
+  
   
   <div class="card-body">
     
