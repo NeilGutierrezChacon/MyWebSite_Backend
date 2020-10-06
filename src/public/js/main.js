@@ -3,7 +3,7 @@
  * @description Structuring in MCV
  */
 
-window.onload = function () {
+/* window.onload = function () { */
 
 var data = {
   editor: null
@@ -436,4 +436,4 @@ var view = {
 };
 
 controller.init();
-};
+/* }; */
