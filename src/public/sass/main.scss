@@ -399,7 +399,7 @@ body {
                 opacity: 0.6;
             }
             & h6{
-                font-size: 2.5em;
+                font-size: 2em;
                 /* position: absolute;
                 width: 100%;
                 top: 45%; */
@@ -463,6 +463,15 @@ body {
                 & span{
                     background-color: transparent !important;
                 };
+                & .post-title{
+                    overflow: hidden;
+                    height: 2.5em;
+                    font-size: 2em;
+                }
+                & .post-content{
+                    overflow: hidden;
+                    height: 8em;
+                }
                 @media (min-width: 576px){
                     width: 65%;
                     padding-left: 2em;
@@ -628,10 +637,25 @@ body {
             }
         }
     }
+
+    & .delta{
+        & img{
+            width: 100%;
+            margin: auto;
+            display: block;
+            @media (min-width: 576px){
+                width: auto;
+            }
+        }
+    }
   
       
 }
 
+/* Post 5efaa8d122835f0007699dfa */
+.project-5efaa8d122835f0007699dfa{
+    
+}
 
 /* Page LogIn */
 .page-log-in{
