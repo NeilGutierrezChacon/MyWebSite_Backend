@@ -22,6 +22,11 @@
       "methods": ["GET"]
     },
     {
+      "src": "/projects/pagination/(?<page>[^/]*)",
+      "dest": "src/index.js",
+      "methods": ["GET"]
+    },
+    {
       "src": "/projects/(?<id>[^/]*)",
       "dest": "src/index.js",
       "methods": ["GET"]
@@ -143,11 +148,6 @@
     },
     {
       "src": "/legal-notice",
-      "dest": "src/index.js",
-      "methods": ["GET"]
-    },
-    {
-      "src": "/project/(?<id>[^/]*)",
       "dest": "src/index.js",
       "methods": ["GET"]
     },

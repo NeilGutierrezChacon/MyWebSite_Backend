@@ -245,8 +245,8 @@ var controller = {
     }
   },
   nextProjects: async function(){
-    /* console.log(data.nextProjects.hasNextPage);
-    console.log(data.nextProjects.nextPage); */
+    console.log(data.nextProjects.hasNextPage);
+    console.log(data.nextProjects.nextPage);
     if(data.nextProjects.hasNextPage){
       await model.loadNextProjects(data.nextProjects.nextPage);
       view.drawNextProjects(data.nextProjects.nextContent);
