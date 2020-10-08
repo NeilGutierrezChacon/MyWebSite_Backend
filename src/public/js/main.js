@@ -26,7 +26,7 @@ var model = {
   },
   /**
    * @function loadNextProjects
-   * @param {Int} page 
+   * @param {Int} page Number of the page to load
    * @description 
    * Execute the request on the server to load the projects by the specified "page" parameter, 
    * by default it takes the value of 1.
@@ -470,7 +470,7 @@ var view = {
   },
   /**
    * @function drawNextProjects
-   * @param {String} nextContent 
+   * @param {String} nextContent Content to draw in the page
    * @description If the page has the class "page-projects", 
    * Find the an element with class "card-deck-projects" and load the content
    * of the param "nextContent"
