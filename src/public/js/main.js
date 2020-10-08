@@ -6,7 +6,12 @@
 /* window.onload = function () { */
 
 var data = {
-  editor: null
+  editor: null,
+  nextProjects: {
+    nextContent:"",
+    hasNextPage:true,
+    nextPage:2
+  }
 }
 /* MODEL */
 var model = {
@@ -18,6 +23,16 @@ var model = {
   },
   getEditor: function(){
     return data.editor;
+  },
+  loadNextProjects:async function(page = 1){
+    await axios
+      .get("/projects/pagination/"+page)
+      .then((response) => {
+        data.nextProjects = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 };
 
@@ -25,7 +40,7 @@ var model = {
 /* CONTROLLER */
 var controller = {
 
-  init: function () {
+  init:function () {
     /* console.log("init controller"); */
     controller.settingNavMenu();
     controller.initSlider();
@@ -228,6 +243,15 @@ var controller = {
         
       });
     }
+  },
+  nextProjects: async function(){
+    /* console.log(data.nextProjects.hasNextPage);
+    console.log(data.nextProjects.nextPage); */
+    if(data.nextProjects.hasNextPage){
+      await model.loadNextProjects(data.nextProjects.nextPage);
+      view.drawNextProjects(data.nextProjects.nextContent);
+    }
+    
   }
 };
 
@@ -243,6 +267,7 @@ var view = {
     view.loadDeltaToEditor();
     view.eventShowBlockList();
     view.saveFormWithQuillEditor();
+    view.eventFinalScroll();
   },
   getInputImage: function () {
     return document.querySelector("#inputImage");
@@ -277,9 +302,9 @@ var view = {
    * "delta-summary" class, it will take the text in "blockquote" format
    * and take it as a summary of the content. 
    */
-  processDeltaToHtml: function(){
+  processDeltaToHtml: function(content = document){
     try {
-      let deltas = document.getElementsByClassName("delta");
+      let deltas = content.getElementsByClassName("delta");
       Array.from(deltas).forEach(delta => {
         /* console.log(delta); */
         if(delta.getAttribute("value")){
@@ -432,6 +457,21 @@ var view = {
         })
       }     
     });
+  },
+  drawNextProjects:function(nextContent){
+    let pageMyProjects = document.querySelector(".page-projects");
+    if(pageMyProjects){
+      let deckProjects = pageMyProjects.getElementsByClassName("card-deck-projects")[0];
+      deckProjects.innerHTML += nextContent;
+      view.processDeltaToHtml(deckProjects);
+    }
+  },
+  eventFinalScroll:function(){
+    window.onscroll = function(e) {
+      if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+        controller.nextProjects();
+      }
+    };
   }
 };
 

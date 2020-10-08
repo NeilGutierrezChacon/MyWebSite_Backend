@@ -7,10 +7,6 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: "Title cannot be blank!",
   },
-  description: {
-    type: String,
-    required: "Description cannot be blank!",
-  },
   content: {
     type: String,
   },

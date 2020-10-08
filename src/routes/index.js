@@ -16,8 +16,8 @@ const cloudinary = require("../cloudinary");
 const multer = require("multer");
 const upload = multer();
 
-
-
+const ejs = require("ejs");
+const path = require("path");
 
 /* Functions from helpers */
 const {
@@ -26,6 +26,7 @@ const {
   reduceTextDescription,
 } = require("../helpers/functions");
 const { Router } = require("express");
+const { dirname } = require("path");
 
 
 router.get("/", async (req, res) => {
@@ -40,11 +41,18 @@ router.get("/", async (req, res) => {
 /* Projects */
 
 router.get("/projects", async (req, res) => {
-  let projects = await Project.find();
+  const page = parseInt(req.params.page,10) || 1 ;
+  const limit = 8;
+  const projects = await Project.paginate({},{limit,page});
+
+
   let auth = false;
   if(req.cookies.token) auth = true;
 
-  res.render("my_projects.html", { projects,auth });
+  res.render("my_projects.html", {
+    projects:projects.docs,
+    auth 
+  });
 });
 
 router.get("/projects/:id", async (req, res) => {
@@ -56,6 +64,21 @@ router.get("/projects/:id", async (req, res) => {
   res.render("projectDetail.html", { project,auth });
 });
 
+router.get("/projects/pagination/:page",async (req, res) => {
+  const page = parseInt(req.params.page,10) || 1 ;
+  const limit = 8;
+  const projects = await Project.paginate({},{limit,page});
+  let nextContent = "";
+  for (let index = 0; index < projects.docs.length; index++) {
+    const project = projects.docs[index];
+    nextContent += await ejs.renderFile(path.join(__dirname,"/../views/partials/cartProject.html"),{project});
+  }
+  res.json({
+    nextContent,
+    hasNextPage:projects.hasNextPage,
+    nextPage:projects.nextPage
+  });
+});
 
 /* Blog */
 router.get("/blog", async (req, res) => {
@@ -228,7 +251,6 @@ router.post("/admin/manage-projects/add",verifyToken,
       }
       const project = new Project({
         title,
-        description,
         content,
         github,
         website,
@@ -288,7 +310,6 @@ router.post("/admin/manage-projects/:project/edit",verifyToken,
         { _id: id },
         {
           title,
-          description,
           content,
           github,
           website,
@@ -302,7 +323,6 @@ router.post("/admin/manage-projects/:project/edit",verifyToken,
         { _id: id },
         {
           title,
-          description,
           content,
           github,
           website,
