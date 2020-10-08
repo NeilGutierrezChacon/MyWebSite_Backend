@@ -24,6 +24,13 @@ var model = {
   getEditor: function(){
     return data.editor;
   },
+  /**
+   * @function loadNextProjects
+   * @param {Int} page 
+   * @description 
+   * Execute the request on the server to load the projects by the specified "page" parameter, 
+   * by default it takes the value of 1.
+   */
   loadNextProjects:async function(page = 1){
     await axios
       .get("/projects/pagination/"+page)
@@ -244,9 +251,12 @@ var controller = {
       });
     }
   },
+  /**
+   * @function nextProjects
+   * @description If there are more projects to load,run the model function 
+   * to loads the new data and run the view function to draw the content
+   */
   nextProjects: async function(){
-    console.log(data.nextProjects.hasNextPage);
-    console.log(data.nextProjects.nextPage);
     if(data.nextProjects.hasNextPage){
       await model.loadNextProjects(data.nextProjects.nextPage);
       view.drawNextProjects(data.nextProjects.nextContent);
@@ -458,6 +468,13 @@ var view = {
       }     
     });
   },
+  /**
+   * @function drawNextProjects
+   * @param {String} nextContent 
+   * @description If the page has the class "page-projects", 
+   * Find the an element with class "card-deck-projects" and load the content
+   * of the param "nextContent"
+   */
   drawNextProjects:function(nextContent){
     let pageMyProjects = document.querySelector(".page-projects");
     if(pageMyProjects){
@@ -466,6 +483,11 @@ var view = {
       view.processDeltaToHtml(deckProjects);
     }
   },
+  /**
+   * @function eventFinalScroll
+   * @description When scroll is at the button of the page 
+   * it loads the specified functions 
+   */
   eventFinalScroll:function(){
     window.onscroll = function(e) {
       if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {

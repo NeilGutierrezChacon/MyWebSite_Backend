@@ -35,7 +35,12 @@
 /* window.onload = function () { */
 
 var data = {
-  editor: null
+  editor: null,
+  nextProjects: {
+    nextContent:"",
+    hasNextPage:true,
+    nextPage:2
+  }
 }
 /* MODEL */
 var model = {
@@ -47,6 +52,23 @@ var model = {
   },
   getEditor: function(){
     return data.editor;
+  },
+  /**
+   * @function loadNextProjects
+   * @param {Int} page 
+   * @description 
+   * Execute the request on the server to load the projects by the specified "page" parameter, 
+   * by default it takes the value of 1.
+   */
+  loadNextProjects:async function(page = 1){
+    await axios
+      .get("/projects/pagination/"+page)
+      .then((response) => {
+        data.nextProjects = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 };
 
@@ -54,7 +76,7 @@ var model = {
 /* CONTROLLER */
 var controller = {
 
-  init: function () {
+  init:function () {
     /* console.log("init controller"); */
     controller.settingNavMenu();
     controller.initSlider();
@@ -257,6 +279,18 @@ var controller = {
         
       });
     }
+  },
+  /**
+   * @function nextProjects
+   * @description If there are more projects to load,run the model function 
+   * to loads the new data and run the view function to draw the content
+   */
+  nextProjects: async function(){
+    if(data.nextProjects.hasNextPage){
+      await model.loadNextProjects(data.nextProjects.nextPage);
+      view.drawNextProjects(data.nextProjects.nextContent);
+    }
+    
   }
 };
 
@@ -272,6 +306,7 @@ var view = {
     view.loadDeltaToEditor();
     view.eventShowBlockList();
     view.saveFormWithQuillEditor();
+    view.eventFinalScroll();
   },
   getInputImage: function () {
     return document.querySelector("#inputImage");
@@ -306,9 +341,9 @@ var view = {
    * "delta-summary" class, it will take the text in "blockquote" format
    * and take it as a summary of the content. 
    */
-  processDeltaToHtml: function(){
+  processDeltaToHtml: function(content = document){
     try {
-      let deltas = document.getElementsByClassName("delta");
+      let deltas = content.getElementsByClassName("delta");
       Array.from(deltas).forEach(delta => {
         /* console.log(delta); */
         if(delta.getAttribute("value")){
@@ -461,6 +496,33 @@ var view = {
         })
       }     
     });
+  },
+  /**
+   * @function drawNextProjects
+   * @param {String} nextContent 
+   * @description If the page has the class "page-projects", 
+   * Find the an element with class "card-deck-projects" and load the content
+   * of the param "nextContent"
+   */
+  drawNextProjects:function(nextContent){
+    let pageMyProjects = document.querySelector(".page-projects");
+    if(pageMyProjects){
+      let deckProjects = pageMyProjects.getElementsByClassName("card-deck-projects")[0];
+      deckProjects.innerHTML += nextContent;
+      view.processDeltaToHtml(deckProjects);
+    }
+  },
+  /**
+   * @function eventFinalScroll
+   * @description When scroll is at the button of the page 
+   * it loads the specified functions 
+   */
+  eventFinalScroll:function(){
+    window.onscroll = function(e) {
+      if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+        controller.nextProjects();
+      }
+    };
   }
 };
 
@@ -476,13 +538,13 @@ controller.init();
 </div>
 
 <nav>
-    <h2><a href="index.html">Documentation | NGCH43 </a></h2><h3>Global</h3><ul><li><a href="global.html#calcBlogPag">calcBlogPag</a></li><li><a href="global.html#dotenv">dotenv</a></li><li><a href="global.html#eventShowBlockList">eventShowBlockList</a></li><li><a href="global.html#eventShowInputNewPassword">eventShowInputNewPassword</a></li><li><a href="global.html#initEditor">initEditor</a></li><li><a href="global.html#initSlider">initSlider</a></li><li><a href="global.html#loadDeltaToEditor">loadDeltaToEditor</a></li><li><a href="global.html#preViewImages">preViewImages</a></li><li><a href="global.html#processDeltaToHtml">processDeltaToHtml</a></li><li><a href="global.html#reduceTextDescription">reduceTextDescription</a></li><li><a href="global.html#saveFormWithQuillEditor">saveFormWithQuillEditor</a></li><li><a href="global.html#settingNavMenu">settingNavMenu</a></li><li><a href="global.html#showAdminView">showAdminView</a></li><li><a href="global.html#uploadFromBuffer">uploadFromBuffer</a></li><li><a href="global.html#verifyToken">verifyToken</a></li></ul>
+    <h2><a href="index.html">Documentation | NGCH43 </a></h2><h3>Global</h3><ul><li><a href="global.html#calcBlogPag">calcBlogPag</a></li><li><a href="global.html#dotenv">dotenv</a></li><li><a href="global.html#drawNextProjects">drawNextProjects</a></li><li><a href="global.html#eventFinalScroll">eventFinalScroll</a></li><li><a href="global.html#eventShowBlockList">eventShowBlockList</a></li><li><a href="global.html#eventShowInputNewPassword">eventShowInputNewPassword</a></li><li><a href="global.html#initEditor">initEditor</a></li><li><a href="global.html#initSlider">initSlider</a></li><li><a href="global.html#loadDeltaToEditor">loadDeltaToEditor</a></li><li><a href="global.html#loadNextProjects">loadNextProjects</a></li><li><a href="global.html#nextProjects">nextProjects</a></li><li><a href="global.html#preViewImages">preViewImages</a></li><li><a href="global.html#processDeltaToHtml">processDeltaToHtml</a></li><li><a href="global.html#reduceTextDescription">reduceTextDescription</a></li><li><a href="global.html#saveFormWithQuillEditor">saveFormWithQuillEditor</a></li><li><a href="global.html#settingNavMenu">settingNavMenu</a></li><li><a href="global.html#showAdminView">showAdminView</a></li><li><a href="global.html#uploadFromBuffer">uploadFromBuffer</a></li><li><a href="global.html#verifyToken">verifyToken</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.5</a> on Tue Oct 06 2020 17:47:44 GMT+0200 (hora de verano de Europa central)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.5</a> on Thu Oct 08 2020 12:23:51 GMT+0200 (hora de verano de Europa central)
 </footer>
 
 <script> prettyPrint(); </script>
