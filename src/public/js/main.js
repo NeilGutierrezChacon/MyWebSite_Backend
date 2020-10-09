@@ -26,14 +26,14 @@ var model = {
   },
   /**
    * @function loadNextProjects
-   * @param {Int} page Number of the page to load
-   * @description 
-   * Execute the request on the server to load the projects by the specified "page" parameter, 
-   * by default it takes the value of 1.
+   * @param {Int} page Number of the page to load, default value 1
+   * @param {Json} params Json with the query parameters for the request, default value {}
+   * @description Execute the request on the server to load the projects by 
+   * the specified "page" parameter, by default it takes the value of 1.
    */
-  loadNextProjects:async function(page = 1){
+  loadNextProjects:async function(page = 1, params={}){
     await axios
-      .get("/projects/pagination/"+page)
+      .get("/projects/pagination/"+page,{params})
       .then((response) => {
         data.nextProjects = response.data;
       })
@@ -254,11 +254,24 @@ var controller = {
   /**
    * @function nextProjects
    * @description If there are more projects to load,run the model function 
-   * to loads the new data and run the view function to draw the content
+   * to loads the new data and run the view function to draw the content.
+   * If in the URL there is a query parameter "title", it loaded in 
+   * the model function
    */
   nextProjects: async function(){
     if(data.nextProjects.hasNextPage){
-      await model.loadNextProjects(data.nextProjects.nextPage);
+      let searchParams = new URLSearchParams(window.location.search);
+      
+      if(searchParams.has('title')){
+        params = {
+          title: searchParams.get('title')
+        }
+      }else{
+        params = {}
+      }
+      await model.loadNextProjects(data.nextProjects.nextPage, params);
+
+      
       view.drawNextProjects(data.nextProjects.nextContent);
     }
     
@@ -271,13 +284,12 @@ var view = {
     /* console.log("init view"); */
     view.eventShowInputNewPassword();
     view.showAdminView();
-    view.eventPaginationBlogNext();
-    view.eventPaginationBlogPrevious();
     view.processDeltaToHtml();
     view.loadDeltaToEditor();
     view.eventShowBlockList();
     view.saveFormWithQuillEditor();
     view.eventFinalScroll();
+    view.loadFilterPagination();
   },
   getInputImage: function () {
     return document.querySelector("#inputImage");
@@ -399,32 +411,6 @@ var view = {
       };
     } 
   },
-  eventPaginationBlogNext: function () {
-    let btn_next = document.querySelector("#next");
-    if(btn_next){
-      btn_next.addEventListener("click", (e) => {
-        e.preventDefault();
-        let path = window.location.pathname;
-        let pagination = path.split("/")[path.split("/").length - 1];
-        window.location.replace("/Blog/" + (parseInt(pagination) + 1));
-      });
-    }
-  },
-  eventPaginationBlogPrevious: function () {
-    let btn_previous = document.querySelector("#previous");
-    if(btn_previous){
-      btn_previous.addEventListener("click", (e) => {
-        e.preventDefault();
-        let path = window.location.pathname;
-        let pagination = path.split("/")[path.split("/").length - 1];
-        pagination = parseInt(pagination) - 1;
-        if(pagination>0){
-          window.location.replace("/Blog/" + pagination);
-        }
-        
-      });
-    } 
-  },
   /**
    * @function eventShowBlockList
    * @description Search all elements with class "block-list-toggle" and attribute 
@@ -494,6 +480,19 @@ var view = {
         controller.nextProjects();
       }
     };
+  },
+  /**
+   * @function loadFilterPagination
+   * @description Add to the link with the "page-link" class in 
+   * the "pagination-item" element the query parameters specified 
+   * in the browser's search engine.
+   */
+  loadFilterPagination:function(){
+    let filter = window.location.search;
+    let paginationItem = document.querySelectorAll(".pagination-item .page-link[href]");
+    paginationItem.forEach(item => {
+      item.href+=filter;
+    });
   }
 };
 

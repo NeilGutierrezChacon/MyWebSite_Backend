@@ -25,12 +25,14 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="nav-search">
-            <div class="input-group my-4">
-              <input type="text" class="form-control" placeholder="Write a project" aria-label="Write a project" aria-describedby="button-search">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="button-search"><i class="fas fa-search fa-lg"></i> Search</button>
+            <form action="/blog/1" method="GET">
+              <div class="input-group my-4">
+                <input name="title" type="text" class="form-control" placeholder="Write a project" aria-label="Write a project" aria-describedby="button-search">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="submit" id="button-search"><i class="fas fa-search fa-lg"></i> Search</button>
+                </div>
               </div>
-            </div>
+            </form> 
           </div> 
         </div>
       </div>
@@ -38,7 +40,7 @@
       <div class="row">
         <div class="col-sm-12 px-0">
           <!-- Swiper -->
-          <%- include('partials/postsSwiper.html',{posts})%>
+          <%- include('partials/postsSwiper.html',{posts:posts.docs})%>
         </div>
       </div>
 
@@ -51,16 +53,24 @@
           <!-- Pagination -->
           <nav class="mt-3" aria-label="Page navigation example">
             <ul class="pagination">
-              <li class="page-item">
-                <a id="previous" class="page-link">Previous</a>
+              <li class="page-item pagination-item">
+                <% if(posts.prevPage){ %>
+                  <a id="previous" class="page-link" href="/blog/<%= posts.prevPage %>">Previous</a>
+                <% }else{%>
+                  <a id="next" class="page-link">Previous</a>
+                <% } %>    
               </li>
               <% for(let i = 1 ;i <= posts.totalPages; i++){ %>
-                <li class="page-item">
+                <li class="page-item pagination-item">
                   <a class="page-link" href="/blog/<%= i %>"><%= i %></a>
                 </li>
               <% } %>
-              <li class="page-item">
-                <a id="next" class="page-link" href="#">Next</a>
+              <li class="page-item pagination-item">
+                <% if(posts.nextPage){ %>
+                  <a id="next" class="page-link" href="/blog/<%= +posts.nextPage %>">Next</a>
+                <% }else{%>
+                  <a id="next" class="page-link">Next</a>
+                <% } %>
               </li>
             </ul>
           </nav>

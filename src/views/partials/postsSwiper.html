@@ -1,6 +1,6 @@
 <div class="swiper-container">
     <div class="swiper-wrapper">
-        <% posts.docs.forEach(function(post){ %>
+        <% posts.forEach(function(post){ %>
             <div class="swiper-slide">
                 <img src="/img/img_not_found.png" alt="Featured image of the post">
                 <span class="date"><%= `${post.updateDate.getDay()}/${post.updateDate.getMonth()}/${post.updateDate.getFullYear()}` %></span>

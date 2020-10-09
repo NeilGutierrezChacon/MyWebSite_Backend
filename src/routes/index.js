@@ -43,9 +43,17 @@ router.get("/", async (req, res) => {
 router.get("/projects", async (req, res) => {
   const page = parseInt(req.params.page,10) || 1 ;
   const limit = 8;
-  const projects = await Project.paginate({},{limit,page});
-
-
+  const queryTitle = req.query.title;
+  let projects = [];
+  let filter = { "title": {} };
+  if (req.query) {
+      filter["title"]["$regex"] = new RegExp(queryTitle, "i");       
+  } else {
+      filter = { };
+  }
+  projects = await Project.paginate(filter,{limit,page});
+  
+  console.log(projects);
   let auth = false;
   if(req.cookies.token) auth = true;
 
@@ -65,9 +73,21 @@ router.get("/projects/:id", async (req, res) => {
 });
 
 router.get("/projects/pagination/:page",async (req, res) => {
-  const page = parseInt(req.params.page,10) || 1 ;
+  const page = parseInt(req.params.page,10) || 2 ;
   const limit = 8;
-  const projects = await Project.paginate({},{limit,page});
+  const queryTitle = req.query.title;
+  let projects = [];
+  let filter = { "title": {} };
+  if (req.query) {
+      filter["title"]["$regex"] = new RegExp(queryTitle, "i");       
+  } else {
+      filter = { };
+  }
+  console.log(filter);
+  console.log(page);
+  projects = await Project.paginate(filter,{limit,page});
+
+  /* console.log(projects); */
   let nextContent = "";
   for (let index = 0; index < projects.docs.length; index++) {
     const project = projects.docs[index];
@@ -83,7 +103,7 @@ router.get("/projects/pagination/:page",async (req, res) => {
 /* Blog */
 router.get("/blog", async (req, res) => {
   const posts = await Post.paginate({},{limit:5});
-  console.log(posts);
+
   let auth = false;
   if(req.cookies.token) auth = true;
   
@@ -95,8 +115,17 @@ router.get("/blog", async (req, res) => {
 router.get("/blog/:page", async (req, res) => {
   const page = parseInt(req.params.page,10) || 1 ;
   const limit = 5 ;
-  const posts = await Post.paginate({},{limit,page});
+
+  let filter = { "title": {} };
+  if (req.query) {
+      filter["title"]["$regex"] = new RegExp(req.query.title, "i");       
+  } else {
+      filter = { };
+  }
+
+  const posts = await Post.paginate(filter,{limit,page});
   console.log(posts);
+
   let auth = false;
   if(req.cookies.token) auth = true;
 
