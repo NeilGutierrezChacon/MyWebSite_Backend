@@ -206,13 +206,16 @@ var controller = {
       [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
       [{ 'font': [] }],
       [{ 'align': [] }],
-      ['image','blockquote', 'code-block']
+      ['image','blockquote', 'code-block'],
+      ['clean'],
+      ['link']
     
     ];
     let options = {
       modules: {
         toolbar: toolbarOptions
       },
+      scrollingContainer: '#scrolling-container',
       placeholder: 'Compose an epic...',
       theme: 'snow'
     };

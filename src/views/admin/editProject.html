@@ -9,17 +9,15 @@
   </head>
   <body>
     <%- include ('../partials/header.html')%>
-    <main class="container">
+    <main class="page-projet-editor container">
       
       <!-- Formulario de mensaje directo -->
-      <div class="row d-flex justify-content-center mt-5">
+      <div class="row mt-5">
         <div class="col-sm-12">
           <h3>Edit project</h3>
         </div>
-      </div>
-      <form class="w-50 mx-auto form-quill" action="/admin/manage-projects/<%= project.id %>/edit" method="POST" enctype="multipart/form-data">
-        <div class="form-row">
-          <div class="col-sm-12 col-md-10">
+        <section class="col-sm-12 col-md-10">
+          <form class="form-quill" action="/admin/manage-projects/<%= project.id %>/edit" method="POST" enctype="multipart/form-data">
             <div class="form-group">
               <label for="inputTitle">Title</label>
               <input
@@ -30,49 +28,66 @@
                 value="<%= project.title %>"
               />
             </div>
-            <div class="form-group">
-              <label for="inputUrlGitHub">Link GitHub</label>
-              <input
-                type="url"
-                name="github"
-                id="inputUrlGitHub"
-                placeholder="https://github.com"
-                pattern="https://.*"
-                class="form-control"
-                value="<%= project.github %>"
-              />
+            <div class="form-row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="inputUrlGitHub">Link GitHub</label>
+                  <input
+                    type="url"
+                    name="github"
+                    id="inputUrlGitHub"
+                    placeholder="https://github.com"
+                    pattern="https://.*"
+                    class="form-control"
+                    value="<%= project.github %>"
+                  />
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="inputUrlWebSite">Link WebSite</label>
+                  <input
+                    type="url"
+                    name="website"
+                    id="inputUrlWebSite"
+                    placeholder="https://website.com"
+                    pattern="https://.*"
+                    class="form-control"
+                    value="<%= project.website %>"
+                  />
+                </div>
+              </div>
             </div>
+            <!-- Input with a preview of images -->
+            <%- include ('../partials/inputImages.html',{imgs:project.imgs}) %>
             <div class="form-group">
-              <label for="inputUrlWebSite">Link WebSite</label>
-              <input
-                type="url"
-                name="website"
-                id="inputUrlWebSite"
-                placeholder="https://website.com"
-                pattern="https://.*"
-                class="form-control"
-                value="<%= project.website %>"
-              />
+              <label for="content">Description</label>
+              <input id="content" name="content" type="hidden">
+              <div id="scrollingContainer">
+                <div id="editor" class="editor load-delta" value="<%= project.content %>" >
+                </div>
+              </div>
             </div>
+            <div class="form-row">
+              <button
+                type="submit"
+                class="btn btn-primary mx-auto"
+              >
+                Update
+              </button>
+            </div>
+          </form>
+        </section>
+        <section class="col-md-2 col-sm-12 d-none d-md-block">
+          <div class="row">
+            <button type="button" id-form="form-add-post" class="btn-save btn btn-primary mx-auto">
+              Save
+            </button>
           </div>
-        </div>
-        <!-- Input with a preview of images -->
-        <%- include ('../partials/inputImages.html',{imgs:project.imgs}) %>
-        <div class="form-group">
-          <label for="content">Description</label>
-          <input id="content" name="content" type="hidden">
-          <div id="editor" class="editor load-delta" value="<%= project.content %>" >
-          </div>
-        </div>
-        <div class="form-row">
-          <button
-            type="submit"
-            class="btn btn-primary mx-auto"
-          >
-            Update
-          </button>
-        </div>
-      </form>
+        </section>
+      </div>
+      
+      
       <% if (auth) { %>
         <%- include ('../partials/controlAdmin.html')%>
       <% } %>

@@ -10,13 +10,11 @@
   <body>
     <%- include ('../partials/header.html')%>
     <main class="container admin page-add-post">
-      <div class="row row-main">
+      <div class="row mt-5">
+        <div class="col-sm-12">
+          <h3>Edit post</h3>
+        </div>
         <section class="col-md-10 col-sm-12">
-          <div class="row mb-3">
-            <div class="col">
-              <h3>Edit post</h3>
-            </div>
-          </div>
           <form
             class="form-quill"
             action="/admin/manage-posts/<%= post.id %>/edit"
@@ -38,7 +36,9 @@
             <div class="form-group">
               <label for="content">Description</label>
               <input id="content" name="content" type="hidden">
-              <div id="editor" class="editor load-delta" value="<%= post.content %>">
+              <div id="scrollingContainer">
+                <div id="editor" class="editor load-delta" value="<%= post.content %>">
+                </div>
               </div>
             </div>
             

@@ -784,9 +784,28 @@ body {
         }
     }
 }
-  .editor{
-    min-height: 20em;
-  }
+
+/* Page project editor  */
+.page-projet-editor{
+    & .form-quill{
+        width: 100%;
+    }
+}
+
+#scrollingContainer{
+    & .editor{
+        height: 24em;
+        @media (min-width: 576px){
+            height: 22em;
+        }
+    }
+    height: 30em;
+    @media (min-width: 576px){
+        height: 25em;
+    }
+    
+}
+
   
   .ck-content{
     min-height: 20em;

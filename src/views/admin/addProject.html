@@ -11,19 +11,17 @@
     <%- include ('../partials/header.html')%>
     <main class="container page-add-project">
       
-      <div class="row d-flex justify-content-center mt-5">
+      <div class="row mt-5">
         <div class="col-sm-12">
           <h3>Add project</h3>
         </div>
-      </div>
-      <form
-        class="w-50 mx-auto form-quill"
-        action="/admin/manage-projects/add"
-        method="POST"
-        enctype="multipart/form-data"
-      >
-        <div class="form-row">
-          <div class="col-sm-12 col-md-10">
+        <section class="col-sm-12 col-md-10">
+          <form
+            class="form-quill"
+            action="/admin/manage-projects/add"
+            method="POST"
+            enctype="multipart/form-data"
+          >
             <div class="form-group">
               <label for="inputTitle">Title</label>
               <input
@@ -33,48 +31,64 @@
                 id="inputTitle"
               />
             </div>
-            <div class="form-group">
-              <label for="inputUrlGitHub">Link GitHub</label>
-              <input
-                type="url"
-                name="github"
-                id="inputUrlGitHub"
-                placeholder="https://github.com"
-                pattern="https://.*"
-                class="form-control"
-              />
+            <div class="form-row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="inputUrlGitHub">Link GitHub</label>
+                  <input
+                    type="url"
+                    name="github"
+                    id="inputUrlGitHub"
+                    placeholder="https://github.com"
+                    pattern="https://.*"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="inputUrlWebSite">Link WebSite</label>
+                  <input
+                    type="url"
+                    name="website"
+                    id="inputUrlWebSite"
+                    placeholder="https://website.com"
+                    pattern="https://.*"
+                    class="form-control"
+                  />
+                </div>
+              </div>
             </div>
+            <!-- Input with a preview of images -->
+            <!-- When creating a new project, you need to send an object {img:[]} -->
+            <%- include ('../partials/inputImages.html',{imgs:[]}) %>
             <div class="form-group">
-              <label for="inputUrlWebSite">Link WebSite</label>
-              <input
-                type="url"
-                name="website"
-                id="inputUrlWebSite"
-                placeholder="https://website.com"
-                pattern="https://.*"
-                class="form-control"
-              />
+              <label for="content">Description</label>
+              <input id="content" name="content" type="hidden">
+              <div id="scrollingContainer">
+                <div id="editor" class="editor">
+                </div>
+              </div>
             </div>
+            <div class="form-row">
+              <button
+                type="submit"
+                class="btn btn-primary mx-auto"
+              >
+                Add
+              </button>
+            </div>
+          </form>
+        </section>
+        <section class="col-md-2 col-sm-12 d-none d-md-block">
+          <div class="row">
+            <button type="button" id-form="form-add-post" class="btn-save btn btn-primary mx-auto">
+              Save
+            </button>
           </div>
-        </div>
-        <!-- Input with a preview of images -->
-        <!-- When creating a new project, you need to send an object {img:[]} -->
-        <%- include ('../partials/inputImages.html',{imgs:[]}) %>
-        <div class="form-group">
-          <label for="content">Description</label>
-          <input id="content" name="content" type="hidden">
-          <div id="editor">
-          </div>
-        </div>
-        <div class="form-row">
-          <button
-            type="submit"
-            class="btn btn-primary mx-auto"
-          >
-            Add
-          </button>
-        </div>
-      </form>
+        </section>
+      </div>
+      
       <% if (auth) { %>
         <%- include ('../partials/controlAdmin.html')%>
       <% } %>
