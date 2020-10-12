@@ -15,6 +15,10 @@ const cloudinary = require("../cloudinary");
 
 const multer = require("multer");
 const upload = multer();
+var cpUpload = upload.fields([
+   { name: 'outstandingImage', maxCount: 1 },
+   { name: 'images', maxCount: 12 }
+  ]);
 
 const ejs = require("ejs");
 const path = require("path");
@@ -265,24 +269,36 @@ router.get("/admin/manage-projects/add",verifyToken, (req, res) => {
 });
 
 router.post("/admin/manage-projects/add",verifyToken,
-  upload.array("images"),
+  cpUpload,
   async (req, res) => {
     try {
       let imgs = Array();
       let imgsPubId = Array();
-      const { title, description, github, website, content } = req.body;
+      let outstandingImage;
+      let outstandingImagePubId;
+      const { title, github, website, content } = req.body;
       console.log("-- Add project --");
-      console.log(req.body);
-      for (let i = 0; i < req.files.length; i++) {
-        let result = await uploadFromBuffer(req.files[i], "myWebSite");
-        imgs.push(result.secure_url);
-        imgsPubId.push(result.public_id);
+      for (const key in req.files) {
+        const element = req.files[key];
+        for (let i = 0; i < element.length; i++) {
+          let result = await uploadFromBuffer(element[i], "myWebSite");
+          if(key == "outstandingImage"){
+            outstandingImage = result.secure_url
+            outstandingImagePubId = result.public_id
+          }else{
+            imgs.push(result.secure_url);
+            imgsPubId.push(result.public_id);
+          }
+        }
+        
       }
       const project = new Project({
         title,
         content,
         github,
         website,
+        outstandingImage,
+        outstandingImagePubId,
         imgs,
         imgsPubId,
         updateDate: new Date(),
@@ -309,31 +325,39 @@ router.get("/admin/manage-projects/:project/edit",verifyToken, async (req, res) 
 });
 
 router.post("/admin/manage-projects/:project/edit",verifyToken,
-  upload.array("images"),
+  cpUpload,
   async (req, res) => {
     console.log("-- Edit Project --");
     let imgs = Array();
     let imgsPubId = Array();
-    const { title, github, website, description, content } = req.body;
+    const { title, github, website, content } = req.body;
     const id = req.params.project;
     console.log(req.body);
-    if (req.files.length > 0) {
-      console.log("Files request");
-      console.log(req.files.length);
+    if (req.files.images || req.files.outstandingImage) {
       const project = await Project.findById({ _id: id });
+      let infoDestroy;
+      if(project.outstandingImagePubId){
+        infoDestroy = await cloudinary.v2.uploader
+                              .destroy(project.outstandingImagePubId);
+      }
       project.imgsPubId.forEach(async (element) => {
         /* Destroy de image in clodinary */
-        let infoDestroy = await cloudinary.v2.uploader.destroy(element);
+        infoDestroy = await cloudinary.v2.uploader.destroy(element);
         console.log("info destroy");
         console.log(infoDestroy);
       });
-      for (let i = 0; i < req.files.length; i++) {
-        /* Upload de new image in clodunary */
-        let result = await uploadFromBuffer(req.files[i], "myWebSite");
-        console.log("info update");
-        console.log(result);
-        imgs.push(result.secure_url);
-        imgsPubId.push(result.public_id);
+      for (const key in req.files) {
+        const element = req.files[key];
+        for (let i = 0; i < element.length; i++) {
+          let result = await uploadFromBuffer(element[i], "myWebSite");
+          if(key == "outstandingImage"){
+            outstandingImage = result.secure_url
+            outstandingImagePubId = result.public_id
+          }else{
+            imgs.push(result.secure_url);
+            imgsPubId.push(result.public_id);
+          }
+        }
       }
       const info = await Project.updateOne(
         { _id: id },
@@ -342,6 +366,8 @@ router.post("/admin/manage-projects/:project/edit",verifyToken,
           content,
           github,
           website,
+          outstandingImage,
+          outstandingImagePubId,
           imgs,
           imgsPubId,
           updateDate: new Date(),
@@ -395,16 +421,22 @@ router.get("/admin/manage-posts/add",verifyToken, async (req, res) => {
   res.render("admin/addPost.html",{ auth });
 });
 
-router.post("/admin/manage-posts/add",verifyToken,upload.array("images"), async (req, res) => {
+router.post("/admin/manage-posts/add",verifyToken, cpUpload, async (req, res) => {
   console.log("-- New post Add --");
   console.log(req.body);
   const {title, content } = req.body;
   try {
+    if(req.files.outstandingImage[0]){
+      let result = await uploadFromBuffer(req.files.outstandingImage[0], "myWebSite");
+      outstandingImage = result.secure_url
+      outstandingImagePubId = result.public_id
+    }
     const post = new Post({
       title,
       updateDate: new Date(),
+      outstandingImage,
+      outstandingImagePubId,
       content
-  
     });
     const info = await post.save();
     console.log(info);
@@ -429,17 +461,31 @@ router.get("/admin/manage-posts/:post/edit",verifyToken, async (req, res) => {
 
 });
 
-router.post("/admin/manage-posts/:post/edit",verifyToken,upload.array("images"), async (req, res) => {
+router.post("/admin/manage-posts/:post/edit",verifyToken, cpUpload, async (req, res) => {
   console.log("-- Post update --");
   try {
     console.log(req.body);
     const {title, content } = req.body;
     const id = req.params.post;
+    const post = await Post.findById({ _id: id });
+    let outstandingImage;
+    let outstandingImagePubId;
+    let infoDestroy;
+    if(req.files.outstandingImage[0]){
+      infoDestroy = await cloudinary.v2.uploader
+                              .destroy(post.outstandingImagePubId);
+      let result = await uploadFromBuffer(req.files.outstandingImage[0], "myWebSite");
+      outstandingImage = result.secure_url
+      outstandingImagePubId = result.public_id
+    }
+
     const info = await Post.updateOne(
       { _id: id },
       {
         title,
         updateDate: new Date(),
+        outstandingImage,
+        outstandingImagePubId,
         content
       }
     );

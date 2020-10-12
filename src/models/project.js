@@ -16,6 +16,12 @@ const projectSchema = new mongoose.Schema({
   website: {
     type: String,
   },
+  outstandingImage:{
+    type: String
+  },
+  outstandingImagePubId:{
+    type: String
+  },
   imgs: {
     type: Array,
   },

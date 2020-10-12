@@ -12,6 +12,12 @@ const postSchema = new mongoose.Schema({
         type: Date,
         required: 'Date cannot be blank'
     },
+    outstandingImage:{
+        type: String
+    },
+    outstandingImagePubId:{
+        type: String
+    },
     content: {
         type: String,
         required: 'Body cannot be blank!'
