@@ -1,6 +1,8 @@
-# MyWebSite
+# MyWebSite(Backend)
 
-Repository from my website personal.
+Proyecto que funcionara para gestionar la parte del BACKEND del proyecto MyWebSite_Fronend y funcionara como una API que sera consumida por el proyecto.
+
+
 
 ## NODEJS(EXPRESS)
 Para la creación del servidor utilizamos NodeJs con el framework de express que nos permite crear el servidor de una manera más sencilla y de manera mucho más flexible. Ya que espress nos permite realizar la configuración de una manera muy sencilla y crear las diferentes rutas que necesitamos para nuestro servidor. Por otra parte tiene una muy buena integración con otros recursos de NodeJs.
